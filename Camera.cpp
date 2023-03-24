@@ -98,6 +98,16 @@ void Camera::DebugUpdate()
 		DebugTargetDistance += 0.2;
 	}
 
+	//’Ç]ƒJƒƒ‰
+	if (input->PushKey(DIK_A))
+	{
+		target_.x -= 0.1;
+	}
+	if (input->PushKey(DIK_D))
+	{
+		target_.x += 0.1;
+	}
+
 	//‹“_À•W‚É‘ã“ü
 	eye_.x = sin(DebugChangeRot) * DebugTargetDistance + target_.x;
 	eye_.y = sin(DebugChangeRot2) * DebugTargetDistance + target_.y;

@@ -59,7 +59,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	lightGroup1->SetSpotLightActive(1, false);
 	lightGroup1->SetSpotLightActive(2, false);
 	///*lightGroup1->SetCircleShadowActive(0, true);*/
-	lightGroup1->SetShadowActive(0,true);
+	lightGroup1->SetShadowActive(0, true);
 
 	//FBX読み込み
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
@@ -67,6 +67,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	model0 = FbxLoader::GetInstance()->LoadModelFromFile("key", "Resources/key.png");
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/white1x1.png");
 	model2 = FbxLoader::GetInstance()->LoadModelFromFile("light", "Resources/white1x1.png");
+	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/gray1x1.png");
+	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/blue1x1.png");
+	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/red1x1.png");
+
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -93,6 +97,25 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	object2->Initialize();
 	object2->SetModel(model2);
 
+	//ブロック
+	for (int i = 0; i < blockSize; i++) {
+		blockObject[i] = new FbxObject3D2;
+		blockObject[i]->Initialize();
+		blockObject[i]->SetModel(blockModel);
+	}
+
+	//プレイヤー
+	Player::SetInput(input_);
+	Player::SetDXInput(dxInput);
+	player = new Player;
+	player->Initialize(playerModel);
+
+	//敵
+	for (int i = 0; i < enemySize; i++) {
+		enemy[i] = new Enemy;
+		enemy[i]->Initialize(enemyModel);
+	}
+
 	/*object1 = new FbxObject3D;
 	object1->Initialize();
 	object1->SetModel(model1);*/
@@ -110,7 +133,7 @@ void GameScene::Update()
 	//ライト更新
 	lightGroup0->SetAmbientColor(XMFLOAT3(ambientColor0));
 	lightGroup0->SetDirLightDir(0, XMVECTOR({ lightDir0[0],lightDir0[1], lightDir0[2],0 }));
-	lightGroup0->SetDirLightColor(0,XMFLOAT3(lightColor0));
+	lightGroup0->SetDirLightColor(0, XMFLOAT3(lightColor0));
 
 	/*lightGroup->SetPointLightPos(0, XMFLOAT3(pointLightPos0));
 	lightGroup->SetPointLightColor(0, XMFLOAT3(pointLightColor0));
@@ -134,20 +157,56 @@ void GameScene::Update()
 
 	//オブジェクト更新
 	rotation0.y += 0.02;
-	object0->SetPosition({0,3,0});
-	object0->SetScale({0.2f,0.1f,0.4f});
+	object0->SetPosition({ 0,3,0 });
+	object0->SetScale({ 0.2f,0.1f,0.4f });
 	object0->SetRotation(rotation0);
 	object0->Update();
 
 	object1->SetPosition({ 0,0,0 });
-	object1->SetScale({ 0.5f,0.01f,0.5f });
-	object1->SetRotation({0.0f,0.0f,0.0f});
+	object1->SetScale({ 10.0f,0.01f,0.5f });
+	object1->SetRotation({ 0.0f,0.0f,0.0f });
 	object1->Update();
 
 	object2->SetPosition(XMFLOAT3(shadowLightPos));
 	object2->SetScale({ 0.2f,0.1f,0.4f });
-	object2->SetRotation({0,0,0});
+	object2->SetRotation({ 0,0,0 });
 	object2->Update();
+
+	//ブロック
+	blockObject[0]->SetPosition({ 4,1,0 });
+	blockObject[1]->SetPosition({ 5,1,0 });
+
+	blockObject[2]->SetPosition({ 9,1,0 });
+	blockObject[3]->SetPosition({ 10,1,0 });
+
+	blockObject[4]->SetPosition({ 14,1,0 });
+	blockObject[5]->SetPosition({ 15,1,0 });
+	blockObject[6]->SetPosition({ 16,1,0 });
+
+	blockObject[7]->SetPosition({ 21,1,0 });
+	blockObject[8]->SetPosition({ 22,1,0 });
+
+	blockObject[9]->SetPosition({ 28,1,0 });
+
+
+	for (int i = 0; i < blockSize; i++) {
+		blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
+		blockObject[i]->SetRotation({ 0,0,0 });
+		blockObject[i]->Update();
+	}
+
+	//プレイヤー
+	player->Update();
+
+	//敵
+	enemy[0]->SetPosition({ 7,1,1});
+	enemy[1]->SetPosition({ 12,1,1 });
+	enemy[2]->SetPosition({ 18.5,1,1 });
+	enemy[3]->SetPosition({ 25,1,1 });
+
+	for (int i = 0; i < enemySize; i++) {
+		enemy[i]->Update();
+	}
 }
 
 void GameScene::Draw()
@@ -156,7 +215,7 @@ void GameScene::Draw()
 	ImGui::SetWindowPos(ImVec2(0, 0));
 	ImGui::SetWindowSize(ImVec2(500, 500));
 	ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
-	ImGui::InputFloat3("lightDir0",lightDir0);
+	ImGui::InputFloat3("lightDir0", lightDir0);
 	ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
 	/*ImGui::InputFloat3("circleShadowDir", circleShadowDir);
 	ImGui::InputFloat3("circleShadowAtten", circleShadowAtten);
@@ -166,7 +225,20 @@ void GameScene::Draw()
 	ImGui::InputFloat3("lightPos", shadowLightPos);
 	ImGui::End();
 
-	object0->Draw(dxCommon_->GetCommandList());
+	//object0->Draw(dxCommon_->GetCommandList());
 	object1->Draw(dxCommon_->GetCommandList());
-	object2->Draw(dxCommon_->GetCommandList());
+	//object2->Draw(dxCommon_->GetCommandList());
+
+	//ブロック
+	for (int i = 0; i < blockSize; i++) {
+		blockObject[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//プレイヤー
+	player->Draw(dxCommon_->GetCommandList());
+
+	//敵
+	for (int i = 0; i < enemySize; i++) {
+		enemy[i]->Draw(dxCommon_->GetCommandList());
+	}
 }

@@ -10,6 +10,8 @@
 #include "FbxObject3d2.h"
 #include "FbxModel.h"
 #include "LightGroup.h"
+#include "Player.h"
+#include "Enemy.h"
 
 class GameScene
 {
@@ -42,6 +44,20 @@ private:
 	FbxModel* model1 = nullptr;
 	//FbxObject3D* object1 = nullptr;
 	FbxModel* model2 = nullptr;
+
+	//ブロック
+	static const int blockSize = 10;
+	FbxModel* blockModel = nullptr;
+	FbxObject3D2* blockObject[blockSize] = {};
+
+	//プレイヤー
+	FbxModel* playerModel = nullptr;
+	Player* player = nullptr;
+
+	//敵
+	static const int enemySize = 4;
+	FbxModel* enemyModel = nullptr;
+	Enemy* enemy[enemySize] = {};
 
 	//ライト
 	LightGroup* lightGroup0 = nullptr;
