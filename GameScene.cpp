@@ -15,6 +15,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	delete clearSprite;
 }
 
 void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
@@ -116,9 +117,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		enemy[i]->Initialize(enemyModel);
 	}
 
-	/*object1 = new FbxObject3D;
-	object1->Initialize();
-	object1->SetModel(model1);*/
+	////テクスチャ
+	//clearTexture = Texture::LoadTexture(L"Resources/clear.png");
+
+	//clearSprite = new Sprite();
+	//clearSprite->Initialize(clearTexture);
+	//clearSprite->SetPos(XMFLOAT2(340, 200));
+	//clearSprite->Update();
 
 }
 
@@ -211,6 +216,9 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
+	//-------背景スプライト描画処理-------//
+	//SpriteManager::GetInstance()->beginDraw();
+
 	ImGui::Begin("Light");
 	ImGui::SetWindowPos(ImVec2(0, 0));
 	ImGui::SetWindowSize(ImVec2(500, 500));
@@ -241,4 +249,10 @@ void GameScene::Draw()
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Draw(dxCommon_->GetCommandList());
 	}
+
+	//-------前景スプライト描画処理-------//
+	//SpriteManager::GetInstance()->beginDraw();
+
+	//clearSprite->Draw();
+
 }

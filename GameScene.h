@@ -12,6 +12,7 @@
 #include "LightGroup.h"
 #include "Player.h"
 #include "Enemy.h"
+#include"Sprite.h"
 
 class GameScene
 {
@@ -83,4 +84,9 @@ private:
 	DirectX::XMFLOAT3 rotation0 = { 0.0f,0.0f,0.0f };
 	DirectX::XMFLOAT3 scale = { 0.010f,0.010f,0.010f };
 	DirectX::XMFLOAT3 rotation1 = { 0.0f,0.0f,0.0f };
+
+	//テクスチャ
+	uint32_t clearTexture = 0;		//クリア画面
+	Sprite* clearSprite = nullptr;
+
 };
