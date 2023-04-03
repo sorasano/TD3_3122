@@ -122,9 +122,27 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	clearSprite = new Sprite();
 	clearSprite->Initialize(clearTexture);
-	clearSprite->SetPos(XMFLOAT2(340, 200));
+	//アンカーポイントをスプライトの中心に
+	clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
 	clearSprite->Update();
 
+	titleTexture = Texture::LoadTexture(L"Resources/title.png");
+
+	titleSprite = new Sprite();
+	titleSprite->Initialize(titleTexture);
+	titleSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	titleSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
+	titleSprite->StartSway({ WinApp::winW / 2, WinApp::winH / 2 - 200 });
+	titleSprite->Update();
+
+	titleUITexture = Texture::LoadTexture(L"Resources/titleUI.png");
+
+	titleUISprite = new Sprite();
+	titleUISprite->Initialize(titleUITexture);
+	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	titleUISprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 + 200));
+	titleUISprite->Update();
 }
 
 void GameScene::Update()
@@ -212,6 +230,21 @@ void GameScene::Update()
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Update();
 	}
+
+	//スプライト
+
+	//タイトル
+	if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+		titleSprite->StartFlipOut();
+	}
+
+	titleSprite->Update();
+
+	//タイトルUI
+	if (titleSprite->isflipEase == false) {
+		titleUISprite->color.w = sin(clock() / 100);
+		titleTimer++;
+	}
 }
 
 void GameScene::Draw()
@@ -219,19 +252,19 @@ void GameScene::Draw()
 	//-------背景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();
 
-	ImGui::Begin("Light");
-	ImGui::SetWindowPos(ImVec2(0, 0));
-	ImGui::SetWindowSize(ImVec2(500, 500));
-	ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
-	ImGui::InputFloat3("lightDir0", lightDir0);
-	ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
-	/*ImGui::InputFloat3("circleShadowDir", circleShadowDir);
-	ImGui::InputFloat3("circleShadowAtten", circleShadowAtten);
-	ImGui::ColorEdit3("pointLightColor", pointLightColor0, ImGuiColorEditFlags_Float);
-	ImGui::InputFloat3("pointLightPos", pointLightPos0);
-	ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
-	ImGui::InputFloat3("lightPos", shadowLightPos);
-	ImGui::End();
+	//ImGui::Begin("Light");
+	//ImGui::SetWindowPos(ImVec2(0, 0));
+	//ImGui::SetWindowSize(ImVec2(500, 500));
+	//ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
+	//ImGui::InputFloat3("lightDir0", lightDir0);
+	//ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
+	///*ImGui::InputFloat3("circleShadowDir", circleShadowDir);
+	//ImGui::InputFloat3("circleShadowAtten", circleShadowAtten);
+	//ImGui::ColorEdit3("pointLightColor", pointLightColor0, ImGuiColorEditFlags_Float);
+	//ImGui::InputFloat3("pointLightPos", pointLightPos0);
+	//ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
+	//ImGui::InputFloat3("lightPos", shadowLightPos);
+	//ImGui::End();
 
 	//object0->Draw(dxCommon_->GetCommandList());
 	object1->Draw(dxCommon_->GetCommandList());
@@ -253,6 +286,13 @@ void GameScene::Draw()
 	//-------前景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();
 
-	clearSprite->Draw();
+	//clearSprite->Draw();
+	if (titleSprite->endFlip == false) {
+		titleSprite->Draw();
+	}
+
+	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+		titleUISprite->Draw();
+	}
 
 }

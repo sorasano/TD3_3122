@@ -89,4 +89,13 @@ private:
 	uint32_t clearTexture = 0;		//クリア画面
 	Sprite* clearSprite = nullptr;
 
+	uint32_t titleTexture = 0;		//クリア画面
+	Sprite* titleSprite = nullptr;
+
+	uint32_t titleUITexture = 0;		//クリア画面
+	Sprite* titleUISprite = nullptr;
+
+	//タイトルUI用タイマー
+	int titleTimer;
+	int titleAssistTime = 300;
 };

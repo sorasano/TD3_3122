@@ -215,6 +215,128 @@ void Sprite::Update()
 
 	//色を転送
 	constMap->color = color;
+
+	if (isflipEase && endFlip == false) {
+		FlipOut();
+	}
+	else if (isSway) {
+		Sway();
+	}
+
+}
+
+void Sprite::FlipOut()
+{
+
+	float flipInUp = startEasePos.y - flipInRangeUp;
+	float flipInDown = startEasePos.y + flipInRangeDown;
+
+	if (initFlip) {
+
+		if (flipInFase == 0) {
+
+			position = EaseOut(startEasePos, { startEasePos.x,flipInUp }, flipInEase.timeRate);
+
+			if (!flipInEase.GetActive()) {
+				//今の演出が終わったら次の段階へ
+				flipInFase = 1;
+				flipInDown = position.y + flipInRangeDown;
+
+				//数値のリセット
+				startEasePos = position;
+				flipInEase.Start(1.0f);
+				flipInEase.timeRate = 0.0f;
+			}
+
+		}
+		else if (flipInFase == 1) {
+
+			position = EaseOut(startEasePos, { startEasePos.x,flipInDown }, flipInEase.timeRate);
+
+			if (!flipInEase.GetActive()) {
+				//今の演出が終わったら次の段階へ
+				flipInFase = 2;
+
+				//数値のリセット
+				startEasePos = position;
+				flipInEase.Start(1.0f);
+				flipInEase.timeRate = 0.0f;
+			}
+
+
+		}
+		else if (flipInFase == 2) {
+
+			position = EaseOut(startEasePos, { startEasePos.x, -100 }, flipInEase.timeRate);
+
+			if (!flipInEase.GetActive()) {
+				//今の演出が終わったら次の段階へ
+				flipInFase = 3;
+
+				//数値のリセット
+				//isflipEase = false;
+				//initFlip = false;
+				endFlip = true;
+			}
+
+		}
+
+	}
+	else {
+		initFlip = true;
+		flipInFase = 0;
+		flipInUp = position.y - flipInRangeUp;
+		flipInEase.Start(1.0f);
+		flipInEase.timeRate = 0.0f;
+		startEasePos = position;
+		isSway = false;
+	}
+
+	flipInEase.Update();
+}
+
+void Sprite::Sway()
+{
+
+	float swayUp = swayCenterPos.y - (swayRange / 2);
+	float swayDown = swayCenterPos.y + (swayRange / 2);
+
+	if (initSway) {
+
+		if (isSwayUp) {
+			position = EaseOut(startEasePos, { startEasePos.x,swayUp }, swayEase.timeRate);
+
+			if (!swayEase.GetActive()) {
+				//上まで行ったら下降に変更
+				isSwayUp = false;
+
+				//数値のリセット
+				startEasePos = position;
+				swayEase.Start(2.0f);
+				swayEase.timeRate = 0.0f;
+			}
+		}
+		else {
+			position = EaseOut(startEasePos, { startEasePos.x,swayDown }, swayEase.timeRate);
+
+			if (!swayEase.GetActive()) {
+				//下まで行ったら上昇に変更
+				isSwayUp = true;
+				//数値のリセット
+				startEasePos = position;
+				swayEase.Start(2.0f);
+				swayEase.timeRate = 0.0f;
+			}
+		}
+
+	}
+	else {
+		initSway = true;
+		swayEase.Start(1.0f);
+		startEasePos = position;
+	}
+
+	swayEase.Update();
 }
 
 void Sprite::AdjustTextureSize() {

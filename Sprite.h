@@ -6,6 +6,7 @@
 #include<string>
 #include"Vector3.h"
 #include"SpriteManager.h"
+#include"Easing.h"
 
 enum VertexNumber {
 	LB,	//左下
@@ -45,6 +46,35 @@ public:	//メンバ変数
 	DirectX::XMFLOAT2 textureLeftTop = { 0.0f,0.0f };	//テクスチャ左上座標
 	DirectX::XMFLOAT2 textureSize = { 100.0f,100.0f };	//テクスチャ切り出しサイズ
 
+	//画面外から入ってくる演出用
+	Easing flipInEase;
+	//フリップ初期化
+	bool initFlip = false;
+	//演出中か
+	bool isflipEase = false;
+	//演出の段階
+	int flipInFase;
+	//揺れ幅
+	float flipInRangeUp = 50;
+	float flipInRangeDown = 100;
+	//演出が終わったか
+	bool endFlip = false;
+
+	//揺れ用
+	Easing swayEase;
+	//揺れ初期化
+	bool initSway = false;
+	//揺れ幅
+	float swayRange = 100;
+	//揺れてるか
+	bool isSway = false;
+	//上昇中か下降中か
+	bool isSwayUp = true;
+	//演出開始位置
+	DirectX::XMFLOAT2 startEasePos;
+	//中心点
+	DirectX::XMFLOAT2 swayCenterPos;
+
 
 public: //メンバ関数
 	void Initialize(uint32_t textureNum = UINT32_MAX);
@@ -75,6 +105,16 @@ public: //メンバ関数
 	const DirectX::XMFLOAT2 GetTextureSize()const { return textureSize; }
 
 	void Update();
+
+	//演出
+
+	//画面外へアウト
+	void StartFlipOut() { isflipEase = true; };
+	void FlipOut();
+
+	//揺れる	center=中心点
+	void StartSway(DirectX::XMFLOAT2 center) { isSway = true, swayCenterPos = center; }
+	void Sway();
 
 private:
 	//テクスチャサイズをイメージサイズに合わせる
