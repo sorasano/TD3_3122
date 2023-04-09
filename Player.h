@@ -20,6 +20,8 @@ public:
 
 	void Setrotate(XMFLOAT3 rotate);
 
+	const XMFLOAT3& GetPosition() { return position; }
+
 	static void SetInput(Input* input) { Player::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Player::dxInput = dxInput; }
 

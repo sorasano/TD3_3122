@@ -12,6 +12,7 @@
 #include "LightGroup.h"
 #include "Player.h"
 #include "Enemy.h"
+#include"Vector3.h"
 
 class GameScene
 {
@@ -53,11 +54,15 @@ private:
 	//プレイヤー
 	FbxModel* playerModel = nullptr;
 	Player* player = nullptr;
+	XMFLOAT3 playerpos;
 
 	//敵
 	static const int enemySize = 4;
 	FbxModel* enemyModel = nullptr;
+	FbxModel* enemyModel2 = nullptr;
 	Enemy* enemy[enemySize] = {};
+	XMFLOAT3 enemypos[enemySize];
+	Vector3 enemyvec[enemySize];
 
 	//ライト
 	LightGroup* lightGroup0 = nullptr;
@@ -83,4 +88,17 @@ private:
 	DirectX::XMFLOAT3 rotation0 = { 0.0f,0.0f,0.0f };
 	DirectX::XMFLOAT3 scale = { 0.010f,0.010f,0.010f };
 	DirectX::XMFLOAT3 rotation1 = { 0.0f,0.0f,0.0f };
+
+	//判定用
+	Vector3 targetvec[enemySize];
+	Vector3 dotvec;
+	float dot[enemySize];
+	float deg[enemySize];
+
+	int time = 0;
+	int maxTime = 150;
+
+	bool isHit = false;
+	bool isFound = false;
+	bool isback = false;
 };

@@ -6,6 +6,8 @@
 #include "string.h"
 #include "vector"
 #include "imgui.h"
+#include"Vector3.h"
+#include<math.h>
 
 #define PI 3.1415
 
@@ -70,6 +72,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/gray1x1.png");
 	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/blue1x1.png");
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/red1x1.png");
+	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/green1x1.png");
 
 
 	//デバイスをセット
@@ -197,16 +200,56 @@ void GameScene::Update()
 
 	//プレイヤー
 	player->Update();
+	playerpos = player->GetPosition();
 
 	//敵
-	enemy[0]->SetPosition({ 7,1,1});
+	enemy[0]->SetPosition({ 7,1,1 });
 	enemy[1]->SetPosition({ 12,1,1 });
 	enemy[2]->SetPosition({ 18.5,1,1 });
 	enemy[3]->SetPosition({ 25,1,1 });
 
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Update();
+		//判定用
+		enemypos[i] = enemy[i]->GetPosition();
+		enemyvec[i] = enemy[i]->Getvec();
+		targetvec[i].x = (enemypos[i].x-playerpos.x ) ;
+		targetvec[i].y = ( enemypos[i].y-playerpos.y );
+		targetvec[i].z = (enemypos[i].z-playerpos.z );
+		targetvec[i].normalize();
+		dot[i] = enemyvec[i].dot(targetvec[i]);
+		deg[i] = acos(dot[i]) * (PI / 180);
 	}
+	time++;
+	if (time >= maxTime) {
+		if (isback == true) {
+			isback = false;
+		}
+		else {
+			isback = true;
+
+		}
+		time = 0;
+	}
+
+	for (int i = 0; i < enemySize; i++) {
+		if (isback == false) {
+			enemy[i]->SetModel(enemyModel);
+			if (deg[i] <= 13) {
+				isHit = true;
+			}
+			else {
+				isHit = false;
+			}
+		}
+		else {
+			enemy[i]->SetModel(enemyModel2);
+			isHit = false;
+		}
+	}
+
+
+
 }
 
 void GameScene::Draw()
@@ -223,6 +266,7 @@ void GameScene::Draw()
 	ImGui::InputFloat3("pointLightPos", pointLightPos0);
 	ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
 	ImGui::InputFloat3("lightPos", shadowLightPos);
+	ImGui::InputFloat4("deg", deg);
 	ImGui::End();
 
 	//object0->Draw(dxCommon_->GetCommandList());
