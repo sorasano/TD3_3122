@@ -20,6 +20,12 @@ public:
 
 	void Setrotate(XMFLOAT3 rotate);
 
+	XMFLOAT3 GetPosition() { return position; }
+
+	bool GetDeath() { return isDeath; }
+
+	void Death();
+
 	static void SetInput(Input* input) { Player::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Player::dxInput = dxInput; }
 
@@ -38,6 +44,9 @@ private:
 	static DXInput* dxInput;
 	//fbx
 	FbxObject3D* playerObject = nullptr;
+
+	//ê∂Ç´ÇƒÇÈÇ©
+	bool isDeath = false;
 
 };
 

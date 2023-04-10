@@ -12,7 +12,8 @@
 #include "LightGroup.h"
 #include "Player.h"
 #include "Enemy.h"
-#include"Sprite.h"
+#include "Sprite.h"
+#include "Button.h"
 
 class GameScene
 {
@@ -60,6 +61,12 @@ private:
 	FbxModel* enemyModel = nullptr;
 	Enemy* enemy[enemySize] = {};
 
+	//ボタン
+	static const int buttonSize = 7;
+	FbxModel* buttonModel = nullptr;
+	Button* button[buttonSize] = {};
+
+
 	//ライト
 	LightGroup* lightGroup0 = nullptr;
 	LightGroup* lightGroup1 = nullptr;
@@ -71,7 +78,7 @@ private:
 
 	float pointLightPos0[3] = { 0,7,0 };
 	float pointLightColor0[3] = { 1,1,1 };
-	float pointLightAtten0[3] = {0.3f,0.05f,0.0f};
+	float pointLightAtten0[3] = { 0.3f,0.05f,0.0f };
 
 	float circleShadowDir[3] = { 1,-1,0 };
 	float circleShadowAtten[3] = { 0.5f,0.6f,0.0f };
@@ -89,11 +96,15 @@ private:
 	uint32_t clearTexture = 0;		//クリア画面
 	Sprite* clearSprite = nullptr;
 
-	uint32_t titleTexture = 0;		//クリア画面
+	uint32_t gameoverTexture = 0;		//ゲームオーバー画面
+	Sprite* gameoverSprite = nullptr;
+
+	uint32_t titleTexture = 0;		//タイトル画面
 	Sprite* titleSprite = nullptr;
 
-	uint32_t titleUITexture = 0;		//クリア画面
+	uint32_t titleUITexture = 0;		
 	Sprite* titleUISprite = nullptr;
+
 
 	//タイトルUI用タイマー
 	int titleTimer;

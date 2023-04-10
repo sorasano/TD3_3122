@@ -71,7 +71,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/gray1x1.png");
 	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/blue1x1.png");
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/red1x1.png");
-
+	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -117,7 +117,45 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		enemy[i]->Initialize(enemyModel);
 	}
 
-	//テクスチャ
+	//ボタン
+
+	float startPos3 = 35;
+
+	Button::SetInput(input_);
+	Button::SetDXInput(dxInput);
+	for (int i = 0; i < buttonSize; i++) {
+
+		button[i] = new Button;
+		button[i]->Initialize(buttonModel, player);
+
+	}
+
+	button[0]->SetPositionX(startPos3);
+	button[0]->SetBlockPositionX(startPos3 + 3);
+
+
+	button[1]->SetPositionX(startPos3 + 9);
+	button[1]->SetBlockPositionX(startPos3 + 21);
+
+	button[2]->SetPositionX(startPos3 + 27);
+	button[2]->SetBlockPositionX(startPos3 + 39);
+
+	button[3]->SetPositionX(startPos3 + 27);
+	button[3]->SetBlockPositionX(startPos3 + 42);
+
+
+	button[4]->SetPositionX(startPos3 + 48);
+	button[4]->SetBlockPositionX(startPos3 + 65);
+
+	button[5]->SetPositionX(startPos3 + 52);
+	button[5]->SetBlockPositionX(startPos3 + 68);
+
+	button[6]->SetPositionX(startPos3 + 56);
+	button[6]->SetBlockPositionX(startPos3 + 71);
+
+	//------テクスチャ------
+
+	//---クリア---
 	clearTexture = Texture::LoadTexture(L"Resources/clear.png");
 
 	clearSprite = new Sprite();
@@ -127,6 +165,17 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
 	clearSprite->Update();
 
+	//---ゲームオーバー---
+	gameoverTexture = Texture::LoadTexture(L"Resources/gameover.png");
+
+	gameoverSprite = new Sprite();
+	gameoverSprite->Initialize(gameoverTexture);
+	//アンカーポイントをスプライトの中心に
+	gameoverSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	gameoverSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	gameoverSprite->Update();
+
+	//---タイトル---
 	titleTexture = Texture::LoadTexture(L"Resources/title.png");
 
 	titleSprite = new Sprite();
@@ -222,13 +271,18 @@ void GameScene::Update()
 	player->Update();
 
 	//敵
-	enemy[0]->SetPosition({ 7,1,1});
+	enemy[0]->SetPosition({ 7,1,1 });
 	enemy[1]->SetPosition({ 12,1,1 });
 	enemy[2]->SetPosition({ 18.5,1,1 });
 	enemy[3]->SetPosition({ 25,1,1 });
 
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Update();
+	}
+
+	//ボタン
+	for (int i = 0; i < buttonSize; i++) {
+		button[i]->Update();
 	}
 
 	//スプライト
@@ -283,6 +337,11 @@ void GameScene::Draw()
 		enemy[i]->Draw(dxCommon_->GetCommandList());
 	}
 
+	//ボタン
+	for (int i = 0; i < buttonSize; i++) {
+		button[i]->Draw(dxCommon_->GetCommandList());
+	}
+
 	//-------前景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();
 
@@ -293,6 +352,10 @@ void GameScene::Draw()
 
 	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
 		titleUISprite->Draw();
+	}
+
+	if (player->GetDeath()) {
+		gameoverSprite->Draw();
 	}
 
 }

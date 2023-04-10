@@ -24,6 +24,10 @@ void Player::Update()
 		position.x += 0.1;
 	}
 
+	if (input->PushKey(DIK_E)) {
+		isDeath = false;
+	}
+
 	playerObject->SetPosition(position);
 	playerObject->SetScale(scale);
 	playerObject->SetRotation(rotate);
@@ -49,4 +53,9 @@ void Player::SetScale(XMFLOAT3 scale)
 void Player::Setrotate(XMFLOAT3 rotate)
 {
 	this->rotate = rotate;
+}
+
+void Player::Death()
+{
+	isDeath = true;
 }
