@@ -1,13 +1,15 @@
 #include "Enemy.h"
 
-void Enemy::Initialize(FbxModel* EnemyModel)
+void Enemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel)
 {
 
 	enemyObject = new FbxObject3D;
 	enemyObject->Initialize();
-
 	enemyObject->SetModel(EnemyModel);
 
+	enemyEyeObject = new FbxObject3D;
+	enemyEyeObject->Initialize();
+	enemyEyeObject->SetModel(enemyEyeModel);
 }
 
 void Enemy::Update()
@@ -33,11 +35,17 @@ void Enemy::Update()
 
 	enemyObject->Update();
 
+	int size = 6;
+	enemyEyeObject->SetPosition(XMFLOAT3(position.x, 1.5, position.z));
+	enemyEyeObject->SetScale(XMFLOAT3(1, 1, 1));
+	enemyEyeObject->Update();
+
 }
 
 void Enemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	enemyObject->Draw(cmdList);
+	enemyEyeObject->Draw(cmdList);
 }
 
 void Enemy::SetPosition(XMFLOAT3 position)

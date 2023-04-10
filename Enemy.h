@@ -8,7 +8,7 @@ class Enemy
 
 public:
 
-	void Initialize(FbxModel* enemyModel);
+	void Initialize(FbxModel* enemyModel, FbxModel* enemyEyeModeld);
 
 	void Update();
 
@@ -38,6 +38,9 @@ private:
 
 	//fbx
 	FbxObject3D* enemyObject = nullptr;
+
+	//éãê¸
+	FbxObject3D* enemyEyeObject = nullptr;
 
 };
 

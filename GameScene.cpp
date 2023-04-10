@@ -74,8 +74,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/blue1x1.png");
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/green1x1.png");
-
-
+	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/transparentYellow1x1.png");
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
 
 	//デバイスをセット
@@ -119,7 +118,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//敵
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i] = new Enemy;
-		enemy[i]->Initialize(enemyModel);
+		enemy[i]->Initialize(enemyModel,enemyEyeModel);
 	}
 
 	//ボタン
@@ -310,8 +309,9 @@ void GameScene::Update()
 	for (int i = 0; i < enemySize; i++) {
 		if (isback == false) {
 			enemy[i]->SetModel(enemyModel);
-			if (deg[i] <= 13) {
+			if (deg[i] * 1000 <= 13) {
 				isHit = true;
+				player->Death();
 			}
 			else {
 				isHit = false;

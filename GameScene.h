@@ -66,6 +66,8 @@ private:
 	XMFLOAT3 enemypos[enemySize];
 	Vector3 enemyvec[enemySize];
 
+	FbxModel* enemyEyeModel = nullptr;
+
 	//ボタン
 	static const int buttonSize = 7;
 	FbxModel* buttonModel = nullptr;
