@@ -20,7 +20,13 @@ public:
 
 	void Setrotate(XMFLOAT3 rotate);
 
-	const XMFLOAT3& GetPosition() { return position; }
+
+	XMFLOAT3 GetPosition() { return position; }
+
+	bool GetDeath() { return isDeath; }
+
+	void Death();
+
 
 	static void SetInput(Input* input) { Player::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Player::dxInput = dxInput; }
@@ -33,13 +39,16 @@ private:
 
 private:
 
-	//“ü—Í
-	//ƒL[ƒ{[ƒh
+	//å…¥åŠ›
+	//ã‚­ãƒ¼ãƒœãƒ¼ãƒ‰
 	static Input* input;
-	//ƒRƒ“ƒgƒ[ƒ‰[
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼
 	static DXInput* dxInput;
 	//fbx
 	FbxObject3D* playerObject = nullptr;
+
+	//ç”Ÿãã¦ã‚‹ã‹
+	bool isDeath = false;
 
 };
 

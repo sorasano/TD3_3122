@@ -17,6 +17,7 @@ GameScene::GameScene()
 
 GameScene::~GameScene()
 {
+	delete clearSprite;
 }
 
 void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
@@ -24,7 +25,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	this->dxCommon_ = dxCommon;
 	this->input_ = input;
 
-	//ƒJƒƒ‰‰Šú‰»
+	//ã‚«ãƒ¡ãƒ©åˆæœŸåŒ–
 	Camera::SetInput(input_);
 	Camera::SetDXInput(dxInput);
 	Camera* newCamera = new Camera();
@@ -33,7 +34,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	camera_->SetTarget({ 0,0,0 });
 	camera_->SetEye({ 0, 10,-10 });
 
-	//ƒ‰ƒCƒg¶¬
+	//ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup0 = LightGroup::Create();
 
 	lightGroup0->SetDirLightActive(0, true);
@@ -48,7 +49,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	/*lightGroup->SetCircleShadowActive(0, true);*/
 	lightGroup0->SetShadowActive(0, false);
 
-	//ƒ‰ƒCƒg¶¬
+	//ãƒ©ã‚¤ãƒˆç”Ÿæˆ
 	lightGroup1 = LightGroup::Create();
 
 	lightGroup1->SetDirLightActive(0, true);
@@ -63,9 +64,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	///*lightGroup1->SetCircleShadowActive(0, true);*/
 	lightGroup1->SetShadowActive(0, true);
 
-	//FBX“Ç‚İ‚İ
+	//FBXèª­ã¿è¾¼ã¿
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
-	//ƒ‚ƒfƒ‹–¼‚ğw’è‚µ‚Äƒtƒ@ƒCƒ‹“Ç‚İ‚İ
+	//ãƒ¢ãƒ‡ãƒ«åã‚’æŒ‡å®šã—ã¦ãƒ•ã‚¡ã‚¤ãƒ«èª­ã¿è¾¼ã¿
 	model0 = FbxLoader::GetInstance()->LoadModelFromFile("key", "Resources/key.png");
 	model1 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/white1x1.png");
 	model2 = FbxLoader::GetInstance()->LoadModelFromFile("light", "Resources/white1x1.png");
@@ -75,19 +76,21 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/green1x1.png");
 
 
-	//ƒfƒoƒCƒX‚ğƒZƒbƒg
+	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
+
+	//ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
 	FbxObject3D::SetCamera(camera_.get());
 	FbxObject3D::SetLightGroup(lightGroup0);
 	FbxObject3D::CreateGraphicsPipeline();
 
-	//ƒfƒoƒCƒX‚ğƒZƒbƒg
+	//ãƒ‡ãƒã‚¤ã‚¹ã‚’ã‚»ãƒƒãƒˆ
 	FbxObject3D2::SetDevice(dxCommon_->GetDevice());
 	FbxObject3D2::SetCamera(camera_.get());
 	FbxObject3D2::SetLightGroup(lightGroup0);
 	FbxObject3D2::CreateGraphicsPipeline();
 
-	//ƒIƒuƒWƒFƒNƒg‰Šú‰»
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆåˆæœŸåŒ–
 	object0 = new FbxObject3D;
 	object0->Initialize();
 	object0->SetModel(model0);
@@ -100,40 +103,111 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	object2->Initialize();
 	object2->SetModel(model2);
 
-	//ƒuƒƒbƒN
+	//ãƒ–ãƒ­ãƒƒã‚¯
 	for (int i = 0; i < blockSize; i++) {
 		blockObject[i] = new FbxObject3D2;
 		blockObject[i]->Initialize();
 		blockObject[i]->SetModel(blockModel);
 	}
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	Player::SetInput(input_);
 	Player::SetDXInput(dxInput);
 	player = new Player;
 	player->Initialize(playerModel);
 
-	//“G
+	//æ•µ
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i] = new Enemy;
 		enemy[i]->Initialize(enemyModel);
 	}
 
-	/*object1 = new FbxObject3D;
-	object1->Initialize();
-	object1->SetModel(model1);*/
+	//ãƒœã‚¿ãƒ³
 
+	float startPos3 = 35;
+
+	Button::SetInput(input_);
+	Button::SetDXInput(dxInput);
+	for (int i = 0; i < buttonSize; i++) {
+
+		button[i] = new Button;
+		button[i]->Initialize(buttonModel, player);
+
+	}
+
+	button[0]->SetPositionX(startPos3);
+	button[0]->SetBlockPositionX(startPos3 + 3);
+
+
+	button[1]->SetPositionX(startPos3 + 9);
+	button[1]->SetBlockPositionX(startPos3 + 21);
+
+	button[2]->SetPositionX(startPos3 + 27);
+	button[2]->SetBlockPositionX(startPos3 + 39);
+
+	button[3]->SetPositionX(startPos3 + 27);
+	button[3]->SetBlockPositionX(startPos3 + 42);
+
+
+	button[4]->SetPositionX(startPos3 + 48);
+	button[4]->SetBlockPositionX(startPos3 + 65);
+
+	button[5]->SetPositionX(startPos3 + 52);
+	button[5]->SetBlockPositionX(startPos3 + 68);
+
+	button[6]->SetPositionX(startPos3 + 56);
+	button[6]->SetBlockPositionX(startPos3 + 71);
+
+	//------ãƒ†ã‚¯ã‚¹ãƒãƒ£------
+
+	//---ã‚¯ãƒªã‚¢---
+	clearTexture = Texture::LoadTexture(L"Resources/clear.png");
+
+	clearSprite = new Sprite();
+	clearSprite->Initialize(clearTexture);
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ä¸­å¿ƒã«
+	clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	clearSprite->Update();
+
+	//---ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼---
+	gameoverTexture = Texture::LoadTexture(L"Resources/gameover.png");
+
+	gameoverSprite = new Sprite();
+	gameoverSprite->Initialize(gameoverTexture);
+	//ã‚¢ãƒ³ã‚«ãƒ¼ãƒã‚¤ãƒ³ãƒˆã‚’ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆã®ä¸­å¿ƒã«
+	gameoverSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	gameoverSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	gameoverSprite->Update();
+
+	//---ã‚¿ã‚¤ãƒˆãƒ«---
+	titleTexture = Texture::LoadTexture(L"Resources/title.png");
+
+	titleSprite = new Sprite();
+	titleSprite->Initialize(titleTexture);
+	titleSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	titleSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
+	titleSprite->StartSway({ WinApp::winW / 2, WinApp::winH / 2 - 200 });
+	titleSprite->Update();
+
+	titleUITexture = Texture::LoadTexture(L"Resources/titleUI.png");
+
+	titleUISprite = new Sprite();
+	titleUISprite->Initialize(titleUITexture);
+	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	titleUISprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 + 200));
+	titleUISprite->Update();
 }
 
 void GameScene::Update()
 {
-	//ƒJƒƒ‰XV
+	//ã‚«ãƒ¡ãƒ©æ›´æ–°
 	camera_->DebugUpdate();
 	camera_->Update();
-	//ƒRƒ“ƒgƒ[ƒ‰[XV
+	//ã‚³ãƒ³ãƒˆãƒ­ãƒ¼ãƒ©ãƒ¼æ›´æ–°
 	dxInput->InputProcess();
 
-	//ƒ‰ƒCƒgXV
+	//ãƒ©ã‚¤ãƒˆæ›´æ–°
 	lightGroup0->SetAmbientColor(XMFLOAT3(ambientColor0));
 	lightGroup0->SetDirLightDir(0, XMVECTOR({ lightDir0[0],lightDir0[1], lightDir0[2],0 }));
 	lightGroup0->SetDirLightColor(0, XMFLOAT3(lightColor0));
@@ -151,14 +225,14 @@ void GameScene::Update()
 
 	lightGroup0->Update();
 
-	//ƒ‰ƒCƒgXV
+	//ãƒ©ã‚¤ãƒˆæ›´æ–°
 	lightGroup1->SetAmbientColor(XMFLOAT3(ambientColor0));
 	lightGroup1->SetDirLightDir(0, XMVECTOR({ lightDir0[0],lightDir0[1], lightDir0[2],0 }));
 	lightGroup1->SetDirLightColor(0, XMFLOAT3(lightColor0));
 	lightGroup1->SetShadowLightPos(0, XMFLOAT3(shadowLightPos), camera_->GetTraget(), camera_->GetUp());
 	lightGroup1->Update();
 
-	//ƒIƒuƒWƒFƒNƒgXV
+	//ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆæ›´æ–°
 	rotation0.y += 0.02;
 	object0->SetPosition({ 0,3,0 });
 	object0->SetScale({ 0.2f,0.1f,0.4f });
@@ -175,7 +249,7 @@ void GameScene::Update()
 	object2->SetRotation({ 0,0,0 });
 	object2->Update();
 
-	//ƒuƒƒbƒN
+	//ãƒ–ãƒ­ãƒƒã‚¯
 	blockObject[0]->SetPosition({ 4,1,0 });
 	blockObject[1]->SetPosition({ 5,1,0 });
 
@@ -198,11 +272,11 @@ void GameScene::Update()
 		blockObject[i]->Update();
 	}
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player->Update();
 	playerpos = player->GetPosition();
 
-	//“G
+	//æ•µ
 	enemy[0]->SetPosition({ 7,1,1 });
 	enemy[1]->SetPosition({ 12,1,1 });
 	enemy[2]->SetPosition({ 18.5,1,1 });
@@ -210,7 +284,7 @@ void GameScene::Update()
 
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Update();
-		//”»’è—p
+		//åˆ¤å®šç”¨
 		enemypos[i] = enemy[i]->GetPosition();
 		enemyvec[i] = enemy[i]->Getvec();
 		targetvec[i].x = (enemypos[i].x-playerpos.x ) ;
@@ -220,6 +294,7 @@ void GameScene::Update()
 		dot[i] = enemyvec[i].dot(targetvec[i]);
 		deg[i] = acos(dot[i]) * (PI / 180);
 	}
+  
 	time++;
 	if (time >= maxTime) {
 		if (isback == true) {
@@ -250,10 +325,31 @@ void GameScene::Update()
 
 
 
+
+	//ãƒœã‚¿ãƒ³
+	for (int i = 0; i < buttonSize; i++) {
+		button[i]->Update();
+	}
+
+	//ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆ
+
+	//ã‚¿ã‚¤ãƒˆãƒ«
+	if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+		titleSprite->StartFlipOut();
+	}
+
+	titleSprite->Update();
+
+	//ã‚¿ã‚¤ãƒˆãƒ«UI
+	if (titleSprite->isflipEase == false) {
+		titleUISprite->color.w = sin(clock() / 100);
+		titleTimer++;
+	}
 }
 
 void GameScene::Draw()
 {
+
 	ImGui::Begin("Light");
 	ImGui::SetWindowPos(ImVec2(0, 0));
 	ImGui::SetWindowSize(ImVec2(500, 500));
@@ -269,20 +365,47 @@ void GameScene::Draw()
 	ImGui::InputFloat4("deg", deg);
 	ImGui::End();
 
+	//-------èƒŒæ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»å‡¦ç†-------//
+	SpriteManager::GetInstance()->beginDraw();
+
+
+
 	//object0->Draw(dxCommon_->GetCommandList());
 	object1->Draw(dxCommon_->GetCommandList());
 	//object2->Draw(dxCommon_->GetCommandList());
 
-	//ƒuƒƒbƒN
+	//ãƒ–ãƒ­ãƒƒã‚¯
 	for (int i = 0; i < blockSize; i++) {
 		blockObject[i]->Draw(dxCommon_->GetCommandList());
 	}
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	player->Draw(dxCommon_->GetCommandList());
 
-	//“G
+	//æ•µ
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Draw(dxCommon_->GetCommandList());
 	}
+
+	//ãƒœã‚¿ãƒ³
+	for (int i = 0; i < buttonSize; i++) {
+		button[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//-------å‰æ™¯ã‚¹ãƒ—ãƒ©ã‚¤ãƒˆæç”»å‡¦ç†-------//
+	SpriteManager::GetInstance()->beginDraw();
+
+	//clearSprite->Draw();
+	if (titleSprite->endFlip == false) {
+		titleSprite->Draw();
+	}
+
+	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+		titleUISprite->Draw();
+	}
+
+	if (player->GetDeath()) {
+		gameoverSprite->Draw();
+	}
+
 }

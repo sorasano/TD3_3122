@@ -13,26 +13,28 @@
 #include "Player.h"
 #include "Enemy.h"
 #include"Vector3.h"
+#include "Sprite.h"
+#include "Button.h"
 
 class GameScene
 {
-	//ƒƒ“ƒoŠÖ”
+	//ãƒ¡ãƒ³ãƒé–¢æ•°
 public:
 	GameScene();
 	~GameScene();
 	void Initialize(DirectXCommon* dxCommon, Input* input);
-	//XV
+	//æ›´æ–°
 	void Update();
-	//•`‰æ
+	//æç”»
 	void Draw();
 
-	//ƒƒ“ƒo•Ï”
+	//ãƒ¡ãƒ³ãƒå¤‰æ•°
 private:
-	//ƒfƒoƒCƒX‚Æinput
+	//ãƒ‡ãƒã‚¤ã‚¹ã¨input
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	DXInput* dxInput = new DXInput();
-	//ƒJƒƒ‰
+	//ã‚«ãƒ¡ãƒ©
 	std::unique_ptr<Camera> camera_;
 
 	//fbx
@@ -46,17 +48,17 @@ private:
 	//FbxObject3D* object1 = nullptr;
 	FbxModel* model2 = nullptr;
 
-	//ƒuƒƒbƒN
+	//ãƒ–ãƒ­ãƒƒã‚¯
 	static const int blockSize = 10;
 	FbxModel* blockModel = nullptr;
 	FbxObject3D2* blockObject[blockSize] = {};
 
-	//ƒvƒŒƒCƒ„[
+	//ãƒ—ãƒ¬ã‚¤ãƒ¤ãƒ¼
 	FbxModel* playerModel = nullptr;
 	Player* player = nullptr;
 	XMFLOAT3 playerpos;
 
-	//“G
+	//æ•µ
 	static const int enemySize = 4;
 	FbxModel* enemyModel = nullptr;
 	FbxModel* enemyModel2 = nullptr;
@@ -64,18 +66,24 @@ private:
 	XMFLOAT3 enemypos[enemySize];
 	Vector3 enemyvec[enemySize];
 
-	//ƒ‰ƒCƒg
+	//ãƒœã‚¿ãƒ³
+	static const int buttonSize = 7;
+	FbxModel* buttonModel = nullptr;
+	Button* button[buttonSize] = {};
+
+
+	//ãƒ©ã‚¤ãƒˆ
 	LightGroup* lightGroup0 = nullptr;
 	LightGroup* lightGroup1 = nullptr;
 
 	float ambientColor0[3] = { 1,1,1 };
-	//Œõü•ûŒü‰Šú’l
+	//å…‰ç·šæ–¹å‘åˆæœŸå€¤
 	float lightDir0[3] = { 0,0,1 };
 	float lightColor0[3] = { 0,0,0 };
 
 	float pointLightPos0[3] = { 0,7,0 };
 	float pointLightColor0[3] = { 1,1,1 };
-	float pointLightAtten0[3] = {0.3f,0.05f,0.0f};
+	float pointLightAtten0[3] = { 0.3f,0.05f,0.0f };
 
 	float circleShadowDir[3] = { 1,-1,0 };
 	float circleShadowAtten[3] = { 0.5f,0.6f,0.0f };
@@ -83,13 +91,13 @@ private:
 
 	float shadowLightPos[3] = { 3,5,3 };
 
-	//•ÏŒ`s—ñ
+	//å¤‰å½¢è¡Œåˆ—
 	DirectX::XMFLOAT3 position = { 0.0f,0.0f,0.0f };
 	DirectX::XMFLOAT3 rotation0 = { 0.0f,0.0f,0.0f };
 	DirectX::XMFLOAT3 scale = { 0.010f,0.010f,0.010f };
 	DirectX::XMFLOAT3 rotation1 = { 0.0f,0.0f,0.0f };
 
-	//”»’è—p
+	//åˆ¤å®šç”¨
 	Vector3 targetvec[enemySize];
 	Vector3 dotvec;
 	float dot[enemySize];
@@ -101,4 +109,21 @@ private:
 	bool isHit = false;
 	bool isFound = false;
 	bool isback = false;
+	//ãƒ†ã‚¯ã‚¹ãƒãƒ£
+	uint32_t clearTexture = 0;		//ã‚¯ãƒªã‚¢ç”»é¢
+	Sprite* clearSprite = nullptr;
+
+	uint32_t gameoverTexture = 0;		//ã‚²ãƒ¼ãƒ ã‚ªãƒ¼ãƒãƒ¼ç”»é¢
+	Sprite* gameoverSprite = nullptr;
+
+	uint32_t titleTexture = 0;		//ã‚¿ã‚¤ãƒˆãƒ«ç”»é¢
+	Sprite* titleSprite = nullptr;
+
+	uint32_t titleUITexture = 0;		
+	Sprite* titleUISprite = nullptr;
+
+
+	//ã‚¿ã‚¤ãƒˆãƒ«UIç”¨ã‚¿ã‚¤ãƒãƒ¼
+	int titleTimer;
+	int titleAssistTime = 300;
 };
