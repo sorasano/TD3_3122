@@ -1,6 +1,6 @@
-#include "Enemy.h"
+#include "CameraEnemy.h"
 
-void Enemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel)
+void CameraEnemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel)
 {
 
 	enemyObject = new FbxObject3D;
@@ -17,13 +17,13 @@ void Enemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel)
 	target.z = target.z - 20;
 }
 
-void Enemy::Update()
+void CameraEnemy::Update()
 {
 
 	enemyObject->SetPosition(position);
 	enemyObject->SetScale(scale);
 	enemyObject->SetRotation(rotate);
-	
+
 
 	//”»’è—p
 	vec.x = position.x;
@@ -39,35 +39,35 @@ void Enemy::Update()
 	enemyObject->Update();
 
 	int size = 6;
-	enemyEyeObject->SetPosition(XMFLOAT3(position.x, 1.5, position.z));
+	enemyEyeObject->SetPosition(XMFLOAT3(position.x, position.y+0.5f, position.z));
 	enemyEyeObject->SetScale(XMFLOAT3(1, 1, 1));
 	enemyEyeObject->SetRotation(rotate);
 	enemyEyeObject->Update();
 
 }
 
-void Enemy::Draw(ID3D12GraphicsCommandList* cmdList)
+void CameraEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	enemyObject->Draw(cmdList);
 	enemyEyeObject->Draw(cmdList);
 }
 
-void Enemy::SetPosition(XMFLOAT3 position)
+void CameraEnemy::SetPosition(XMFLOAT3 position)
 {
 	this->position = position;
 }
 
-void Enemy::SetScale(XMFLOAT3 scale)
+void CameraEnemy::SetScale(XMFLOAT3 scale)
 {
 	this->scale = scale;
 }
 
-void Enemy::Setrotate(XMFLOAT3 rotate)
+void CameraEnemy::Setrotate(XMFLOAT3 rotate)
 {
 	this->rotate = rotate;
 }
 
-void Enemy::SetModel(FbxModel* enemyModel)
+void CameraEnemy::SetModel(FbxModel* enemyModel)
 {
 	enemyObject->SetModel(enemyModel);
 }

@@ -9,6 +9,7 @@
 #include"Vector3.h"
 #include<math.h>
 
+
 #define PI 3.1415
 
 GameScene::GameScene()
@@ -75,6 +76,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/transparentYellow1x1.png");
+	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
 
 	//デバイスをセット
@@ -118,12 +120,40 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//敵
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i] = new Enemy;
-		enemy[i]->Initialize(enemyModel,enemyEyeModel);
+		enemy[i]->Initialize(enemyModel, enemyEyeModel);
 	}
+	//敵
+	enemy[0]->SetPosition({ 7,1,1 });
+	enemy[1]->SetPosition({ 12,1,1 });
+	enemy[2]->SetPosition({ 18.5,1,1 });
+	enemy[3]->SetPosition({ 25,1,1 });
+
+
+
+	for (int i = 0; i < enemySize; i++) {
+		if (i < 4) {
+			enemytarget[i].x = enemy[i]->GetPosition().x;
+			enemytarget[i].y = enemy[i]->GetPosition().y;
+			enemytarget[i].z = enemy[i]->GetPosition().z - distance;
+			enemy[i]->SetTarget(enemytarget[i]);
+			enemypos[i] = enemy[i]->GetPosition();
+		}
+	}
+
+	//監視カメラ
+	for (int i = 0; i < cameraEnemySize; i++) {
+		cameraEnemy[i] = new CameraEnemy;
+		cameraEnemy[i]->Initialize(cameraEnemyModel, enemyEyeModel);
+	}
+	cameraEnemy[0]->SetPosition({ 40,5,0 });
+
+	cameraEnemypos2[0].x = cameraEnemy[0]->GetPosition().x;
+	cameraEnemypos2[0].y = cameraEnemy[0]->GetPosition().y;
+	cameraEnemypos2[0].z = cameraEnemy[0]->GetPosition().z;
 
 	//ボタン
 
-	float startPos3 = 35;
+	float startPos3 = 55;
 
 	Button::SetInput(input_);
 	Button::SetDXInput(dxInput);
@@ -275,27 +305,10 @@ void GameScene::Update()
 	player->Update();
 	playerpos = player->GetPosition();
 
-	//敵
-	enemy[0]->SetPosition({ 7,1,1 });
-	enemy[1]->SetPosition({ 12,1,1 });
-	enemy[2]->SetPosition({ 18.5,1,1 });
-	enemy[3]->SetPosition({ 25,1,1 });
 
-	for (int i = 0; i < enemySize; i++) {
-		enemy[i]->Update();
-		//判定用
-		enemypos[i] = enemy[i]->GetPosition();
-		enemyvec[i] = enemy[i]->Getvec();
-		targetvec[i].x = (enemypos[i].x-playerpos.x ) ;
-		targetvec[i].y = ( enemypos[i].y-playerpos.y );
-		targetvec[i].z = (enemypos[i].z-playerpos.z );
-		targetvec[i].normalize();
-		dot[i] = enemyvec[i].dot(targetvec[i]);
-		deg[i] = acos(dot[i]) * (PI / 180);
-	}
-  
 	time++;
 	if (time >= maxTime) {
+
 		if (isback == true) {
 			isback = false;
 		}
@@ -306,23 +319,93 @@ void GameScene::Update()
 		time = 0;
 	}
 
+
+
 	for (int i = 0; i < enemySize; i++) {
+
+		enemy[i]->Update();
+		//判定用
+		enemypos[i] = enemy[i]->GetPosition();
+		enemyvec[i] = enemy[i]->Getvec();
+		enemytargetvec[i].x = (enemypos[i].x - playerpos.x);
+		enemytargetvec[i].y = (enemypos[i].y - playerpos.y);
+		enemytargetvec[i].z = (enemypos[i].z - playerpos.z);
+		enemytargetvec[i].normalize();
+		enemydot[i] = enemyvec[i].dot(enemytargetvec[i]);
+		enemydeg[i] = acos(enemydot[i]) * (PI / 180);
+
 		if (isback == false) {
+			////回転
+			//enemyangle -= XMConvertToRadians(0.25f);
+			//赤
 			enemy[i]->SetModel(enemyModel);
-			if (deg[i] * 1000 <= 13) {
-				isHit = true;
+			enemy[i]->Setrotate(XMFLOAT3{ 0,0,0 });
+			//当たっている
+			if (enemydeg[i] * 1000 <= 6) {
 				player->Death();
-			}
-			else {
-				isHit = false;
 			}
 		}
 		else {
+			////回転
+			//enemyangle += XMConvertToRadians(0.25f);
+			enemy[i]->Setrotate(XMFLOAT3{ 0,XMConvertToRadians(180.0f) ,0 });
+			//緑
 			enemy[i]->SetModel(enemyModel2);
-			isHit = false;
 		}
+		enemy[i]->Update();
 	}
 
+
+
+
+
+	for (int i = 0; i < cameraEnemySize; i++) {
+
+		cameraEnemy[i]->Update();
+		//判定用
+		cameraEnemypos[i] = cameraEnemy[i]->GetPosition();
+		cameraEnemyvec[i] = cameraEnemy[i]->Getvec();
+		cameraEnemytargetvec[i].x = (cameraEnemypos[i].x - playerpos.x);
+		cameraEnemytargetvec[i].y = (cameraEnemypos[i].y - playerpos.y);
+		cameraEnemytargetvec[i].z = (cameraEnemypos[i].z - playerpos.z);
+		cameraEnemytargetvec[i].normalize();
+		cameraEnemydot[i] = cameraEnemyvec[i].dot(cameraEnemytargetvec[i]);
+		cameraEnemydeg[i] = acos(cameraEnemydot[i]) * (PI / 180);
+
+		if (isback == false) {
+			cameraEnemyangle -= XMConvertToRadians(0.25f);
+			//当たっている
+			if (cameraEnemydeg[i] * 1000 <= 3) {
+				if (playerpos.x + 9.0f >= cameraEnemypos[i].x) {
+					player->Death();
+				}
+			}
+		}
+		else {
+			//回転
+			cameraEnemyangle += XMConvertToRadians(0.25f);
+			//当たっている
+			if (cameraEnemydeg[i] * 1000 <= 3) {
+				if (playerpos.x + 9.0f >= cameraEnemypos[i].x) {
+					player->Death();
+				}
+			}
+		}
+
+
+		//angleラジアンだけY軸まわりに回転。半径は-100
+		cameraEnemytarget[i].x = cameraEnemypos2[i].x - (distance * cosf(cameraEnemyangle));
+		cameraEnemytarget[i].y = cameraEnemypos2[i].y + (distance * sinf(cameraEnemyangle));
+
+		/*cameraEnemyposset[i].x = cameraEnemytarget[i].x;
+		cameraEnemyposset[i].y = cameraEnemytarget[i].y;
+		cameraEnemyposset[i].z = cameraEnemytarget[i].z;
+		cameraEnemy[i]->SetPosition(cameraEnemyposset[i]);*/
+
+		cameraEnemy[i]->SetTarget(cameraEnemytarget[i]);
+		cameraEnemy[i]->Setrotate(XMFLOAT3{ cameraEnemyangle,XMConvertToRadians(90.0f),0 });
+		cameraEnemy[i]->Update();
+	}
 
 
 
@@ -362,7 +445,15 @@ void GameScene::Draw()
 	ImGui::InputFloat3("pointLightPos", pointLightPos0);
 	ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
 	ImGui::InputFloat3("lightPos", shadowLightPos);
-	ImGui::InputFloat4("deg", deg);
+	ImGui::InputFloat4("deg", enemydeg);
+	ImGui::InputFloat("cameradeg", cameraEnemydeg);
+	ImGui::InputFloat("camerapos", &cameraEnemyposset[0].x);
+	ImGui::InputFloat("camerapos", &cameraEnemyposset[0].y);
+	ImGui::InputFloat("camerapos", &cameraEnemyposset[0].z);
+	ImGui::InputFloat("target", &enemytarget[0].x);
+	ImGui::InputFloat("target", &enemytarget[0].z);
+	ImGui::InputFloat("player", &playerpos.x);
+
 	ImGui::End();
 
 	//-------背景スプライト描画処理-------//
@@ -385,6 +476,11 @@ void GameScene::Draw()
 	//敵
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//監視カメラ
+	for (int i = 0; i < cameraEnemySize; i++) {
+		cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	//ボタン

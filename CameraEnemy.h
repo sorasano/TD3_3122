@@ -3,7 +3,7 @@
 #include "FbxObject3d.h"
 #include "FbxModel.h"
 #include "Vector3.h"
-class Enemy
+class CameraEnemy
 {
 
 public:

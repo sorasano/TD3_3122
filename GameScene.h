@@ -15,6 +15,7 @@
 #include"Vector3.h"
 #include "Sprite.h"
 #include "Button.h"
+#include"CameraEnemy.h"
 
 class GameScene
 {
@@ -65,6 +66,34 @@ private:
 	Enemy* enemy[enemySize] = {};
 	XMFLOAT3 enemypos[enemySize];
 	Vector3 enemyvec[enemySize];
+	//判定用
+	XMFLOAT3 enemyposset[enemySize];
+	Vector3 enemytargetvec[enemySize];
+	float enemydot[enemySize];
+	float enemydeg[enemySize];
+	Vector3 enemytarget[enemySize];
+	float enemyangle = 0.0f;
+	
+	int time = 0;
+	int maxTime = 180;
+	float distance = 9;
+
+	//監視カメラ
+	static const int cameraEnemySize = 1;
+	FbxModel* cameraEnemyModel = nullptr;
+	CameraEnemy* cameraEnemy[cameraEnemySize] = {};
+	XMFLOAT3 cameraEnemypos[cameraEnemySize];
+	Vector3 cameraEnemyvec[cameraEnemySize];
+
+	//判定用
+	XMFLOAT3 cameraEnemyposset[cameraEnemySize];
+	Vector3 cameraEnemytargetvec[cameraEnemySize];
+	float cameraEnemydot[cameraEnemySize];
+	float cameraEnemydeg[cameraEnemySize];
+	Vector3 cameraEnemytarget[cameraEnemySize];
+	float cameraEnemyangle = 0.0f;
+	XMFLOAT3 cameraEnemypos2[cameraEnemySize];
+
 
 	FbxModel* enemyEyeModel = nullptr;
 
@@ -99,18 +128,14 @@ private:
 	DirectX::XMFLOAT3 scale = { 0.010f,0.010f,0.010f };
 	DirectX::XMFLOAT3 rotation1 = { 0.0f,0.0f,0.0f };
 
-	//判定用
-	Vector3 targetvec[enemySize];
-	Vector3 dotvec;
-	float dot[enemySize];
-	float deg[enemySize];
 
-	int time = 0;
-	int maxTime = 150;
+
 
 	bool isHit = false;
 	bool isFound = false;
 	bool isback = false;
+
+
 	//テクスチャ
 	uint32_t clearTexture = 0;		//クリア画面
 	Sprite* clearSprite = nullptr;
@@ -121,7 +146,7 @@ private:
 	uint32_t titleTexture = 0;		//タイトル画面
 	Sprite* titleSprite = nullptr;
 
-	uint32_t titleUITexture = 0;		
+	uint32_t titleUITexture = 0;
 	Sprite* titleUISprite = nullptr;
 
 
