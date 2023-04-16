@@ -24,6 +24,8 @@ public:
 
 	void SetTarget(Vector3 target) { this->target = target; }
 
+	void SetIsback(bool isback) { this->isback = isback; }
+
 	const Vector3& Getvec() { return vec; }
 
 	const XMFLOAT3& GetPosition() { return position; }
@@ -37,6 +39,7 @@ private:
 	XMFLOAT3 rotate = { 0.0f,0.0f,0.0f };
 	Vector3 target = { 0.0f,0.0f,0.0f };
 	Vector3 vec = { 0.0f,0.0f,0.0f };
+	bool isback = false;
 private:
 
 	//fbx
