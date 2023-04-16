@@ -67,6 +67,7 @@ private:
 	XMFLOAT3 enemypos[enemySize];
 	Vector3 enemyvec[enemySize];
 	//判定用
+	XMFLOAT3 enemypos2[enemySize];
 	XMFLOAT3 enemyposset[enemySize];
 	Vector3 enemytargetvec[enemySize];
 	float enemydot[enemySize];
@@ -75,7 +76,7 @@ private:
 	float enemyangle = 0.0f;
 	
 	int time = 0;
-	int maxTime = 180;
+	int maxTime = 170;
 	float distance = 9;
 
 	//監視カメラ

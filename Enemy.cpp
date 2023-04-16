@@ -23,7 +23,7 @@ void Enemy::Update()
 	enemyObject->SetPosition(position);
 	enemyObject->SetScale(scale);
 	enemyObject->SetRotation(rotate);
-	
+
 
 	//”»’è—p
 	vec.x = position.x;
@@ -49,8 +49,11 @@ void Enemy::Update()
 void Enemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	enemyObject->Draw(cmdList);
-	enemyEyeObject->Draw(cmdList);
+	if (isback == false) {
+		enemyEyeObject->Draw(cmdList);
+	}
 }
+
 
 void Enemy::SetPosition(XMFLOAT3 position)
 {

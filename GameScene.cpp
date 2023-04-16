@@ -137,8 +137,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 			enemytarget[i].z = enemy[i]->GetPosition().z - distance;
 			enemy[i]->SetTarget(enemytarget[i]);
 			enemypos[i] = enemy[i]->GetPosition();
+			enemypos2[i].x = enemy[i]->GetPosition().x;
+			enemypos2[i].y = enemy[i]->GetPosition().y;
+			enemypos2[i].z = enemy[i]->GetPosition().z;
 		}
 	}
+	enemyangle = XMConvertToRadians(30.0f);
 
 	//監視カメラ
 	for (int i = 0; i < cameraEnemySize; i++) {
@@ -313,6 +317,7 @@ void GameScene::Update()
 			isback = false;
 		}
 		else {
+			enemyangle = XMConvertToRadians(30.0f);
 			isback = true;
 
 		}
@@ -322,7 +327,7 @@ void GameScene::Update()
 
 
 	for (int i = 0; i < enemySize; i++) {
-
+		enemy[i]->SetIsback(isback);
 		enemy[i]->Update();
 		//判定用
 		enemypos[i] = enemy[i]->GetPosition();
@@ -335,11 +340,15 @@ void GameScene::Update()
 		enemydeg[i] = acos(enemydot[i]) * (PI / 180);
 
 		if (isback == false) {
-			////回転
-			//enemyangle -= XMConvertToRadians(0.25f);
+			if (enemyangle >= XMConvertToRadians(-30.0f)) {
+				//回転
+				enemyangle -= XMConvertToRadians(0.1f);
+			}
+
 			//赤
 			enemy[i]->SetModel(enemyModel);
-			enemy[i]->Setrotate(XMFLOAT3{ 0,0,0 });
+			/*enemy[i]->Setrotate(XMFLOAT3{ 0,0,0 });*/
+
 			//当たっている
 			if (enemydeg[i] * 1000 <= 6) {
 				player->Death();
@@ -348,10 +357,32 @@ void GameScene::Update()
 		else {
 			////回転
 			//enemyangle += XMConvertToRadians(0.25f);
-			enemy[i]->Setrotate(XMFLOAT3{ 0,XMConvertToRadians(180.0f) ,0 });
+			/*enemy[i]->Setrotate(XMFLOAT3{ 0,XMConvertToRadians(180.0f) ,0 });*/
+
 			//緑
 			enemy[i]->SetModel(enemyModel2);
+			if (maxTime - 30 <= time) {
+				if (time % 2 == 0) {
+					//緑
+					enemy[i]->SetModel(enemyModel2);
+				}
+				else if (time % 2 == 1) {
+					//赤
+					enemy[i]->SetModel(enemyModel);
+				}
+			}
 		}
+		//angleラジアンだけY軸まわりに回転。半径は-100
+		enemytarget[i].x = enemypos2[i].x - (distance * sinf(enemyangle));
+		enemytarget[i].z = enemypos2[i].z - (distance * cosf(enemyangle));
+
+		/*enemyposset[i].x = enemytarget[i].x;
+		enemyposset[i].y = enemytarget[i].y;
+		enemyposset[i].z = enemytarget[i].z;
+		enemy[i]->SetPosition(enemyposset[i]);*/
+
+		enemy[i]->SetTarget(enemytarget[i]);
+		enemy[i]->Setrotate(XMFLOAT3{ 0,enemyangle,0 });
 		enemy[i]->Update();
 	}
 
