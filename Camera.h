@@ -35,7 +35,7 @@ public:
 	//初期化
 	void Initialize();
 	//更新
-	void Update();
+	void Update(XMFLOAT3 playerPos);
 	//デバッグ Arrowキーで視点座標変更
 	void DebugUpdate();
 

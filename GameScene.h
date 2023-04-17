@@ -16,6 +16,7 @@
 #include "Sprite.h"
 #include "Button.h"
 #include"CameraEnemy.h"
+#include "Autosave.h"
 
 class GameScene
 {
@@ -50,7 +51,7 @@ private:
 	FbxModel* model2 = nullptr;
 
 	//ブロック
-	static const int blockSize = 10;
+	static const int blockSize = 11;
 	FbxModel* blockModel = nullptr;
 	FbxObject3D2* blockObject[blockSize] = {};
 
@@ -60,7 +61,7 @@ private:
 	XMFLOAT3 playerpos;
 
 	//敵
-	static const int enemySize = 4;
+	static const int enemySize = 11;
 	FbxModel* enemyModel = nullptr;
 	FbxModel* enemyModel2 = nullptr;
 	Enemy* enemy[enemySize] = {};
@@ -103,6 +104,8 @@ private:
 	FbxModel* buttonModel = nullptr;
 	Button* button[buttonSize] = {};
 
+	//オートセーブ
+	Autosave *autoSave;
 
 	//ライト
 	LightGroup* lightGroup0 = nullptr;
@@ -129,8 +132,10 @@ private:
 	DirectX::XMFLOAT3 scale = { 0.010f,0.010f,0.010f };
 	DirectX::XMFLOAT3 rotation1 = { 0.0f,0.0f,0.0f };
 
+	//クリア
 
-
+	bool isClear = false;
+	float clearPos = 130;
 
 	bool isHit = false;
 	bool isFound = false;
