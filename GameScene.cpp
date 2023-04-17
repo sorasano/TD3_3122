@@ -111,6 +111,24 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		blockObject[i]->SetModel(blockModel);
 	}
 
+	//ブロック
+	blockObject[0]->SetPosition({ 15.5,1,0 });
+	blockObject[1]->SetPosition({ 18.5,1,0 });
+
+	blockObject[2]->SetPosition({ 14,1,0 });
+	blockObject[3]->SetPosition({ 15,1,0 });
+
+	blockObject[4]->SetPosition({ 19,1,0 });
+	blockObject[5]->SetPosition({ 20,1,0 });
+	blockObject[6]->SetPosition({ 21,1,0 });
+
+	blockObject[7]->SetPosition({ 27,1,0 });
+	blockObject[8]->SetPosition({ 28,1,0 });
+
+	blockObject[9]->SetPosition({ 32,1,0 });
+	blockObject[10]->SetPosition({ 36,1,0 });
+
+
 	//プレイヤー
 	Player::SetInput(input_);
 	Player::SetDXInput(dxInput);
@@ -123,15 +141,25 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		enemy[i]->Initialize(enemyModel, enemyEyeModel);
 	}
 	//敵
-	enemy[0]->SetPosition({ 7,1,1 });
-	enemy[1]->SetPosition({ 12,1,1 });
-	enemy[2]->SetPosition({ 18.5,1,1 });
-	enemy[3]->SetPosition({ 25,1,1 });
+	enemy[0]->SetPosition({ 17,1,1 });
+	enemy[1]->SetPosition({ 23,1,1 });
+	enemy[2]->SetPosition({ 25,1,1 });
+	enemy[3]->SetPosition({ 30,1,1 });
+	enemy[4]->SetPosition({ 34,1,1 });
+
+	enemy[5]->SetPosition({ 66,1,1 });
+	enemy[6]->SetPosition({ 76,1,1 });
+
+	enemy[7]->SetPosition({ 90.5,1,1 });
+
+	enemy[8]->SetPosition({ 100.0,1,1 });
+	enemy[9]->SetPosition({ 104.5,1,1 });
+	enemy[10]->SetPosition({ 109.0,1,1 });
 
 
 
 	for (int i = 0; i < enemySize; i++) {
-		if (i < 4) {
+		if (i < 11) {
 			enemytarget[i].x = enemy[i]->GetPosition().x;
 			enemytarget[i].y = enemy[i]->GetPosition().y;
 			enemytarget[i].z = enemy[i]->GetPosition().z - distance;
@@ -153,7 +181,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//ボタン
 
-	float startPos3 = 55;
+	float startPos3 = 50;
 
 	Button::SetInput(input_);
 	Button::SetDXInput(dxInput);
@@ -171,10 +199,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	button[1]->SetPositionX(startPos3 + 9);
 	button[1]->SetBlockPositionX(startPos3 + 21);
 
-	button[2]->SetPositionX(startPos3 + 27);
+	button[2]->SetPositionX(startPos3 + 30);
 	button[2]->SetBlockPositionX(startPos3 + 39);
 
-	button[3]->SetPositionX(startPos3 + 27);
+	button[3]->SetPositionX(startPos3 + 30);
 	button[3]->SetBlockPositionX(startPos3 + 42);
 
 
@@ -196,11 +224,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	clearSprite->Initialize(clearTexture);
 	//アンカーポイントをスプライトの中心に
 	clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
 	clearSprite->Update();
 
 	//---ゲームオーバー---
-	gameoverTexture = Texture::LoadTexture(L"Resources/gameover.png");
+	gameoverTexture = Texture::LoadTexture(L"Resources/gameover2.png");
 
 	gameoverSprite = new Sprite();
 	gameoverSprite->Initialize(gameoverTexture);
@@ -226,13 +254,17 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
 	titleUISprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 + 200));
 	titleUISprite->Update();
+
+	//セーブ
+	autoSave = new Autosave;
+	autoSave->Initialize(player);
 }
 
 void GameScene::Update()
 {
 	//カメラ更新
 	camera_->DebugUpdate();
-	camera_->Update();
+	camera_->Update(player->GetPosition());
 	//コントローラー更新
 	dxInput->InputProcess();
 
@@ -279,21 +311,6 @@ void GameScene::Update()
 	object2->Update();
 
 	//ブロック
-	blockObject[0]->SetPosition({ 4,1,0 });
-	blockObject[1]->SetPosition({ 5,1,0 });
-
-	blockObject[2]->SetPosition({ 9,1,0 });
-	blockObject[3]->SetPosition({ 10,1,0 });
-
-	blockObject[4]->SetPosition({ 14,1,0 });
-	blockObject[5]->SetPosition({ 15,1,0 });
-	blockObject[6]->SetPosition({ 16,1,0 });
-
-	blockObject[7]->SetPosition({ 21,1,0 });
-	blockObject[8]->SetPosition({ 22,1,0 });
-
-	blockObject[9]->SetPosition({ 28,1,0 });
-
 
 	for (int i = 0; i < blockSize; i++) {
 		blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
@@ -305,6 +322,16 @@ void GameScene::Update()
 	player->Update();
 	playerpos = player->GetPosition();
 
+	//復活
+	if (input_->PushKey(DIK_E)) {
+		player->SetisDeath(false);
+		XMFLOAT2 savePos = autoSave->GetSavePos();
+		player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+		if (isClear == true) {
+			isClear = false;
+			player->SetPosition(XMFLOAT3(0, 0, -1));
+		}
+	}
 
 	time++;
 	if (time >= maxTime) {
@@ -407,7 +434,10 @@ void GameScene::Update()
 		cameraEnemy[i]->Update();
 	}
 
-
+	//クリア
+	if (playerpos.x > clearPos) {
+		isClear = true;
+	}
 
 	//ボタン
 	for (int i = 0; i < buttonSize; i++) {
@@ -428,33 +458,36 @@ void GameScene::Update()
 		titleUISprite->color.w = sin(clock() / 100);
 		titleTimer++;
 	}
+
+	//オートセーブ
+	autoSave->Update();
 }
 
 void GameScene::Draw()
 {
 
-	ImGui::Begin("Light");
-	ImGui::SetWindowPos(ImVec2(0, 0));
-	ImGui::SetWindowSize(ImVec2(500, 500));
-	ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
-	ImGui::InputFloat3("lightDir0", lightDir0);
-	ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
-	/*ImGui::InputFloat3("circleShadowDir", circleShadowDir);
-	ImGui::InputFloat3("circleShadowAtten", circleShadowAtten);
-	ImGui::ColorEdit3("pointLightColor", pointLightColor0, ImGuiColorEditFlags_Float);
-	ImGui::InputFloat3("pointLightPos", pointLightPos0);
-	ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
-	ImGui::InputFloat3("lightPos", shadowLightPos);
-	ImGui::InputFloat4("deg", enemydeg);
-	ImGui::InputFloat("cameradeg", cameraEnemydeg);
-	ImGui::InputFloat("camerapos", &cameraEnemyposset[0].x);
-	ImGui::InputFloat("camerapos", &cameraEnemyposset[0].y);
-	ImGui::InputFloat("camerapos", &cameraEnemyposset[0].z);
-	ImGui::InputFloat("target", &enemytarget[0].x);
-	ImGui::InputFloat("target", &enemytarget[0].z);
-	ImGui::InputFloat("player", &playerpos.x);
+	//ImGui::Begin("Light");
+	//ImGui::SetWindowPos(ImVec2(0, 0));
+	//ImGui::SetWindowSize(ImVec2(500, 500));
+	//ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
+	//ImGui::InputFloat3("lightDir0", lightDir0);
+	//ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
+	///*ImGui::InputFloat3("circleShadowDir", circleShadowDir);
+	//ImGui::InputFloat3("circleShadowAtten", circleShadowAtten);
+	//ImGui::ColorEdit3("pointLightColor", pointLightColor0, ImGuiColorEditFlags_Float);
+	//ImGui::InputFloat3("pointLightPos", pointLightPos0);
+	//ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
+	//ImGui::InputFloat3("lightPos", shadowLightPos);
+	//ImGui::InputFloat4("deg", enemydeg);
+	//ImGui::InputFloat("cameradeg", cameraEnemydeg);
+	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].x);
+	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].y);
+	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].z);
+	//ImGui::InputFloat("target", &enemytarget[0].x);
+	//ImGui::InputFloat("target", &enemytarget[0].z);
+	//ImGui::InputFloat("player", &playerpos.x);
 
-	ImGui::End();
+	//ImGui::End();
 
 	//-------背景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();
@@ -504,4 +537,7 @@ void GameScene::Draw()
 		gameoverSprite->Draw();
 	}
 
+	if (isClear) {
+		clearSprite->Draw();
+	}
 }

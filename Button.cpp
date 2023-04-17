@@ -90,7 +90,7 @@ void Button::ButtonCol()
 
 			if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
 
-				if (input->PushKey(DIK_SPACE) && push == false)
+				if (push == false)
 				{
 					push = true;
 					pushTimer = 0;

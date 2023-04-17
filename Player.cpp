@@ -15,18 +15,20 @@ void Player::Initialize(FbxModel* playerModel)
 void Player::Update()
 {
 
-	if (input->PushKey(DIK_A))
-	{
-		position.x -= 0.1;
-	}
-	if (input->PushKey(DIK_D))
-	{
-		position.x += 0.1;
+	if (isDeath == false) {
+		if (input->PushKey(DIK_A))
+		{
+			position.x -= 0.1;
+		}
+		if (input->PushKey(DIK_D))
+		{
+			position.x += 0.1;
+		}
 	}
 
-	if (input->PushKey(DIK_E)) {
-		isDeath = false;
-	}
+	//if (input->PushKey(DIK_E)) {
+	//	isDeath = false;
+	//}
 
 	playerObject->SetPosition(position);
 	playerObject->SetScale(scale);
@@ -37,7 +39,10 @@ void Player::Update()
 
 void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 {
-	playerObject->Draw(cmdList);
+	if (isDeath == false) {
+		playerObject->Draw(cmdList);
+	}
+
 }
 
 void Player::SetPosition(XMFLOAT3 position)
