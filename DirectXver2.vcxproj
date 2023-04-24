@@ -83,8 +83,8 @@
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(ProjectDir)DirectXTex;$(ProjectDir)imgui;$(IncludePath)</IncludePath>
-    <LibraryPath>C:\Users\a\Desktop\fbxsdk\lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(ProjectDir)fbxsdk\lib\fbx_sdk\include;$(ProjectDir)DirectXTex;$(ProjectDir)imgui;$(IncludePath)</IncludePath>
+    <LibraryPath>$(ProjectDir)fbxsdk\lib\fbx_sdk\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Autosave.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\DXInput.cpp" />
     <ClCompile Include="base\FPS.cpp" />
@@ -156,20 +157,32 @@
     <ClCompile Include="base\Input.cpp" />
     <ClCompile Include="base\Message.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraEnemy.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="FbxObject3D2.cpp" />
     <ClCompile Include="fbx\FbxLoader.cpp" />
     <ClCompile Include="fbx\FbxModel.cpp" />
     <ClCompile Include="fbx\FbxObject3D.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GpPipeline.cpp" />
     <ClCompile Include="LightGroup.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Random.cpp" />
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="Sprite.cpp" />
+    <ClCompile Include="SpriteManager.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Autosave.h" />
     <ClInclude Include="base\DirectXCommon.h" />
     <ClInclude Include="base\DXInput.h" />
     <ClInclude Include="base\FPS.h" />
@@ -177,18 +190,29 @@
     <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\Message.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraEnemy.h" />
     <ClInclude Include="CircleShadow.h" />
     <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="Easing.h" />
+    <ClInclude Include="Enemy.h" />
     <ClInclude Include="FbxObject3D2.h" />
     <ClInclude Include="fbx\FbxLoader.h" />
     <ClInclude Include="fbx\FbxModel.h" />
     <ClInclude Include="fbx\FbxObject3D.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GpPipeline.h" />
     <ClInclude Include="LightGroup.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Random.h" />
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="Sprite.h" />
+    <ClInclude Include="SpriteManager.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="DirectXTex\DirectXTex_Desktop_2022_Win10.vcxproj">

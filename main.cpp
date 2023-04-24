@@ -14,7 +14,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ウィンドウ生成
 	WinApp* winApp = nullptr;
 	winApp = WinApp::GetInstance();
-	winApp->CreateWindow_(L"あいうえお");
+	winApp->CreateWindow_(L"3122");
 
 	//メッセージ
 	Message* message;
@@ -37,6 +37,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 	//ライト静的初期化
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
+
+	//テクスチャマネージャーの初期化
+	Texture::Initialize(dxCommon->GetDevice());
+	//スプライト共通部の初期化
+	SpriteManager* spriteManager = nullptr;
+	spriteManager = SpriteManager::GetInstance();
+	spriteManager->Initialize(dxCommon, WinApp::winW, WinApp::winH);
 
 	//ゲームシーン
 	GameScene* gameScene = nullptr;

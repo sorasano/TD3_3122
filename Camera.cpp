@@ -33,7 +33,7 @@ void Camera::Initialize()
 }
 
 
-void Camera::Update()
+void Camera::Update(XMFLOAT3 playerPos)
 {
 	//デバッグ用
 	/*if (input->PushKey(DIK_D))
@@ -61,6 +61,22 @@ void Camera::Update()
 		position.z -= 0.55;
 	}*/
 
+	//追従カメラ
+	//if (input->PushKey(DIK_A))
+	//{
+	//	target_.x -= 0.1;
+	//}
+	//if (input->PushKey(DIK_D))
+	//{
+	//	target_.x += 0.1;
+	//}
+	
+	//視点座標に代入
+	eye_.x = sin(DebugChangeRot) * DebugTargetDistance + target_.x;
+	eye_.y = sin(DebugChangeRot2) * DebugTargetDistance + target_.y;
+	eye_.z = cos(DebugChangeRot) * DebugTargetDistance + target_.z;
+
+	target_.x = playerPos.x;
 
 	matView_ = XMMatrixLookAtLH(XMLoadFloat3(&eye_), XMLoadFloat3(&target_), XMLoadFloat3(&up_));
 }

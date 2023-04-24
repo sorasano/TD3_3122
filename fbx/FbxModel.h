@@ -121,6 +121,13 @@ public:
 	//モデルの変形行列のゲッター
 	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 
+
+	/// 頂点配列を取得
+	inline const std::vector<VertexPosNormalUvSkin>& GetVertices() { return vertices; }
+
+	/// インデックス配列を取得
+	inline const std::vector<unsigned short>& GetIndices() { return indices; }
+
 private:
 	//ボーン配列
 	std::vector<Bone>bones;
