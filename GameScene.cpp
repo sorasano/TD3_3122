@@ -344,59 +344,6 @@ void GameScene::Update()
 	}
 
 
-	//for (int i = 0; i < enemySize; i++) {
-	//	enemy[i]->SetIsback(isback);
-	//	enemy[i]->Update();
-	//	//判定用
-	//	enemypos[i] = enemy[i]->GetPosition();
-	//	enemyvec[i] = enemy[i]->Getvec();
-	//	enemytargetvec[i].x = (enemypos[i].x - playerpos.x);
-	//	enemytargetvec[i].y = (enemypos[i].y - playerpos.y);
-	//	enemytargetvec[i].z = (enemypos[i].z - playerpos.z);
-	//	enemytargetvec[i].normalize();
-	//	enemydot[i] = enemyvec[i].dot(enemytargetvec[i]);
-	//	enemydeg[i] = acos(enemydot[i]) * (PI / 180);
-
-	//	if (isback == false) {
-	//		if (enemyangle >= XMConvertToRadians(-30.0f)) {
-	//			//回転
-	//			enemyangle -= XMConvertToRadians(0.1f);
-	//		}
-	//		//赤
-	//		enemy[i]->SetModel(enemyModel);
-	//		//当たっている
-	//		if (enemydeg[i] * 1000 <= 6) {
-	//			player->Death();
-	//		}
-	//	}
-	//	else {
-	//		//緑
-	//		enemy[i]->SetModel(enemyModel2);
-	//		if (maxTime - 30 <= time) {
-	//			if (time % 2 == 0) {
-	//				//緑
-	//				enemy[i]->SetModel(enemyModel2);
-	//			}
-	//			else if (time % 2 == 1) {
-	//				//赤
-	//				enemy[i]->SetModel(enemyModel);
-	//			}
-	//		}
-	//	}
-	//	//angleラジアンだけY軸まわりに回転。半径は-100
-	//	enemytarget[i].x = enemypos2[i].x - (distance * sinf(enemyangle));
-	//	enemytarget[i].z = enemypos2[i].z - (distance * cosf(enemyangle));
-
-	//	/*enemyposset[i].x = enemytarget[i].x;
-	//	enemyposset[i].y = enemytarget[i].y;
-	//	enemyposset[i].z = enemytarget[i].z;
-	//	enemy[i]->SetPosition(enemyposset[i]);*/
-
-	//	enemy[i]->SetTarget(enemytarget[i]);
-	//	enemy[i]->Setrotate(XMFLOAT3{ 0,enemyangle,0 });
-	//	enemy[i]->Update();
-	//}
-
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Update();
 		enemydeg = enemy[0]->GetDeg();
@@ -405,52 +352,8 @@ void GameScene::Update()
 
 
 	for (int i = 0; i < cameraEnemySize; i++) {
-
 		cameraEnemy[i]->Update();
 		cameraEnemydeg=cameraEnemy[i]->GetDeg();
-		////判定用
-		//cameraEnemypos[i] = cameraEnemy[i]->GetPosition();
-		//cameraEnemyvec[i] = cameraEnemy[i]->Getvec();
-		//cameraEnemytargetvec[i].x = (cameraEnemypos[i].x - playerpos.x);
-		//cameraEnemytargetvec[i].y = (cameraEnemypos[i].y - playerpos.y);
-		//cameraEnemytargetvec[i].z = (cameraEnemypos[i].z - playerpos.z);
-		//cameraEnemytargetvec[i].normalize();
-		//cameraEnemydot[i] = cameraEnemyvec[i].dot(cameraEnemytargetvec[i]);
-		//cameraEnemydeg[i] = acos(cameraEnemydot[i]) * (PI / 180);
-
-		//if (isback == false) {
-		//	cameraEnemyangle -= XMConvertToRadians(0.25f);
-		//	//当たっている
-		//	if (cameraEnemydeg[i] * 1000 <= 3) {
-		//		if (playerpos.x + 9.0f >= cameraEnemypos[i].x) {
-		//			player->Death();
-		//		}
-		//	}
-		//}
-		//else {
-		//	//回転
-		//	cameraEnemyangle += XMConvertToRadians(0.25f);
-		//	//当たっている
-		//	if (cameraEnemydeg[i] * 1000 <= 3) {
-		//		if (playerpos.x + 9.0f >= cameraEnemypos[i].x) {
-		//			player->Death();
-		//		}
-		//	}
-		//}
-
-
-		////angleラジアンだけY軸まわりに回転。半径は-100
-		//cameraEnemytarget[i].x = cameraEnemypos2[i].x - (distance * cosf(cameraEnemyangle));
-		//cameraEnemytarget[i].y = cameraEnemypos2[i].y + (distance * sinf(cameraEnemyangle));
-
-		///*cameraEnemyposset[i].x = cameraEnemytarget[i].x;
-		//cameraEnemyposset[i].y = cameraEnemytarget[i].y;
-		//cameraEnemyposset[i].z = cameraEnemytarget[i].z;
-		//cameraEnemy[i]->SetPosition(cameraEnemyposset[i]);*/
-
-		//cameraEnemy[i]->SetTarget(cameraEnemytarget[i]);
-		//cameraEnemy[i]->Setrotate(XMFLOAT3{ cameraEnemyangle,XMConvertToRadians(90.0f),0 });
-		//cameraEnemy[i]->Update();
 	}
 
 	//クリア
@@ -484,31 +387,6 @@ void GameScene::Update()
 
 void GameScene::Draw()
 {
-
-	//ImGui::Begin("Light");
-	//ImGui::SetWindowPos(ImVec2(0, 0));
-	//ImGui::SetWindowSize(ImVec2(500, 500));
-	//ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
-	//ImGui::InputFloat3("lightDir0", lightDir0);
-	//ImGui::ColorEdit3("lightColor0", lightColor0, ImGuiColorEditFlags_Float);
-	///*ImGui::InputFloat3("circleShadowDir", circleShadowDir);
-	//ImGui::InputFloat3("circleShadowAtten", circleShadowAtten);
-	//ImGui::ColorEdit3("pointLightColor", pointLightColor0, ImGuiColorEditFlags_Float);
-	//ImGui::InputFloat3("pointLightPos", pointLightPos0);
-	//ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
-	//ImGui::InputFloat3("lightPos", shadowLightPos);
-	//ImGui::InputFloat4("deg", enemydeg);
-	//ImGui::InputFloat("cameradeg",&cameraEnemydeg);
-	//ImGui::InputFloat("enemydeg", &enemydeg);
-	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].x);
-	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].y);
-	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].z);
-	//ImGui::InputFloat("target", &enemytarget[0].x);
-	//ImGui::InputFloat("target", &enemytarget[0].z);
-	//ImGui::InputFloat("player", &playerpos.x);
-
-	//ImGui::End();
-
 	//-------背景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();
 
