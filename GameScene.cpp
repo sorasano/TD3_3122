@@ -78,6 +78,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/transparentYellow1x1.png");
 	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
+	boxModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/cube/Crate.jpg");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -218,6 +219,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	button[6]->SetPositionX(startPos3 + 56);
 	button[6]->SetBlockPositionX(startPos3 + 71);
+
+	//box
+
+	Box::SetInput(input_);
+	Box::SetDXInput(dxInput);
+	box = new Box();
+	box->Initialize(boxModel,player);
 
 	//------テクスチャ------
 

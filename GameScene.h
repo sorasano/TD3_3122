@@ -17,6 +17,7 @@
 #include "Button.h"
 #include"CameraEnemy.h"
 #include "Autosave.h"
+#include "Box.h"
 
 class GameScene
 {
@@ -103,6 +104,10 @@ private:
 	static const int buttonSize = 7;
 	FbxModel* buttonModel = nullptr;
 	Button* button[buttonSize] = {};
+
+	//Box
+	FbxModel* boxModel = nullptr;
+	Box* box = nullptr;
 
 	//オートセーブ
 	Autosave *autoSave;

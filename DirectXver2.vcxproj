@@ -157,6 +157,7 @@
     <ClCompile Include="base\Input.cpp" />
     <ClCompile Include="base\Message.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraEnemy.cpp" />
@@ -190,6 +191,7 @@
     <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\Message.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraEnemy.h" />
