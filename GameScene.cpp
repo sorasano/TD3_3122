@@ -477,7 +477,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 
-	ImGui::Begin("Light");
+	//ImGui::Begin("Light");
 	//ImGui::SetWindowPos(ImVec2(0, 0));
 	//ImGui::SetWindowSize(ImVec2(500, 500));
 	//ImGui::ColorEdit3("ambientColor", ambientColor0, ImGuiColorEditFlags_Float);
@@ -490,8 +490,8 @@ void GameScene::Draw()
 	//ImGui::InputFloat3("pointLightAtten", pointLightAtten0);*/
 	//ImGui::InputFloat3("lightPos", shadowLightPos);
 	//ImGui::InputFloat4("deg", enemydeg);
-	ImGui::InputFloat("cameradeg",&cameraEnemydeg);
-	ImGui::InputFloat("enemydeg", &enemydeg);
+	//ImGui::InputFloat("cameradeg",&cameraEnemydeg);
+	//ImGui::InputFloat("enemydeg", &enemydeg);
 	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].x);
 	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].y);
 	//ImGui::InputFloat("camerapos", &cameraEnemyposset[0].z);
@@ -499,7 +499,7 @@ void GameScene::Draw()
 	//ImGui::InputFloat("target", &enemytarget[0].z);
 	//ImGui::InputFloat("player", &playerpos.x);
 
-	ImGui::End();
+	//ImGui::End();
 
 	//-------背景スプライト描画処理-------//
 	SpriteManager::GetInstance()->beginDraw();
