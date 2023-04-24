@@ -3,12 +3,14 @@
 #include "FbxObject3d.h"
 #include "FbxModel.h"
 #include "Vector3.h"
+#include "Player.h"
+
 class Enemy
 {
 
 public:
 
-	void Initialize(FbxModel* enemyModel, FbxModel* enemyEyeModeld);
+	void Initialize(FbxModel* greenEnemyModel, FbxModel* redEnemyModel, FbxModel* enemyEyeModeld, Player* player);
 
 	void Update();
 
@@ -32,6 +34,8 @@ public:
 
 	const Vector3& GetTarget() { return target; }
 
+	const float GetDeg() { return enemydeg; }
+
 private:
 
 	XMFLOAT3 position = { 0.0f,1.0f,-1.0f };
@@ -39,14 +43,27 @@ private:
 	XMFLOAT3 rotate = { 0.0f,0.0f,0.0f };
 	Vector3 target = { 0.0f,0.0f,0.0f };
 	Vector3 vec = { 0.0f,0.0f,0.0f };
-	bool isback = false;
+	//îªíËóp
+	Vector3 enemytargetvec = {0.0f,0.0f,0.0f};
+	float enemydot=0.0f;
+	float enemydeg=0.0f;
+	//äpìx
+	float enemyangle = 0.0f;
+	//ãììÆéûä‘
+	int time = 0;
+	int maxTime = 170;
+	float distance = 9;
+	bool isback = true;
 private:
-
+	//ìGÉÇÉfÉã
+	FbxModel* enemyModel = nullptr;
+	FbxModel* enemyModel2 = nullptr;
 	//fbx
 	FbxObject3D* enemyObject = nullptr;
 	//éãê¸
 	FbxObject3D* enemyEyeObject = nullptr;
 
+	Player* player;
 
 };
 
