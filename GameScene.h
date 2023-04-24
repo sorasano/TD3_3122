@@ -72,7 +72,7 @@ private:
 	XMFLOAT3 enemyposset[enemySize];
 	Vector3 enemytargetvec[enemySize];
 	float enemydot[enemySize];
-	float enemydeg[enemySize];
+	float enemydeg;
 	Vector3 enemytarget[enemySize];
 	float enemyangle = 0.0f;
 	
@@ -91,7 +91,7 @@ private:
 	XMFLOAT3 cameraEnemyposset[cameraEnemySize];
 	Vector3 cameraEnemytargetvec[cameraEnemySize];
 	float cameraEnemydot[cameraEnemySize];
-	float cameraEnemydeg[cameraEnemySize];
+	float cameraEnemydeg;
 	Vector3 cameraEnemytarget[cameraEnemySize];
 	float cameraEnemyangle = 0.0f;
 	XMFLOAT3 cameraEnemypos2[cameraEnemySize];

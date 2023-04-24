@@ -1,7 +1,10 @@
 #include "CameraEnemy.h"
 
-void CameraEnemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel)
+void CameraEnemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel, Player* player)
 {
+	//プレイヤー
+	this->player = player;
+
 
 	enemyObject = new FbxObject3D;
 	enemyObject->Initialize();
@@ -10,11 +13,6 @@ void CameraEnemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel)
 	enemyEyeObject = new FbxObject3D;
 	enemyEyeObject->Initialize();
 	enemyEyeObject->SetModel(enemyEyeModel);
-
-	target.x = position.x;
-	target.y = position.y;
-	target.z = position.z;
-	target.z = target.z - 20;
 }
 
 void CameraEnemy::Update()
@@ -36,10 +34,59 @@ void CameraEnemy::Update()
 
 	vec.normalize();
 
+	time++;
+	if (time >= maxTime) {
+		if (isback == true) {
+			isback = false;
+		}
+		else {
+			isback = true;
+		}
+		time = 0;
+	}
+
+	//判定用
+	enemytargetvec.x = (position.x - player->GetPosition().x);
+	enemytargetvec.y = (position.y - player->GetPosition().y);
+	enemytargetvec.z = (position.z - player->GetPosition().z);
+	enemytargetvec.normalize();
+	enemydot = vec.dot(enemytargetvec);
+	enemydeg = acos(enemydot) * (PI / 180);
+
+	if (isback == false) {
+		enemyangle -= XMConvertToRadians(0.25f);
+		//当たっている
+		if (enemydeg * 1000 <= 3) {
+			if (player->GetPosition().x + 9.0f >= position.x) {
+				player->Death();
+			}
+		}
+	}
+	else {
+		//回転
+		enemyangle += XMConvertToRadians(0.25f);
+		//当たっている
+		if (enemydeg * 1000 <= 3) {
+			if (player->GetPosition().x + 9.0f >= position.x) {
+				player->Death();
+			}
+		}
+	}
+
+
+	//angleラジアンだけY軸まわりに回転。半径は-100
+	target.x = position.x - (distance * cosf(enemyangle));
+	target.y = position.y + (distance * sinf(enemyangle));
+
+	Setrotate(XMFLOAT3{ enemyangle,XMConvertToRadians(90.0f),0 });
+
+	enemyObject->SetPosition(position);
+	enemyObject->SetScale(scale);
+	enemyObject->SetRotation(rotate);
+
 	enemyObject->Update();
 
-	int size = 6;
-	enemyEyeObject->SetPosition(XMFLOAT3(position.x, position.y+0.5f, position.z));
+	enemyEyeObject->SetPosition(XMFLOAT3(position.x, position.y + 0.5f, position.z));
 	enemyEyeObject->SetScale(XMFLOAT3(1, 1, 1));
 	enemyEyeObject->SetRotation(rotate);
 	enemyEyeObject->Update();
