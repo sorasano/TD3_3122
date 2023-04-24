@@ -8,7 +8,7 @@ void Autosave::Initialize(Player* player)
 
 	//セーブ地点
 	savePos[0] = XMFLOAT2(0, 1);
-	savePos[1] = XMFLOAT2(27.5, 1);
+	savePos[1] = XMFLOAT2(27, 1);
 	savePos[2] = XMFLOAT2(42, 1);
 	savePos[3] = XMFLOAT2(95.5, 1);
 

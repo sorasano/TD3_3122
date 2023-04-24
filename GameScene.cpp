@@ -112,21 +112,21 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	}
 
 	//ブロック
-	blockObject[0]->SetPosition({ 15.5,1,0 });
-	blockObject[1]->SetPosition({ 18.5,1,0 });
+	blockObject[0]->SetPosition({ 14,1,0 });
+	blockObject[1]->SetPosition({ 20,1,0 });
 
-	blockObject[2]->SetPosition({ 14,1,0 });
-	blockObject[3]->SetPosition({ 15,1,0 });
+	blockObject[2]->SetPosition({ 27,1,0 });
+	blockObject[3]->SetPosition({ 37,1,0 });
 
-	blockObject[4]->SetPosition({ 19,1,0 });
-	blockObject[5]->SetPosition({ 20,1,0 });
-	blockObject[6]->SetPosition({ 21,1,0 });
+	//blockObject[4]->SetPosition({ 19,1,0 });
+	//blockObject[5]->SetPosition({ 20,1,0 });
+	//blockObject[6]->SetPosition({ 21,1,0 });
 
-	blockObject[7]->SetPosition({ 27,1,0 });
-	blockObject[8]->SetPosition({ 28,1,0 });
+	//blockObject[7]->SetPosition({ 27,1,0 });
+	//blockObject[8]->SetPosition({ 28,1,0 });
 
-	blockObject[9]->SetPosition({ 32,1,0 });
-	blockObject[10]->SetPosition({ 36,1,0 });
+	//blockObject[9]->SetPosition({ 32,1,0 });
+	//blockObject[10]->SetPosition({ 36,1,0 });
 
 
 	//プレイヤー
@@ -143,18 +143,18 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//敵
 	enemy[0]->SetPosition({ 17,1,1 });
 	enemy[1]->SetPosition({ 23,1,1 });
-	enemy[2]->SetPosition({ 25,1,1 });
-	enemy[3]->SetPosition({ 30,1,1 });
-	enemy[4]->SetPosition({ 34,1,1 });
+	enemy[2]->SetPosition({ 30,1,1 });
+	enemy[3]->SetPosition({ 34,1,1 });
+	enemy[4]->SetPosition({ 66,1,1 });
 
-	enemy[5]->SetPosition({ 66,1,1 });
-	enemy[6]->SetPosition({ 76,1,1 });
+	enemy[5]->SetPosition({ 76,1,1 });
+	enemy[6]->SetPosition({ 90.5,1,1 });
 
-	enemy[7]->SetPosition({ 90.5,1,1 });
+	enemy[7]->SetPosition({ 100.0,1,1 });
 
-	enemy[8]->SetPosition({ 100.0,1,1 });
-	enemy[9]->SetPosition({ 104.5,1,1 });
-	enemy[10]->SetPosition({ 109.0,1,1 });
+	enemy[8]->SetPosition({ 104.5,1,1 });
+	enemy[9]->SetPosition({ 109.0,1,1 });
+	//enemy[10]->SetPosition({ 109.0,1,1 });
 
 
 
@@ -263,7 +263,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 void GameScene::Update()
 {
 	//カメラ更新
-	camera_->DebugUpdate();
+	//camera_->DebugUpdate();
 	camera_->Update(player->GetPosition());
 	//コントローラー更新
 	dxInput->InputProcess();
@@ -325,11 +325,13 @@ void GameScene::Update()
 	//復活
 	if (input_->PushKey(DIK_E)) {
 		player->SetisDeath(false);
-		XMFLOAT2 savePos = autoSave->GetSavePos();
-		player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-		if (isClear == true) {
+		if (isClear) {
 			isClear = false;
-			player->SetPosition(XMFLOAT3(0, 0, -1));
+			player->SetPosition(XMFLOAT3(0, 1, -1));
+		}
+		else {
+			XMFLOAT2 savePos = autoSave->GetSavePos();
+			player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
 		}
 	}
 
@@ -543,11 +545,12 @@ void GameScene::Draw()
 		titleUISprite->Draw();
 	}
 
-	if (player->GetDeath()) {
+	if (player->GetDeath() == true) {
 		gameoverSprite->Draw();
 	}
 
-	if (isClear) {
+	if (isClear == true) {
 		clearSprite->Draw();
 	}
+
 }
