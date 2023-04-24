@@ -51,7 +51,7 @@ private:
 	FbxModel* model2 = nullptr;
 
 	//ブロック
-	static const int blockSize = 11;
+	static const int blockSize = 4;
 	FbxModel* blockModel = nullptr;
 	FbxObject3D2* blockObject[blockSize] = {};
 
@@ -61,7 +61,7 @@ private:
 	XMFLOAT3 playerpos;
 
 	//敵
-	static const int enemySize = 11;
+	static const int enemySize = 10;
 	FbxModel* enemyModel = nullptr;
 	FbxModel* enemyModel2 = nullptr;
 	Enemy* enemy[enemySize] = {};

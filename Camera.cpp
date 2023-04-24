@@ -70,6 +70,11 @@ void Camera::Update(XMFLOAT3 playerPos)
 	//{
 	//	target_.x += 0.1;
 	//}
+	
+	//‹“_À•W‚É‘ã“ü
+	eye_.x = sin(DebugChangeRot) * DebugTargetDistance + target_.x;
+	eye_.y = sin(DebugChangeRot2) * DebugTargetDistance + target_.y;
+	eye_.z = cos(DebugChangeRot) * DebugTargetDistance + target_.z;
 
 	target_.x = playerPos.x;
 
