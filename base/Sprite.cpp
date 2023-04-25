@@ -133,13 +133,27 @@ void Sprite::Initialize()
 
 void Sprite::Update()
 {
+
+	float left = (0.0f - anchorPoint.x) * scale.x;
+	float right = (1.0f - anchorPoint.x) * scale.x;
+	float top = (0.0f - anchorPoint.y) * scale.y;
+	float bottom = (1.0f - anchorPoint.y) * scale.y;
+
 	//頂点データ
-	vertices[0] = { {    0.0f, scale.y, 0.0f },{ 0.0f,1.0f } };	//左下
-	vertices[1] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//左上
-	vertices[2] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//右下
-	vertices[3] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//右下
-	vertices[4] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//左上
-	vertices[5] = { { scale.x,    0.0f, 0.0f },{ 1.0f,0.0f } };	//右上
+	vertices[0] = { {   left,bottom , 0.0f },{ 0.0f,1.0f } };	//左下
+	vertices[1] = { {  left,  top, 0.0f },{ 0.0f,0.0f } };	//左上
+	vertices[2] = { { right,bottom , 0.0f },{ 1.0f,1.0f } };	//右下
+	vertices[3] = { { right,bottom , 0.0f },{ 1.0f,1.0f } };	//右下
+	vertices[4] = { {   left,  top, 0.0f },{ 0.0f,0.0f } };	//左上
+	vertices[5] = { { right,  top, 0.0f },{ 1.0f,0.0f } };	//右上
+
+	////頂点データ
+	//vertices[0] = { {    0.0f, scale.y, 0.0f },{ 0.0f,1.0f } };	//左下
+	//vertices[1] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//左上
+	//vertices[2] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//右下
+	//vertices[3] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//右下
+	//vertices[4] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//左上
+	//vertices[5] = { { scale.x,    0.0f, 0.0f },{ 1.0f,0.0f } };	//右上
 
 	std::copy(std::begin(vertices), std::end(vertices), vertMap);
 
@@ -167,6 +181,14 @@ void Sprite::Update()
 	constMapTransform->mat.r[1].m128_f32[1] = -2.0f / window_height;
 	constMapTransform->mat.r[3].m128_f32[0] = -1.0f + (position.x / window_width) * 2;
 	constMapTransform->mat.r[3].m128_f32[1] = 1.0f - (position.y / window_height) * 2;
+
+	//演出
+	if (isflipEase && endFlip == false) {
+		FlipOut();
+	}
+	else if (isSway) {
+		Sway();
+	}
 }
 
 void Sprite::Draw(ID3D12GraphicsCommandList* cmdList)
@@ -381,4 +403,118 @@ void Sprite::CreateGraphicsPipeLine()
 	//パイプラインステートの生成
 	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(pipelinestate.ReleaseAndGetAddressOf()));
 	assert(SUCCEEDED(result));
+}
+
+void Sprite::FlipOut()
+{
+
+	float flipInUp = startEasePos.y - flipInRangeUp;
+	float flipInDown = startEasePos.y + flipInRangeDown;
+
+	if (initFlip) {
+
+		if (flipInFase == 0) {
+
+			position = EaseOut(startEasePos, { startEasePos.x,flipInUp }, flipInEase.timeRate);
+
+			if (!flipInEase.GetActive()) {
+				//今の演出が終わったら次の段階へ
+				flipInFase = 1;
+				flipInDown = position.y + flipInRangeDown;
+
+				//数値のリセット
+				startEasePos = position;
+				flipInEase.Start(1.0f);
+				flipInEase.timeRate = 0.0f;
+			}
+
+		}
+		else if (flipInFase == 1) {
+
+			position = EaseOut(startEasePos, { startEasePos.x,flipInDown }, flipInEase.timeRate);
+
+			if (!flipInEase.GetActive()) {
+				//今の演出が終わったら次の段階へ
+				flipInFase = 2;
+
+				//数値のリセット
+				startEasePos = position;
+				flipInEase.Start(1.0f);
+				flipInEase.timeRate = 0.0f;
+			}
+
+
+		}
+		else if (flipInFase == 2) {
+
+			position = EaseOut(startEasePos, { startEasePos.x, -100 }, flipInEase.timeRate);
+
+			if (!flipInEase.GetActive()) {
+				//今の演出が終わったら次の段階へ
+				flipInFase = 3;
+
+				//数値のリセット
+				//isflipEase = false;
+				//initFlip = false;
+				endFlip = true;
+			}
+
+		}
+
+	}
+	else {
+		initFlip = true;
+		flipInFase = 0;
+		flipInUp = position.y - flipInRangeUp;
+		flipInEase.Start(1.0f);
+		flipInEase.timeRate = 0.0f;
+		startEasePos = position;
+		isSway = false;
+	}
+
+	flipInEase.Update();
+}
+
+void Sprite::Sway()
+{
+
+	float swayUp = swayCenterPos.y - (swayRange / 2);
+	float swayDown = swayCenterPos.y + (swayRange / 2);
+
+	if (initSway) {
+
+		if (isSwayUp) {
+			position = EaseOut(startEasePos, { startEasePos.x,swayUp }, swayEase.timeRate);
+
+			if (!swayEase.GetActive()) {
+				//上まで行ったら下降に変更
+				isSwayUp = false;
+
+				//数値のリセット
+				startEasePos = position;
+				swayEase.Start(2.0f);
+				swayEase.timeRate = 0.0f;
+			}
+		}
+		else {
+			position = EaseOut(startEasePos, { startEasePos.x,swayDown }, swayEase.timeRate);
+
+			if (!swayEase.GetActive()) {
+				//下まで行ったら上昇に変更
+				isSwayUp = true;
+				//数値のリセット
+				startEasePos = position;
+				swayEase.Start(2.0f);
+				swayEase.timeRate = 0.0f;
+			}
+		}
+
+	}
+	else {
+		initSway = true;
+		swayEase.Start(1.0f);
+		startEasePos = position;
+	}
+
+	swayEase.Update();
 }

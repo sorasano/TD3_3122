@@ -186,7 +186,6 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SpotLight.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -227,7 +226,6 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="SpotLight.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>

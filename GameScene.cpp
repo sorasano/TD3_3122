@@ -124,17 +124,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	blockObject[2]->SetPosition({ 27,1,0 });
 	blockObject[3]->SetPosition({ 37,1,0 });
 
-	//blockObject[4]->SetPosition({ 19,1,0 });
-	//blockObject[5]->SetPosition({ 20,1,0 });
-	//blockObject[6]->SetPosition({ 21,1,0 });
-
-	//blockObject[7]->SetPosition({ 27,1,0 });
-	//blockObject[8]->SetPosition({ 28,1,0 });
-
-	//blockObject[9]->SetPosition({ 32,1,0 });
-	//blockObject[10]->SetPosition({ 36,1,0 });
-
-
 	//プレイヤー
 	Player::SetInput(input_);
 	Player::SetDXInput(dxInput);
@@ -160,23 +149,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	enemy[8]->SetPosition({ 104.5,1,1 });
 	enemy[9]->SetPosition({ 109.0,1,1 });
-	//enemy[10]->SetPosition({ 109.0,1,1 });
-
-
-
-	/*for (int i = 0; i < enemySize; i++) {
-		if (i < 11) {
-			enemytarget[i].x = enemy[i]->GetPosition().x;
-			enemytarget[i].y = enemy[i]->GetPosition().y;
-			enemytarget[i].z = enemy[i]->GetPosition().z - distance;
-			enemy[i]->SetTarget(enemytarget[i]);
-			enemypos[i] = enemy[i]->GetPosition();
-			enemypos2[i].x = enemy[i]->GetPosition().x;
-			enemypos2[i].y = enemy[i]->GetPosition().y;
-			enemypos2[i].z = enemy[i]->GetPosition().z;
-		}
-	}
-	enemyangle = XMConvertToRadians(30.0f);*/
 
 	//監視カメラ
 	for (int i = 0; i < cameraEnemySize; i++) {
@@ -230,43 +202,52 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//------テクスチャ------
 
+	spriteManager->LoadFile(0, L"Resources/clear.png");
+	spriteManager->LoadFile(1, L"Resources/gameover2.png");
+	spriteManager->LoadFile(2, L"Resources/title.png");
+	spriteManager->LoadFile(3, L"Resources/titleUI.png");
+
+	//スプライト
+	Sprite::SetDevice(dxCommon->GetDevice());
+	Sprite::SetSpriteManager(spriteManager);
+	Sprite::CreateGraphicsPipeLine();
+
 	//---クリア---
-	/*clearTexture = Texture::LoadTexture(L"Resources/clear.png");
-
 	clearSprite = new Sprite();
-	clearSprite->Initialize(clearTexture);*/
+	clearSprite->SetTextureNum(0);
+	clearSprite->Initialize();
 	//アンカーポイントをスプライトの中心に
-	//clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	//clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
-	//clearSprite->Update();
+	clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	clearSprite->SetPosition(XMFLOAT2(258,127));
+	clearSprite->SetPosition(XMFLOAT2(window_width,window_height / 2 - 200));
+	clearSprite->Update();
 
-	////---ゲームオーバー---
-	//gameoverTexture = Texture::LoadTexture(L"Resources/gameover2.png");
+	//---ゲームオーバー---
+	gameoverSprite = new Sprite();
+	gameoverSprite->SetTextureNum(1);
+	gameoverSprite->Initialize();
+	gameoverSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	gameoverSprite->SetScale(XMFLOAT2(390,254));
+	gameoverSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2));
+	gameoverSprite->Update();
 
-	//gameoverSprite = new Sprite();
-	//gameoverSprite->Initialize(gameoverTexture);
-	////アンカーポイントをスプライトの中心に
-	//gameoverSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	//gameoverSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
-	//gameoverSprite->Update();
+	//---タイトル---
+	titleSprite = new Sprite();
+	titleSprite->SetTextureNum(2);
+	titleSprite->Initialize();
+	titleSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	titleSprite->SetScale(XMFLOAT2(309,124));
+	titleSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2 - 200));
+	titleSprite->StartSway({ window_width/ 2, window_height / 2 - 200 });
+	titleSprite->Update();
 
-	////---タイトル---
-	//titleTexture = Texture::LoadTexture(L"Resources/title.png");
-
-	//titleSprite = new Sprite();
-	//titleSprite->Initialize(titleTexture);
-	//titleSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	//titleSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
-	//titleSprite->StartSway({ WinApp::winW / 2, WinApp::winH / 2 - 200 });
-	//titleSprite->Update();
-
-	//titleUITexture = Texture::LoadTexture(L"Resources/titleUI.png");
-
-	//titleUISprite = new Sprite();
-	//titleUISprite->Initialize(titleUITexture);
-	//titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	//titleUISprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 + 200));
-	//titleUISprite->Update();
+	titleUISprite = new Sprite();
+	titleUISprite->SetTextureNum(3);
+	titleUISprite->Initialize();
+	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	titleUISprite->SetScale(XMFLOAT2(282,71));
+	titleUISprite->SetPosition(XMFLOAT2(window_width / 2, window_height/ 2 + 200));
+	titleUISprite->Update();
 
 	//セーブ
 	autoSave = new Autosave;
@@ -373,18 +354,22 @@ void GameScene::Update()
 
 	//スプライト
 
-	////タイトル
-	//if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
-	//	titleSprite->StartFlipOut();
-	//}
+	//タイトル
+	if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+		titleSprite->StartFlipOut();
+	}
+	titleSprite->Update();
 
-	//titleSprite->Update();
+	//タイトルUI
+	if (titleSprite->isflipEase == false) {
+		titleUISprite->color.w = sin(clock() / 100);
+		titleTimer++;
+	}
 
-	////タイトルUI
-	//if (titleSprite->isflipEase == false) {
-	//	titleUISprite->color.w = sin(clock() / 100);
-	//	titleTimer++;
-	//}
+	clearSprite->Update();
+	gameoverSprite->Update();
+	titleUISprite->Update();
+
 
 	//オートセーブ
 	autoSave->Update();
@@ -393,8 +378,6 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//-------背景スプライト描画処理-------//
-	/*SpriteManager::GetInstance()->beginDraw();*/
-
 
 
 	//object0->Draw(dxCommon_->GetCommandList());
@@ -425,23 +408,22 @@ void GameScene::Draw()
 	}
 
 	//-------前景スプライト描画処理-------//
-	/*priteManager::GetInstance()->beginDraw();*/
 
-	//clearSprite->Draw();
-	/*if (titleSprite->endFlip == false) {
-		titleSprite->Draw();
+	clearSprite->Draw(dxCommon_->GetCommandList());
+	if (titleSprite->endFlip == false) {
+		titleSprite->Draw(dxCommon_->GetCommandList());
 	}
 
 	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-		titleUISprite->Draw();
+		titleUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
 	if (player->GetDeath() == true) {
-		gameoverSprite->Draw();
+		gameoverSprite->Draw(dxCommon_->GetCommandList());
 	}
 
 	if (isClear == true) {
-		clearSprite->Draw();
-	}*/
+		clearSprite->Draw(dxCommon_->GetCommandList());
+	}
 
 }

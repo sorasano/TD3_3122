@@ -3,6 +3,7 @@
 #include "DirectXMath.h"
 #include "array"
 #include "SpriteManager.h"
+#include "Easing.h"
 
 class Sprite
 {
@@ -47,7 +48,7 @@ public:	//セッター
 	//アルファ値
 	void SetAlpha(float alpha) { color.w = alpha; }
 	//色
-	void SetColor(XMFLOAT3 c) { color.x = c.x; color.y = c.y; color.z = c.z;}
+	void SetColor(XMFLOAT3 c) { color.x = c.x; color.y = c.y; color.z = c.z; }
 	//テクスチャの番号をセット
 	void SetTextureNum(int num) { textureNum = num; }
 	//座標
@@ -56,6 +57,8 @@ public:	//セッター
 	void SetRotation(float rot) { rotation = rot; }
 	//スケール
 	void SetScale(XMFLOAT2 sca) { scale = sca; }
+
+	void SetAnchorPoint(const DirectX::XMFLOAT2& point) { anchorPoint = point; }
 
 public:	//ゲッター
 	//座標
@@ -89,8 +92,56 @@ private:	//メンバ変数
 	//定数バッファ 変形行列
 	ComPtr<ID3D12Resource>constBuffTransform;
 	ConstBuffTransform* constMapTransform = nullptr;
+
+	//アンカーポイント(座標変換の基準点)
+	DirectX::XMFLOAT2 anchorPoint = { 0.0f,0.0f };
+
+public:
+
 	//テクスチャの色
-	XMFLOAT4 color = {1,1,1,1};
+	XMFLOAT4 color = { 1,1,1,1 };
+
+	//---演出用---
+	//画面外から入ってくる演出用
+	Easing flipInEase;
+	//フリップ初期化
+	bool initFlip = false;
+	//演出中か
+	bool isflipEase = false;
+	//演出の段階
+	int flipInFase;
+	//揺れ幅
+	float flipInRangeUp = 50;
+	float flipInRangeDown = 100;
+	//演出が終わったか
+	bool endFlip = false;
+
+	//揺れ用
+	Easing swayEase;
+	//揺れ初期化
+	bool initSway = false;
+	//揺れ幅
+	float swayRange = 100;
+	//揺れてるか
+	bool isSway = false;
+	//上昇中か下降中か
+	bool isSwayUp = true;
+	//演出開始位置
+	DirectX::XMFLOAT2 startEasePos;
+	//中心点
+	DirectX::XMFLOAT2 swayCenterPos;
+
+public:
+
+	//演出
+
+	//画面外へアウト
+	void StartFlipOut() { isflipEase = true; };
+	void FlipOut();
+
+	//揺れる	center=中心点
+	void StartSway(DirectX::XMFLOAT2 center) { isSway = true, swayCenterPos = center; }
+	void Sway();
 
 private:
 	float rotation = 0;

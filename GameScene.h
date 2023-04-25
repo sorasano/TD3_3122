@@ -152,16 +152,12 @@ private:
 
 
 	//テクスチャ
-	uint32_t clearTexture = 0;		//クリア画面
 	Sprite* clearSprite = nullptr;
 
-	uint32_t gameoverTexture = 0;		//ゲームオーバー画面
 	Sprite* gameoverSprite = nullptr;
 
-	uint32_t titleTexture = 0;		//タイトル画面
 	Sprite* titleSprite = nullptr;
 
-	uint32_t titleUITexture = 0;
 	Sprite* titleUISprite = nullptr;
 
 
