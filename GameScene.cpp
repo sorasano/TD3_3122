@@ -9,7 +9,6 @@
 #include"Vector3.h"
 #include<math.h>
 
-
 #define PI 3.1415
 
 GameScene::GameScene()
@@ -26,6 +25,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	this->dxCommon_ = dxCommon;
 	this->input_ = input;
 
+	//当たり判定キューブモデル
+	cubeModel = new CubeModel();
+	cubeModel->CreateBuffers(dxCommon_->GetDevice());
+	cubeModel->SetImageData(XMFLOAT4(255, 0, 0, 1));
+
 	//カメラ初期化
 	Camera::SetInput(input_);
 	Camera::SetDXInput(dxInput);
@@ -35,6 +39,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	camera_->SetTarget({ 0,0,0 });
 	camera_->SetEye({ 0, 10,-10 });
 
+	//当たり判定キューブオブジェクト
+	CubeObject3D::SetCamera(camera_.get());
+	CubeObject3D::SetDevice(dxCommon_->GetDevice());
+	CubeObject3D::SetInput(input_);
+	CubeObject3D::CreateGraphicsPipeline();
 	//スプライトマネージャー
 	SpriteManager::SetDevice(dxCommon->GetDevice());
 	spriteManager = new SpriteManager;
@@ -125,10 +134,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	blockObject[3]->SetPosition({ 37,1,0 });
 
 	//プレイヤー
+	playerColBox = new CubeObject3D();
+	playerColBox->Initialize();
+	playerColBox->SetModel(cubeModel);
 	Player::SetInput(input_);
 	Player::SetDXInput(dxInput);
 	player = new Player;
-	player->Initialize(playerModel);
+	player->Initialize(playerModel, playerColBox);
 
 	//敵
 	for (int i = 0; i < enemySize; i++) {
@@ -164,9 +176,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Button::SetInput(input_);
 	Button::SetDXInput(dxInput);
 	for (int i = 0; i < buttonSize; i++) {
+		ButtonColBox[i] = new CubeObject3D();
+		ButtonColBox[i]->Initialize();
+		ButtonColBox[i]->SetModel(cubeModel);
 
 		button[i] = new Button;
-		button[i]->Initialize(buttonModel, player);
+		button[i]->Initialize(buttonModel, player, ButtonColBox[i]);
 
 	}
 
@@ -252,7 +267,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//セーブ
 	autoSave = new Autosave;
 	autoSave->Initialize(player);
-}
+ }
 
 void GameScene::Update()
 {
@@ -406,6 +421,8 @@ void GameScene::Draw()
 	for (int i = 0; i < buttonSize; i++) {
 		button[i]->Draw(dxCommon_->GetCommandList());
 	}
+
+	/*cubeObject->Draw(dxCommon_->GetCommandList());*/
 
 	//-------前景スプライト描画処理-------//
 
