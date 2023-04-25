@@ -240,7 +240,7 @@ void DirectXCommon::InitializeDepthBuffer()
 	);
 
 	//深度ビュー用デスクリプタヒープ作成
-	dsvHeapDesc.NumDescriptors = 1;	//深度ビューは1つ
+	dsvHeapDesc.NumDescriptors = 2;	//深度ビューは1つ
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;	//デプスステンシルビュー
 	result = GetDevice()->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&dsvHeap));
 
@@ -311,6 +311,9 @@ void DirectXCommon::PreDraw()
 	scissorRect.bottom = scissorRect.top + window_height;
 	GetCommandList()->RSSetScissorRects(1, &scissorRect);
 }
+void DirectXCommon::PreDraw1()
+{
+}
 #pragma endregion 
 #pragma region 描画後処理
 void DirectXCommon::PostDraw()
@@ -360,6 +363,9 @@ void DirectXCommon::PostDraw()
 	//再びコマンドリストを貯める準備
 	result = GetCommandList()->Reset(GetCommandAllocator(), nullptr);
 	assert(SUCCEEDED(result));
+}
+void DirectXCommon::PostDraw1()
+{
 }
 #pragma endregion
 ComPtr<ID3D12DescriptorHeap> DirectXCommon::CreateDescriptorForImgui()

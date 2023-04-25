@@ -39,11 +39,11 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
 
 	//テクスチャマネージャーの初期化
-	Texture::Initialize(dxCommon->GetDevice());
+	/*Texture::Initialize(dxCommon->GetDevice());*/
 	//スプライト共通部の初期化
-	SpriteManager* spriteManager = nullptr;
+	/*SpriteManager* spriteManager = nullptr;
 	spriteManager = SpriteManager::GetInstance();
-	spriteManager->Initialize(dxCommon, WinApp::winW, WinApp::winH);
+	spriteManager->Initialize(dxCommon, window_width, window_height);*/
 
 	//ゲームシーン
 	GameScene* gameScene = nullptr;

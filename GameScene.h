@@ -18,6 +18,7 @@
 #include"CameraEnemy.h"
 #include "Autosave.h"
 #include "Box.h"
+#include "SpriteManager.h"
 
 class GameScene
 {
@@ -60,6 +61,9 @@ private:
 	FbxModel* playerModel = nullptr;
 	Player* player = nullptr;
 	XMFLOAT3 playerpos;
+
+	//スプライトマネージャー
+	SpriteManager* spriteManager = nullptr;
 
 	//敵
 	static const int enemySize = 10;

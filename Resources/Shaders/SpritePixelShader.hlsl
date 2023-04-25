@@ -1,8 +1,13 @@
 #include "SpriteHeader.hlsli"
 
-Texture2D<float4> tex : register(t0);  	// 0番スロットに設定されたテクスチャ
-SamplerState smp : register(s0);      	// 0番スロットに設定されたサンプラー
+texture2D<float4> tex : register(t0);
+SamplerState smp : register(s0);
 
-float4 main(VSOutput input) : SV_TARGET{
-	return tex.Sample(smp, input.uv) * color;
+float4 main(VSOutput input) : SV_TARGET
+{
+	//画像のデータ
+	float4 texData = float4(tex.Sample(smp,input.uv));
+
+	//アルファ値を合成
+	return float4(texData.x * color.x, texData.y * color.y, texData.z * color.z, texData.w * color.w);
 }

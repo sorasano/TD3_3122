@@ -35,6 +35,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	camera_->SetTarget({ 0,0,0 });
 	camera_->SetEye({ 0, 10,-10 });
 
+	//スプライトマネージャー
+	SpriteManager::SetDevice(dxCommon->GetDevice());
+	spriteManager = new SpriteManager;
+	spriteManager->Initialize();
+
 	//ライト生成
 	lightGroup0 = LightGroup::Create();
 
@@ -226,42 +231,42 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//------テクスチャ------
 
 	//---クリア---
-	clearTexture = Texture::LoadTexture(L"Resources/clear.png");
+	/*clearTexture = Texture::LoadTexture(L"Resources/clear.png");
 
 	clearSprite = new Sprite();
-	clearSprite->Initialize(clearTexture);
+	clearSprite->Initialize(clearTexture);*/
 	//アンカーポイントをスプライトの中心に
-	clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
-	clearSprite->Update();
+	//clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	//clearSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
+	//clearSprite->Update();
 
-	//---ゲームオーバー---
-	gameoverTexture = Texture::LoadTexture(L"Resources/gameover2.png");
+	////---ゲームオーバー---
+	//gameoverTexture = Texture::LoadTexture(L"Resources/gameover2.png");
 
-	gameoverSprite = new Sprite();
-	gameoverSprite->Initialize(gameoverTexture);
-	//アンカーポイントをスプライトの中心に
-	gameoverSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	gameoverSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
-	gameoverSprite->Update();
+	//gameoverSprite = new Sprite();
+	//gameoverSprite->Initialize(gameoverTexture);
+	////アンカーポイントをスプライトの中心に
+	//gameoverSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	//gameoverSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2));
+	//gameoverSprite->Update();
 
-	//---タイトル---
-	titleTexture = Texture::LoadTexture(L"Resources/title.png");
+	////---タイトル---
+	//titleTexture = Texture::LoadTexture(L"Resources/title.png");
 
-	titleSprite = new Sprite();
-	titleSprite->Initialize(titleTexture);
-	titleSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	titleSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
-	titleSprite->StartSway({ WinApp::winW / 2, WinApp::winH / 2 - 200 });
-	titleSprite->Update();
+	//titleSprite = new Sprite();
+	//titleSprite->Initialize(titleTexture);
+	//titleSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	//titleSprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 - 200));
+	//titleSprite->StartSway({ WinApp::winW / 2, WinApp::winH / 2 - 200 });
+	//titleSprite->Update();
 
-	titleUITexture = Texture::LoadTexture(L"Resources/titleUI.png");
+	//titleUITexture = Texture::LoadTexture(L"Resources/titleUI.png");
 
-	titleUISprite = new Sprite();
-	titleUISprite->Initialize(titleUITexture);
-	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	titleUISprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 + 200));
-	titleUISprite->Update();
+	//titleUISprite = new Sprite();
+	//titleUISprite->Initialize(titleUITexture);
+	//titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	//titleUISprite->SetPos(XMFLOAT2(WinApp::winW / 2, WinApp::winH / 2 + 200));
+	//titleUISprite->Update();
 
 	//セーブ
 	autoSave = new Autosave;
@@ -368,18 +373,18 @@ void GameScene::Update()
 
 	//スプライト
 
-	//タイトル
-	if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
-		titleSprite->StartFlipOut();
-	}
+	////タイトル
+	//if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+	//	titleSprite->StartFlipOut();
+	//}
 
-	titleSprite->Update();
+	//titleSprite->Update();
 
-	//タイトルUI
-	if (titleSprite->isflipEase == false) {
-		titleUISprite->color.w = sin(clock() / 100);
-		titleTimer++;
-	}
+	////タイトルUI
+	//if (titleSprite->isflipEase == false) {
+	//	titleUISprite->color.w = sin(clock() / 100);
+	//	titleTimer++;
+	//}
 
 	//オートセーブ
 	autoSave->Update();
@@ -388,7 +393,7 @@ void GameScene::Update()
 void GameScene::Draw()
 {
 	//-------背景スプライト描画処理-------//
-	SpriteManager::GetInstance()->beginDraw();
+	/*SpriteManager::GetInstance()->beginDraw();*/
 
 
 
@@ -420,10 +425,10 @@ void GameScene::Draw()
 	}
 
 	//-------前景スプライト描画処理-------//
-	SpriteManager::GetInstance()->beginDraw();
+	/*priteManager::GetInstance()->beginDraw();*/
 
 	//clearSprite->Draw();
-	if (titleSprite->endFlip == false) {
+	/*if (titleSprite->endFlip == false) {
 		titleSprite->Draw();
 	}
 
@@ -437,6 +442,6 @@ void GameScene::Draw()
 
 	if (isClear == true) {
 		clearSprite->Draw();
-	}
+	}*/
 
 }
