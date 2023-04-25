@@ -83,16 +83,17 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
 	model0 = FbxLoader::GetInstance()->LoadModelFromFile("key", "Resources/key.png");
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/white1x1.png");
-	model2 = FbxLoader::GetInstance()->LoadModelFromFile("light", "Resources/white1x1.png");
-	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/gray1x1.png");
-	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/blue1x1.png");
-	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/red1x1.png");
-	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/green1x1.png");
-	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/transparentYellow1x1.png");
-	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
-	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/yellow1x1.png");
-	boxModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/cube/Crate.jpg");
+	model1 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/white1x1.png");
+	model2 = FbxLoader::GetInstance()->LoadModelFromFile("light", "Resources/color/white1x1.png");
+	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
+	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
+	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
+	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/green1x1.png");
+	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/transparentYellow1x1.png");
+	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
+	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
+	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
+	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -119,21 +120,21 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	object2->Initialize();
 	object2->SetModel(model2);
 
-	//ブロック
+	//--------ブロック----------
 	for (int i = 0; i < blockSize; i++) {
 		blockObject[i] = new FbxObject3D2;
 		blockObject[i]->Initialize();
 		blockObject[i]->SetModel(blockModel);
 	}
 
-	//ブロック
+	//----------ブロック---------
 	blockObject[0]->SetPosition({ 14,1,0 });
 	blockObject[1]->SetPosition({ 20,1,0 });
 
 	blockObject[2]->SetPosition({ 27,1,0 });
 	blockObject[3]->SetPosition({ 37,1,0 });
 
-	//プレイヤー
+	//----------プレイヤー--------
 	playerColBox = new CubeObject3D();
 	playerColBox->Initialize();
 	playerColBox->SetModel(cubeModel);
@@ -141,13 +142,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Player::SetDXInput(dxInput);
 	player = new Player;
 	player->Initialize(playerModel, playerColBox);
-
-	//敵
+	
+	//---------敵---------
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i] = new Enemy;
 		enemy[i]->Initialize(enemyModel,enemyModel2, enemyEyeModel,player);
 	}
-	//敵
+
 	enemy[0]->SetPosition({ 17,1,1 });
 	enemy[1]->SetPosition({ 23,1,1 });
 	enemy[2]->SetPosition({ 30,1,1 });
@@ -162,19 +163,17 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	enemy[8]->SetPosition({ 104.5,1,1 });
 	enemy[9]->SetPosition({ 109.0,1,1 });
 
-	//監視カメラ
+	//---------監視カメラ---------
 	for (int i = 0; i < cameraEnemySize; i++) {
 		cameraEnemy[i] = new CameraEnemy;
 		cameraEnemy[i]->Initialize(cameraEnemyModel, enemyEyeModel,player);
 	}
 	cameraEnemy[0]->SetPosition({ 40,5,0 });
 
-	//ボタン
+	//--------ボタン----------
 
 	float startPos3 = 50;
 
-	Button::SetInput(input_);
-	Button::SetDXInput(dxInput);
 	for (int i = 0; i < buttonSize; i++) {
 		ButtonColBox[i] = new CubeObject3D();
 		ButtonColBox[i]->Initialize();
@@ -208,12 +207,25 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	button[6]->SetPositionX(startPos3 + 56);
 	button[6]->SetBlockPositionX(startPos3 + 71);
 
-	//box
+	//--------爆弾--------	
+	for (int i = 0; i < buttonSize; i++) {
 
-	Box::SetInput(input_);
-	Box::SetDXInput(dxInput);
-	box = new Box();
-	box->Initialize(boxModel,player);
+		bomb[i] = new Bomb();
+		bomb[i]->Initialize(bombModel, player);
+	}
+	bomb[0]->SetPositionX(-10.0f);
+	bomb[1]->SetPositionX(-10.0f);
+	bomb[2]->SetPositionX(-10.0f);
+
+	//----------沼----------
+	for (int i = 0; i < swampSize; i++) {
+		swamp[i] = new Swamp();
+		swamp[i]->Initialize(swampModel, player);
+	}
+
+	swamp[0]->SetPositionX(3.0f);
+	swamp[1]->SetPositionX(-10.0f);
+	swamp[2]->SetPositionX(-10.0f);
 
 	//------テクスチャ------
 
@@ -329,7 +341,6 @@ void GameScene::Update()
 
 	//プレイヤー
 	player->Update();
-	playerpos = player->GetPosition();
 
 	//復活
 	if (input_->PushKey(DIK_E)) {
@@ -367,6 +378,16 @@ void GameScene::Update()
 		button[i]->Update();
 	}
 
+	//爆弾
+	for (int i = 0; i < bombSize; i++) {
+		bomb[i]->Update();
+	}
+
+	//沼
+	for (int i = 0; i < swampSize; i++) {
+		swamp[i]->Update();
+	}
+
 	//スプライト
 
 	//タイトル
@@ -384,7 +405,6 @@ void GameScene::Update()
 	clearSprite->Update();
 	gameoverSprite->Update();
 	titleUISprite->Update();
-
 
 	//オートセーブ
 	autoSave->Update();
@@ -420,6 +440,16 @@ void GameScene::Draw()
 	//ボタン
 	for (int i = 0; i < buttonSize; i++) {
 		button[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//爆弾
+	for (int i = 0; i < bombSize; i++) {
+		bomb[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//沼
+	for (int i = 0; i < swampSize; i++) {
+		swamp[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	/*cubeObject->Draw(dxCommon_->GetCommandList());*/

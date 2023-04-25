@@ -17,10 +17,11 @@
 #include "Button.h"
 #include"CameraEnemy.h"
 #include "Autosave.h"
-#include "Box.h"
+#include "Bomb.h"
 #include"CubeModel.h"
 #include"CubeObject3D.h"
 #include "SpriteManager.h"
+#include "Swamp.h"
 
 class GameScene
 {
@@ -111,9 +112,15 @@ private:
 	FbxModel* buttonModel = nullptr;
 	Button* button[buttonSize] = {};
 
-	//Box
-	FbxModel* boxModel = nullptr;
-	Box* box = nullptr;
+	//爆弾
+	static const int bombSize = 3;
+	FbxModel* bombModel = nullptr;
+	Bomb* bomb[buttonSize] = {};
+
+	//沼
+	static const int swampSize = 3;
+	FbxModel* swampModel = nullptr;
+	Swamp* swamp[swampSize] = {};
 
 	//オートセーブ
 	Autosave *autoSave;
