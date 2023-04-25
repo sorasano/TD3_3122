@@ -1,332 +1,105 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="ソース ファイル">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="ヘッダー ファイル">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
-    <Filter Include="リソース ファイル">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="ソース ファイル\base">
-      <UniqueIdentifier>{3a4b7716-6f99-42a7-a5f9-ca70fa0c22ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\base">
-      <UniqueIdentifier>{66ee5674-209b-4950-90a0-6d4471266905}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\fbx">
-      <UniqueIdentifier>{8e67146e-ea7d-47ff-8d0b-a89aafdf31ae}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\fbx">
-      <UniqueIdentifier>{283aea25-45f1-41cb-bae9-dd8791df00bc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="リソース ファイル\Shaders">
-      <UniqueIdentifier>{a0811bc8-edb0-462d-94ad-fbf108442623}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\light">
-      <UniqueIdentifier>{83486a7a-0b44-451a-934d-289376bb2329}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\light">
-      <UniqueIdentifier>{e75dbca6-5c7b-4d44-b7d3-8f0b4930d796}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Sprite">
-      <UniqueIdentifier>{1a4e71d1-eeac-401e-8484-5f728f0a99ad}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Sprite">
-      <UniqueIdentifier>{8183fb7c-7f06-4316-8e48-f6beb141ff98}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\2d">
-      <UniqueIdentifier>{1c790c60-7f0a-4721-a9e5-d1e94abbf7fe}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\2d">
-      <UniqueIdentifier>{320745d5-64b4-4ee5-8c5d-329015e2074f}</UniqueIdentifier>
-    </Filter>
+    <FxCompile Include="FbxShadowPixelShader.hlsl" />
+    <FxCompile Include="FbxShadowVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\FbxPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\FbxVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\PixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\SpritePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\VertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="base\DirectXCommon.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\DXInput.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\FPS.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\Input.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\Message.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="base\WinApp.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="fbx\FbxLoader.cpp">
-      <Filter>ソース ファイル\fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="fbx\FbxModel.cpp">
-      <Filter>ソース ファイル\fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="fbx\FbxObject3D.cpp">
-      <Filter>ソース ファイル\fbx</Filter>
-    </ClCompile>
-    <ClCompile Include="Camera.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="DirectionalLight.cpp">
-      <Filter>ソース ファイル\light</Filter>
-    </ClCompile>
-    <ClCompile Include="LightGroup.cpp">
-      <Filter>ソース ファイル\light</Filter>
-    </ClCompile>
-    <ClCompile Include="PointLight.cpp">
-      <Filter>ソース ファイル\light</Filter>
-    </ClCompile>
-    <ClCompile Include="SpotLight.cpp">
-      <Filter>ソース ファイル\light</Filter>
-    </ClCompile>
-    <ClCompile Include="Shadow.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="base\ImGuiManager.cpp">
-      <Filter>ソース ファイル\base</Filter>
-    </ClCompile>
-    <ClCompile Include="FbxObject3D2.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector3.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GpPipeline.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Random.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Easing.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Button.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CameraEnemy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Autosave.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Box.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CubeModel.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="CubeObject3D.cpp">
-      <Filter>ソース ファイル</Filter>
-    <ClCompile Include="2d\BlurEffect.cpp">
-      <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="2d\ChromaticAberrationEffect.cpp">
-      <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="2d\MonochromeEffect.cpp">
-      <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="2d\MosaicEffect.cpp">
-      <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="2d\PostEffect.cpp">
-      <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="2d\ReversalEffect.cpp">
-      <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="2d\ShadowMap.cpp">
-      <Filter>ソース ファイル\2d</Filter>
-    </ClCompile>
-    <ClCompile Include="base\Sprite.cpp">
-      <Filter>ソース ファイル\Sprite</Filter>
-    </ClCompile>
-    <ClCompile Include="base\SpriteManager.cpp">
-      <Filter>ソース ファイル\Sprite</Filter>
-    </ClCompile>
+    <ClCompile Include="2d\BlurEffect.cpp" />
+    <ClCompile Include="2d\ChromaticAberrationEffect.cpp" />
+    <ClCompile Include="2d\MonochromeEffect.cpp" />
+    <ClCompile Include="2d\MosaicEffect.cpp" />
+    <ClCompile Include="2d\PostEffect.cpp" />
+    <ClCompile Include="2d\ReversalEffect.cpp" />
+    <ClCompile Include="2d\ShadowMap.cpp" />
+    <ClCompile Include="Autosave.cpp" />
+    <ClCompile Include="base\DirectXCommon.cpp" />
+    <ClCompile Include="base\DXInput.cpp" />
+    <ClCompile Include="base\FPS.cpp" />
+    <ClCompile Include="base\ImGuiManager.cpp" />
+    <ClCompile Include="base\Input.cpp" />
+    <ClCompile Include="base\Message.cpp" />
+    <ClCompile Include="base\Sprite.cpp" />
+    <ClCompile Include="base\SpriteManager.cpp" />
+    <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraEnemy.cpp" />
+    <ClCompile Include="CubeModel.cpp" />
+    <ClCompile Include="CubeObject3D.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FbxObject3D2.cpp" />
+    <ClCompile Include="fbx\FbxLoader.cpp" />
+    <ClCompile Include="fbx\FbxModel.cpp" />
+    <ClCompile Include="fbx\FbxObject3D.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GpPipeline.cpp" />
+    <ClCompile Include="LightGroup.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="Goal.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="base\DirectXCommon.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\DXInput.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\FPS.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\Input.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\Message.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="base\WinApp.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="fbx\FbxLoader.h">
-      <Filter>ヘッダー ファイル\fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="fbx\FbxModel.h">
-      <Filter>ヘッダー ファイル\fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="fbx\FbxObject3D.h">
-      <Filter>ヘッダー ファイル\fbx</Filter>
-    </ClInclude>
-    <ClInclude Include="Camera.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CircleShadow.h">
-      <Filter>ヘッダー ファイル\light</Filter>
-    </ClInclude>
-    <ClInclude Include="DirectionalLight.h">
-      <Filter>ヘッダー ファイル\light</Filter>
-    </ClInclude>
-    <ClInclude Include="LightGroup.h">
-      <Filter>ヘッダー ファイル\light</Filter>
-    </ClInclude>
-    <ClInclude Include="PointLight.h">
-      <Filter>ヘッダー ファイル\light</Filter>
-    </ClInclude>
-    <ClInclude Include="SpotLight.h">
-      <Filter>ヘッダー ファイル\light</Filter>
-    </ClInclude>
-    <ClInclude Include="Shadow.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="base\ImGuiManager.h">
-      <Filter>ヘッダー ファイル\base</Filter>
-    </ClInclude>
-    <ClInclude Include="FbxObject3D2.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GpPipeline.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Random.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Easing.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Button.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CameraEnemy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Autosave.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Box.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeModel.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CubeObject3D.h">
-      <Filter>ヘッダー ファイル</Filter>
-    <ClInclude Include="2d\BlurEffect.h">
-      <Filter>ヘッダー ファイル\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\ChromaticAberrationEffect.h">
-      <Filter>ヘッダー ファイル\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\MonochromeEffect.h">
-      <Filter>ヘッダー ファイル\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\MosaicEffect.h">
-      <Filter>ヘッダー ファイル\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\PostEffect.h">
-      <Filter>ヘッダー ファイル\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\ReversalEffect.h">
-      <Filter>ヘッダー ファイル\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\ShadowMap.h">
-      <Filter>ヘッダー ファイル\2d</Filter>
-    </ClInclude>
-    <ClInclude Include="base\Sprite.h">
-      <Filter>ヘッダー ファイル\Sprite</Filter>
-    </ClInclude>
-    <ClInclude Include="base\SpriteManager.h">
-      <Filter>ヘッダー ファイル\Sprite</Filter>
-    </ClInclude>
+    <ClInclude Include="2d\BlurEffect.h" />
+    <ClInclude Include="2d\ChromaticAberrationEffect.h" />
+    <ClInclude Include="2d\MonochromeEffect.h" />
+    <ClInclude Include="2d\MosaicEffect.h" />
+    <ClInclude Include="2d\PostEffect.h" />
+    <ClInclude Include="2d\ReversalEffect.h" />
+    <ClInclude Include="2d\ShadowMap.h" />
+    <ClInclude Include="Autosave.h" />
+    <ClInclude Include="base\DirectXCommon.h" />
+    <ClInclude Include="base\DXInput.h" />
+    <ClInclude Include="base\FPS.h" />
+    <ClInclude Include="base\ImGuiManager.h" />
+    <ClInclude Include="base\Input.h" />
+    <ClInclude Include="base\Message.h" />
+    <ClInclude Include="base\Sprite.h" />
+    <ClInclude Include="base\SpriteManager.h" />
+    <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraEnemy.h" />
+    <ClInclude Include="CircleShadow.h" />
+    <ClInclude Include="CubeModel.h" />
+    <ClInclude Include="CubeObject3D.h" />
+    <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="Easing.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FbxObject3D2.h" />
+    <ClInclude Include="fbx\FbxLoader.h" />
+    <ClInclude Include="fbx\FbxModel.h" />
+    <ClInclude Include="fbx\FbxObject3D.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GpPipeline.h" />
+    <ClInclude Include="LightGroup.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="Shadow.h" />
+    <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Goal.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shaders\FbxHeader.hlsli">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\ShaderHeader.hlsli">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </None>
-    <None Include="Resources\Shaders\SpriteHeader.hlsli">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </None>
-    <None Include="FbxShadowHeader.hlsli">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
-    <FxCompile Include="Resources\Shaders\FbxPixelShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\FbxVertexShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\PixelShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\SpritePixelShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\VertexShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="FbxShadowVertexShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
-    <FxCompile Include="FbxShadowPixelShader.hlsl">
-      <Filter>リソース ファイル\Shaders</Filter>
-    </FxCompile>
+    <None Include="FbxShadowHeader.hlsli" />
+    <None Include="Resources\Shaders\FbxHeader.hlsli" />
+    <None Include="Resources\Shaders\ShaderHeader.hlsli" />
+    <None Include="Resources\Shaders\SpriteHeader.hlsli" />
   </ItemGroup>
 </Project>

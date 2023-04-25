@@ -34,6 +34,8 @@ public:
 
 	void SetisDeath(int isDeath) { this->isDeath = isDeath; };
 
+	void SetisClear(bool isClear) { this->isClear = isClear; };
+
 	static void SetInput(Input* input) { Player::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Player::dxInput = dxInput; }
 
@@ -55,6 +57,8 @@ private:
 
 	//生きてるか
 	bool isDeath = false;
+	//ゴールしてるか
+	bool isClear = false;
 
 	//判定
 	CubeObject3D* cubeObject = nullptr;

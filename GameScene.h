@@ -21,6 +21,7 @@
 #include"CubeModel.h"
 #include"CubeObject3D.h"
 #include "SpriteManager.h"
+#include"Goal.h"
 
 class GameScene
 {
@@ -155,11 +156,10 @@ private:
 
 	//テクスチャ
 	Sprite* clearSprite = nullptr;
+	Sprite* whiteSprite = nullptr;
 
 	Sprite* gameoverSprite = nullptr;
-
 	Sprite* titleSprite = nullptr;
-
 	Sprite* titleUISprite = nullptr;
 
 
@@ -172,4 +172,7 @@ private:
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
 	CubeObject3D* ButtonColBox[buttonSize] = {};
+
+	//ゴール判定
+	Goal* goal = nullptr;
 };

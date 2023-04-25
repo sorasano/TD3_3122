@@ -28,14 +28,14 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cube
 
 	//”»’è
 	this->cubeObject = cubeObject;
-	this->cubeObject->SetScale(XMFLOAT3(3, 3, 5));
+	this->cubeObject->SetScale(XMFLOAT3(blockScale.x*100.0f, blockScale.y* 100.0f, blockScale.z*100.0f));
 }
 
 void Button::Update()
 {
 
 	colPosition = blockPosition;
-	colPosition.y += 1;
+	colPosition.y += 1.5f;
 
 	//”»’è
 	cubeObject->SetPosition(colPosition);
