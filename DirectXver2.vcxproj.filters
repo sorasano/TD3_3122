@@ -135,6 +135,11 @@
     <ClCompile Include="Box.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CubeModel.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CubeObject3D.cpp">
+      <Filter>ソース ファイル</Filter>
     <ClCompile Include="2d\BlurEffect.cpp">
       <Filter>ソース ファイル\2d</Filter>
     </ClCompile>
@@ -251,6 +256,11 @@
     <ClInclude Include="Box.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CubeModel.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="CubeObject3D.h">
+      <Filter>ヘッダー ファイル</Filter>
     <ClInclude Include="2d\BlurEffect.h">
       <Filter>ヘッダー ファイル\2d</Filter>
     </ClInclude>

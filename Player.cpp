@@ -3,13 +3,16 @@
 Input* Player::input = nullptr;
 DXInput* Player::dxInput = nullptr;
 
-void Player::Initialize(FbxModel* playerModel)
+void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 {
 
 	playerObject = new FbxObject3D;
 	playerObject->Initialize();
 	playerObject->SetModel(playerModel);
 
+	//”»’è
+	this->cubeObject = cubeObject;
+	this->cubeObject->SetScale(XMFLOAT3(1, 1, 1));
 }
 
 void Player::Update()
@@ -35,12 +38,17 @@ void Player::Update()
 	playerObject->SetRotation(rotate);
 	playerObject->Update();
 
+	//”»’è
+	cubeObject->SetPosition(position);
+	cubeObject->Update();
+
 }
 
 void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	if (isDeath == false) {
 		playerObject->Draw(cmdList);
+		cubeObject->Draw(cmdList);
 	}
 
 }

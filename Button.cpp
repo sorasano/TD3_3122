@@ -5,7 +5,7 @@
 Input* Button::input = nullptr;
 DXInput* Button::dxInput = nullptr;
 
-void Button::Initialize(FbxModel* ButtonModel, Player* player)
+void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cubeObject)
 {
 	//ƒvƒŒƒCƒ„[
 	this->player = player;
@@ -26,10 +26,20 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player)
 	blockObject->SetRotation(blockRotate);
 	blockObject->Update();
 
+	//”»’è
+	this->cubeObject = cubeObject;
+	this->cubeObject->SetScale(XMFLOAT3(3, 3, 5));
 }
 
 void Button::Update()
 {
+
+	colPosition = blockPosition;
+	colPosition.y += 1;
+
+	//”»’è
+	cubeObject->SetPosition(colPosition);
+	cubeObject->Update();
 
 	ButtonCol();
 
@@ -50,12 +60,14 @@ void Button::Update()
 	blockObject->SetScale(blockScale);
 	blockObject->SetRotation(blockRotate);
 	blockObject->Update();
+
 }
 
 void Button::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	buttonObject->Draw(cmdList);
 	blockObject->Draw(cmdList);
+	cubeObject->Draw(cmdList);
 }
 
 void Button::ButtonCol()
@@ -125,18 +137,22 @@ void Button::BlockCol()
 	float pPosZ1 = player->GetPosition().z - scale;
 	float pPosZ2 = player->GetPosition().z + scale;
 
-	//“–‚½‚Á‚½‚ç
-	if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
+	////“–‚½‚Á‚½‚ç
+	//if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
 
-		if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
+	//	if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
 
-			if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
+	//		if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
 
-				player->Death();
+	//			player->Death();
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
+
+	if (cubeObject->CheakCollision(player->GetCubeObject())) {
+		player->Death();
+	};
 
 }
 

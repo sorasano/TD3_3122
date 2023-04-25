@@ -18,6 +18,8 @@
 #include"CameraEnemy.h"
 #include "Autosave.h"
 #include "Box.h"
+#include"CubeModel.h"
+#include"CubeObject3D.h"
 #include "SpriteManager.h"
 
 class GameScene
@@ -164,4 +166,10 @@ private:
 	//タイトルUI用タイマー
 	int titleTimer;
 	int titleAssistTime = 300;
+
+	//当たり判定キューブモデル
+	CubeModel* cubeModel = nullptr;
+	//当たり判定キューブオブジェクト
+	CubeObject3D* playerColBox = nullptr;
+	CubeObject3D* ButtonColBox[buttonSize] = {};
 };

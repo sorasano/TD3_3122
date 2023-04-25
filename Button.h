@@ -4,13 +4,15 @@
 #include "FbxObject3d2.h"
 #include "FbxModel.h"
 #include "Player.h"
+#include"CubeModel.h"
+#include"CubeObject3D.h"
 
 class Button
 {
 
 public:
 
-	void Initialize(FbxModel* buttonModel,Player *player);
+	void Initialize(FbxModel* buttonModel,Player *player,CubeObject3D* cubeObject);
 
 	void Update();
 
@@ -63,6 +65,8 @@ private:
 	XMFLOAT3 blockScale = { 0.03f,0.03f,0.03f };
 	XMFLOAT3 blockRotate = { 0.0f,0.0f,0.0f };
 
+	XMFLOAT3 colPosition = { 0.0f,1.0f,-1.0f };
+
 private:
 
 	//“ü—Í
@@ -78,6 +82,9 @@ private:
 	FbxModel* blockModel = nullptr;
 
 	Player* player;
+
+	//”»’è
+	CubeObject3D* cubeObject = nullptr;
 
 	//ƒ{ƒ^ƒ“‚ª‰Ÿ‚³‚ê‚½‚Æ‚«
 	bool push = false;
