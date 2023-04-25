@@ -23,7 +23,4 @@ public:
 	//ƒƒ“ƒo•Ï”
 	WNDCLASSEX w{};
 	HWND hwnd;
-
-	static const int winW = 1280;
-	static const int winH = 720;
 };

@@ -20,6 +20,7 @@
 #include "Box.h"
 #include"CubeModel.h"
 #include"CubeObject3D.h"
+#include "SpriteManager.h"
 
 class GameScene
 {
@@ -62,6 +63,9 @@ private:
 	FbxModel* playerModel = nullptr;
 	Player* player = nullptr;
 	XMFLOAT3 playerpos;
+
+	//スプライトマネージャー
+	SpriteManager* spriteManager = nullptr;
 
 	//敵
 	static const int enemySize = 10;
@@ -150,16 +154,12 @@ private:
 
 
 	//テクスチャ
-	uint32_t clearTexture = 0;		//クリア画面
 	Sprite* clearSprite = nullptr;
 
-	uint32_t gameoverTexture = 0;		//ゲームオーバー画面
 	Sprite* gameoverSprite = nullptr;
 
-	uint32_t titleTexture = 0;		//タイトル画面
 	Sprite* titleSprite = nullptr;
 
-	uint32_t titleUITexture = 0;
 	Sprite* titleUISprite = nullptr;
 
 

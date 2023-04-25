@@ -120,7 +120,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)base;$(ProjectDir);$(ProjectDir)fbx;$(ProjectDir)Resources;$(ProjectDir)Resources\Shaders;$(ProjectDIr)fbxsdk\lib\fbx_sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)base;$(ProjectDir);$(ProjectDir)fbx;$(ProjectDir)Resources;$(ProjectDir)Resources\Shaders;$(ProjectDir)2d;$(ProjectDIr)fbxsdk\lib\fbx_sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -137,7 +137,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)base;$(ProjectDir);$(ProjectDir)fbx;$(ProjectDir)Resources;$(ProjectDir)Resources\Shaders;C:\Users\a\Desktop\fbxsdk\lib\fbx_sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)base;$(ProjectDir);$(ProjectDir)fbx;$(ProjectDir)Resources;$(ProjectDir)Resources\Shaders;$(ProjectDir)2d;C:\Users\a\Desktop\fbxsdk\lib\fbx_sdk\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -149,6 +149,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="2d\BlurEffect.cpp" />
+    <ClCompile Include="2d\ChromaticAberrationEffect.cpp" />
+    <ClCompile Include="2d\MonochromeEffect.cpp" />
+    <ClCompile Include="2d\MosaicEffect.cpp" />
+    <ClCompile Include="2d\PostEffect.cpp" />
+    <ClCompile Include="2d\ReversalEffect.cpp" />
+    <ClCompile Include="2d\ShadowMap.cpp" />
     <ClCompile Include="Autosave.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\DXInput.cpp" />
@@ -156,6 +163,8 @@
     <ClCompile Include="base\ImGuiManager.cpp" />
     <ClCompile Include="base\Input.cpp" />
     <ClCompile Include="base\Message.cpp" />
+    <ClCompile Include="base\Sprite.cpp" />
+    <ClCompile Include="base\SpriteManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
     <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
@@ -179,12 +188,16 @@
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SpotLight.cpp" />
-    <ClCompile Include="Sprite.cpp" />
-    <ClCompile Include="SpriteManager.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="2d\BlurEffect.h" />
+    <ClInclude Include="2d\ChromaticAberrationEffect.h" />
+    <ClInclude Include="2d\MonochromeEffect.h" />
+    <ClInclude Include="2d\MosaicEffect.h" />
+    <ClInclude Include="2d\PostEffect.h" />
+    <ClInclude Include="2d\ReversalEffect.h" />
+    <ClInclude Include="2d\ShadowMap.h" />
     <ClInclude Include="Autosave.h" />
     <ClInclude Include="base\DirectXCommon.h" />
     <ClInclude Include="base\DXInput.h" />
@@ -192,6 +205,8 @@
     <ClInclude Include="base\ImGuiManager.h" />
     <ClInclude Include="base\Input.h" />
     <ClInclude Include="base\Message.h" />
+    <ClInclude Include="base\Sprite.h" />
+    <ClInclude Include="base\SpriteManager.h" />
     <ClInclude Include="base\WinApp.h" />
     <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
@@ -215,9 +230,6 @@
     <ClInclude Include="Random.h" />
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="SpotLight.h" />
-    <ClInclude Include="Sprite.h" />
-    <ClInclude Include="SpriteManager.h" />
-    <ClInclude Include="Texture.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>

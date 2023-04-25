@@ -1,4 +1,4 @@
-#include "SpriteHeader.hlsli"
+#include "PostEffectHeader.hlsli"
 
 VSOutput main(float4 pos : POSITION, float2 uv : TEXCOORD)
 {
