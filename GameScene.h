@@ -44,16 +44,9 @@ private:
 	//カメラ
 	std::unique_ptr<Camera> camera_;
 
-	//fbx
-	FbxModel* model0 = nullptr;
-	FbxObject3D* object0 = nullptr;
-	FbxObject3D* object2 = nullptr;
-
-	FbxObject3D2* object1 = nullptr;
-
-	FbxModel* model1 = nullptr;
-	//FbxObject3D* object1 = nullptr;
-	FbxModel* model2 = nullptr;
+	//床
+	FbxObject3D2* groundObject = nullptr;
+	FbxModel* groundModel = nullptr;
 
 	//ブロック
 	static const int blockSize = 4;

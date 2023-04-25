@@ -82,9 +82,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//FBX読み込み
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
-	model0 = FbxLoader::GetInstance()->LoadModelFromFile("key", "Resources/key.png");
-	model1 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/white1x1.png");
-	model2 = FbxLoader::GetInstance()->LoadModelFromFile("light", "Resources/color/white1x1.png");
+	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/white1x1.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
@@ -107,18 +105,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	FbxObject3D2::SetLightGroup(lightGroup0);
 	FbxObject3D2::CreateGraphicsPipeline();
 
-	//オブジェクト初期化
-	object0 = new FbxObject3D;
-	object0->Initialize();
-	object0->SetModel(model0);
-
-	object1 = new FbxObject3D2;
-	object1->Initialize();
-	object1->SetModel(model1);
-
-	object2 = new FbxObject3D;
-	object2->Initialize();
-	object2->SetModel(model2);
+	groundObject = new FbxObject3D2;
+	groundObject->Initialize();
+	groundObject->SetModel(groundModel);
 
 	//--------ブロック----------
 	for (int i = 0; i < blockSize; i++) {
@@ -315,21 +304,11 @@ void GameScene::Update()
 	lightGroup1->Update();
 
 	//オブジェクト更新
-	rotation0.y += 0.02;
-	object0->SetPosition({ 0,3,0 });
-	object0->SetScale({ 0.2f,0.1f,0.4f });
-	object0->SetRotation(rotation0);
-	object0->Update();
 
-	object1->SetPosition({ 0,0,0 });
-	object1->SetScale({ 10.0f,0.01f,0.5f });
-	object1->SetRotation({ 0.0f,0.0f,0.0f });
-	object1->Update();
-
-	object2->SetPosition(XMFLOAT3(shadowLightPos));
-	object2->SetScale({ 0.2f,0.1f,0.4f });
-	object2->SetRotation({ 0,0,0 });
-	object2->Update();
+	groundObject->SetPosition({ 0,0,0 });
+	groundObject->SetScale({ 10.0f,0.01f,0.5f });
+	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
+	groundObject->Update();
 
 	//ブロック
 
@@ -416,7 +395,7 @@ void GameScene::Draw()
 
 
 	//object0->Draw(dxCommon_->GetCommandList());
-	object1->Draw(dxCommon_->GetCommandList());
+	groundObject->Draw(dxCommon_->GetCommandList());
 	//object2->Draw(dxCommon_->GetCommandList());
 
 	//ブロック
