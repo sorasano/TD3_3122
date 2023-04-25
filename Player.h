@@ -2,13 +2,16 @@
 #include "DirectXMath.h"
 #include "FbxObject3d.h"
 #include "FbxModel.h"
+#include"CubeModel.h"
+#include"CubeObject3D.h"
+#include "Camera.h"
 
 class Player
 {
 
 public:
 
-	void Initialize(FbxModel* playerModel);
+	void Initialize(FbxModel* playerModel, CubeObject3D* cubeObject);
 
 	void Update();
 
@@ -22,6 +25,8 @@ public:
 
 
 	XMFLOAT3 GetPosition() { return position; }
+
+	CubeObject3D *GetCubeObject() {return cubeObject; }
 
 	bool GetDeath() { return isDeath; }
 
@@ -50,6 +55,9 @@ private:
 
 	//生きてるか
 	bool isDeath = false;
+
+	//判定
+	CubeObject3D* cubeObject = nullptr;
 
 };
 
