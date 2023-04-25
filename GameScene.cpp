@@ -218,8 +218,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	clearSprite->Initialize();
 	//アンカーポイントをスプライトの中心に
 	clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	clearSprite->SetPosition(XMFLOAT2(258,127));
-	clearSprite->SetPosition(XMFLOAT2(window_width,window_height / 2 - 200));
+	clearSprite->SetScale(XMFLOAT2(258,127));
+	clearSprite->SetPosition(XMFLOAT2(window_width / 2,window_height / 2 - 200));
 	clearSprite->Update();
 
 	//---ゲームオーバー---
@@ -409,7 +409,6 @@ void GameScene::Draw()
 
 	//-------前景スプライト描画処理-------//
 
-	clearSprite->Draw(dxCommon_->GetCommandList());
 	if (titleSprite->endFlip == false) {
 		titleSprite->Draw(dxCommon_->GetCommandList());
 	}

@@ -144,7 +144,7 @@ private:
 	//クリア
 
 	bool isClear = false;
-	float clearPos = 130;
+	float clearPos = 10;
 
 	bool isHit = false;
 	bool isFound = false;
