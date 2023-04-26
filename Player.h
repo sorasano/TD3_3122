@@ -43,12 +43,7 @@ public:
 	//ジャンプ処理
 	void Jump();
 
-	void SetisDeath(int isDeath) { this->isDeath = isDeath; };
-
 	void SetisClear(bool isClear) { this->isClear = isClear; };
-
-	static void SetInput(Input* input) { Player::input = input; }
-	static void SetDXInput(DXInput* dxInput) { Player::dxInput = dxInput; }
 	void Swamp();
 
 private:

@@ -198,10 +198,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//--------爆弾--------	
 	for (int i = 0; i < buttonSize; i++) {
-	Box::SetInput(input_);
+	/*Box::SetInput(input_);
 	Box::SetDXInput(dxInput);
 	box = new Box();
-	box->Initialize(boxModel, player);
+	box->Initialize(boxModel, player);*/
 		bomb[i] = new Bomb();
 		bomb[i]->Initialize(bombModel, player);
 	}
@@ -225,8 +225,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	spriteManager->LoadFile(1, L"Resources/gameover2.png");
 	spriteManager->LoadFile(2, L"Resources/title.png");
 	spriteManager->LoadFile(3, L"Resources/titleUI.png");
-	spriteManager->LoadFile(4, L"Resources/white1x1.png");
-	spriteManager->LoadFile(5, L"Resources/black1x1.png");
+	spriteManager->LoadFile(4, L"Resources/color/white1x1.png");
+	spriteManager->LoadFile(5, L"Resources/color/black1x1.png");
 
 	//スプライト
 	Sprite::SetDevice(dxCommon->GetDevice());
