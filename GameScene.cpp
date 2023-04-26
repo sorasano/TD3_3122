@@ -606,6 +606,14 @@ void GameScene::Update()
 		}
 	}
 	if (isback == true) {
+		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+			//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
+			if (alpha <= 0.5f) {
+				alpha = 0.0f;
+				player->SetAlpha(alpha);
+				isback = false;
+			}
+		}
 		player->SetisDeath(false);
 		player->SetAlpha(alpha);
 		alpha -= 0.005f;
