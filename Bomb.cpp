@@ -43,9 +43,9 @@ void Bomb::Colision()
 	float bPosZ1 = position.z - scaleZ;
 	float bPosZ2 = position.z + scaleZ;
 
-	float pScaleX = player->GetScale().x * 100 / 2;
-	float pScaleY = player->GetScale().y * 100 / 2;
-	float pScaleZ = player->GetScale().z * 100 / 2;
+	float pScaleX = 0.5;
+	float pScaleY = 0.5;
+	float pScaleZ = 0.5;
 
 	float pPosX1 = player->GetPosition().x - pScaleX;
 	float pPosX2 = player->GetPosition().x + pScaleX;
