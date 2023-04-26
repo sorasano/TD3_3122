@@ -468,7 +468,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	titleUISprite->SetTextureNum(3);
 	titleUISprite->Initialize();
 	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	titleUISprite->SetScale(XMFLOAT2(282, 71));
+	titleUISprite->SetScale(XMFLOAT2(500, 100));
 	titleUISprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2 + 200));
 	titleUISprite->Update();
 
@@ -476,9 +476,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	playUISprite = new Sprite();
 	playUISprite->SetTextureNum(6);
 	playUISprite->Initialize();
-	playUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	playUISprite->SetScale(XMFLOAT2(282, 71));
-	playUISprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2 + 200));
+	//playUISprite->SetAnchorPoint(XMFLOAT2(0.0f, 0.5f));
+	playUISprite->SetScale(XMFLOAT2(250, 100));
+	playUISprite->SetPosition(XMFLOAT2(0, window_height - 100));
 	playUISprite->Update();
 
 	//ゴール
@@ -608,7 +608,7 @@ void GameScene::Update()
 	if (isback == true) {
 		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
 			//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
-			if (alpha <= 0.5f) {
+			if (alpha <= 0.8f) {
 				alpha = 0.0f;
 				player->SetAlpha(alpha);
 				isback = false;
@@ -688,7 +688,7 @@ void GameScene::Draw()
 
 	goal->Draw(dxCommon_->GetCommandList());
 
-	if (player->GetDeath()) {
+	if (player->GetDeath() == false) {
 		playUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
