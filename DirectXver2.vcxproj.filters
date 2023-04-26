@@ -1,6 +1,106 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <FxCompile Include="FbxShadowPixelShader.hlsl" />
+    <FxCompile Include="FbxShadowVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\FbxPixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\FbxVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\PixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\SpritePixelShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\VertexShader.hlsl" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="2d\BlurEffect.cpp" />
+    <ClCompile Include="2d\ChromaticAberrationEffect.cpp" />
+    <ClCompile Include="2d\MonochromeEffect.cpp" />
+    <ClCompile Include="2d\MosaicEffect.cpp" />
+    <ClCompile Include="2d\PostEffect.cpp" />
+    <ClCompile Include="2d\ReversalEffect.cpp" />
+    <ClCompile Include="2d\ShadowMap.cpp" />
+    <ClCompile Include="Autosave.cpp" />
+    <ClCompile Include="base\DirectXCommon.cpp" />
+    <ClCompile Include="base\DXInput.cpp" />
+    <ClCompile Include="base\FPS.cpp" />
+    <ClCompile Include="base\ImGuiManager.cpp" />
+    <ClCompile Include="base\Input.cpp" />
+    <ClCompile Include="base\Message.cpp" />
+    <ClCompile Include="base\Sprite.cpp" />
+    <ClCompile Include="base\SpriteManager.cpp" />
+    <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Box.cpp" />
+    <ClCompile Include="Button.cpp" />
+    <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraEnemy.cpp" />
+    <ClCompile Include="CubeModel.cpp" />
+    <ClCompile Include="CubeObject3D.cpp" />
+    <ClCompile Include="DirectionalLight.cpp" />
+    <ClCompile Include="Easing.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="FbxObject3D2.cpp" />
+    <ClCompile Include="fbx\FbxLoader.cpp" />
+    <ClCompile Include="fbx\FbxModel.cpp" />
+    <ClCompile Include="fbx\FbxObject3D.cpp" />
+    <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="GpPipeline.cpp" />
+    <ClCompile Include="LightGroup.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="Random.cpp" />
+    <ClCompile Include="Shadow.cpp" />
+    <ClCompile Include="SpotLight.cpp" />
+    <ClCompile Include="Vector3.cpp" />
+    <ClCompile Include="Goal.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="2d\BlurEffect.h" />
+    <ClInclude Include="2d\ChromaticAberrationEffect.h" />
+    <ClInclude Include="2d\MonochromeEffect.h" />
+    <ClInclude Include="2d\MosaicEffect.h" />
+    <ClInclude Include="2d\PostEffect.h" />
+    <ClInclude Include="2d\ReversalEffect.h" />
+    <ClInclude Include="2d\ShadowMap.h" />
+    <ClInclude Include="Autosave.h" />
+    <ClInclude Include="base\DirectXCommon.h" />
+    <ClInclude Include="base\DXInput.h" />
+    <ClInclude Include="base\FPS.h" />
+    <ClInclude Include="base\ImGuiManager.h" />
+    <ClInclude Include="base\Input.h" />
+    <ClInclude Include="base\Message.h" />
+    <ClInclude Include="base\Sprite.h" />
+    <ClInclude Include="base\SpriteManager.h" />
+    <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Box.h" />
+    <ClInclude Include="Button.h" />
+    <ClInclude Include="Camera.h" />
+    <ClInclude Include="CameraEnemy.h" />
+    <ClInclude Include="CircleShadow.h" />
+    <ClInclude Include="CubeModel.h" />
+    <ClInclude Include="CubeObject3D.h" />
+    <ClInclude Include="DirectionalLight.h" />
+    <ClInclude Include="Easing.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="FbxObject3D2.h" />
+    <ClInclude Include="fbx\FbxLoader.h" />
+    <ClInclude Include="fbx\FbxModel.h" />
+    <ClInclude Include="fbx\FbxObject3D.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="GpPipeline.h" />
+    <ClInclude Include="LightGroup.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PointLight.h" />
+    <ClInclude Include="Random.h" />
+    <ClInclude Include="Shadow.h" />
+    <ClInclude Include="SpotLight.h" />
+    <ClInclude Include="Vector3.h" />
+    <ClInclude Include="Goal.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="FbxShadowHeader.hlsli" />
+    <None Include="Resources\Shaders\FbxHeader.hlsli" />
+    <None Include="Resources\Shaders\ShaderHeader.hlsli" />
+    <None Include="Resources\Shaders\SpriteHeader.hlsli" />
     <FxCompile Include="Resources\Shaders\VertexShader.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>

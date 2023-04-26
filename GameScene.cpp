@@ -135,7 +135,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//---------敵---------
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i] = new Enemy;
-		enemy[i]->Initialize(enemyModel,enemyModel2, enemyEyeModel,player);
+		enemy[i]->Initialize(enemyModel, enemyModel2, enemyEyeModel, player);
 	}
 
 	enemy[0]->SetPosition({ 17,1,1 });
@@ -155,7 +155,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//---------監視カメラ---------
 	for (int i = 0; i < cameraEnemySize; i++) {
 		cameraEnemy[i] = new CameraEnemy;
-		cameraEnemy[i]->Initialize(cameraEnemyModel, enemyEyeModel,player);
+		cameraEnemy[i]->Initialize(cameraEnemyModel, enemyEyeModel, player);
 	}
 	cameraEnemy[0]->SetPosition({ 40,5,0 });
 
@@ -198,7 +198,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//--------爆弾--------	
 	for (int i = 0; i < buttonSize; i++) {
-
+	/*Box::SetInput(input_);
+	Box::SetDXInput(dxInput);
+	box = new Box();
+	box->Initialize(boxModel, player);*/
 		bomb[i] = new Bomb();
 		bomb[i]->Initialize(bombModel, player);
 	}
@@ -222,6 +225,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	spriteManager->LoadFile(1, L"Resources/gameover2.png");
 	spriteManager->LoadFile(2, L"Resources/title.png");
 	spriteManager->LoadFile(3, L"Resources/titleUI.png");
+	spriteManager->LoadFile(4, L"Resources/color/white1x1.png");
+	spriteManager->LoadFile(5, L"Resources/color/black1x1.png");
 
 	//スプライト
 	Sprite::SetDevice(dxCommon->GetDevice());
@@ -234,41 +239,70 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	clearSprite->Initialize();
 	//アンカーポイントをスプライトの中心に
 	clearSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	clearSprite->SetScale(XMFLOAT2(258,127));
-	clearSprite->SetPosition(XMFLOAT2(window_width / 2,window_height / 2 - 200));
+	clearSprite->SetScale(XMFLOAT2(600, 300));
+	clearSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2 ));
 	clearSprite->Update();
+	//白染め
+	whiteSprite=new Sprite();
+	whiteSprite->SetTextureNum(4);
+	whiteSprite->Initialize();
+	whiteSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	whiteSprite->SetScale(XMFLOAT2(window_width, window_height));
+	whiteSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2));
+	whiteSprite->Update();
+
 
 	//---ゲームオーバー---
 	gameoverSprite = new Sprite();
 	gameoverSprite->SetTextureNum(1);
 	gameoverSprite->Initialize();
 	gameoverSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	gameoverSprite->SetScale(XMFLOAT2(390,254));
+	gameoverSprite->SetScale(XMFLOAT2(390, 254));
 	gameoverSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2));
 	gameoverSprite->Update();
+
+	//黒染め
+	/*alpha = 0;*/
+	blackSprite = new Sprite();
+	blackSprite->SetTextureNum(5);
+	blackSprite->Initialize();
+	blackSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	blackSprite->SetScale(XMFLOAT2(window_width, window_height));
+	blackSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2));
+	blackSprite->SetAlpha(alpha);
+	blackSprite->Update();
+	
 
 	//---タイトル---
 	titleSprite = new Sprite();
 	titleSprite->SetTextureNum(2);
 	titleSprite->Initialize();
 	titleSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	titleSprite->SetScale(XMFLOAT2(309,124));
+	titleSprite->SetScale(XMFLOAT2(309, 124));
 	titleSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2 - 200));
-	titleSprite->StartSway({ window_width/ 2, window_height / 2 - 200 });
+	titleSprite->StartSway({ window_width / 2, window_height / 2 - 200 });
 	titleSprite->Update();
 
 	titleUISprite = new Sprite();
 	titleUISprite->SetTextureNum(3);
 	titleUISprite->Initialize();
 	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	titleUISprite->SetScale(XMFLOAT2(282,71));
-	titleUISprite->SetPosition(XMFLOAT2(window_width / 2, window_height/ 2 + 200));
+	titleUISprite->SetScale(XMFLOAT2(282, 71));
+	titleUISprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2 + 200));
 	titleUISprite->Update();
 
 	//セーブ
 	autoSave = new Autosave;
 	autoSave->Initialize(player);
- }
+
+	//ゴール
+	goal = new Goal();
+	Goal::SetInput(input);
+	Goal::SetDXInput(dxInput);
+	goal->Initialize(whiteSprite,clearSprite, player);
+	goal->SetClearPos(startPos3 + 71 + 10);
+
+}
 
 void GameScene::Update()
 {
@@ -321,18 +355,18 @@ void GameScene::Update()
 	//プレイヤー
 	player->Update();
 
-	//復活
-	if (input_->PushKey(DIK_E)) {
-		player->SetisDeath(false);
-		if (isClear) {
-			isClear = false;
-			player->SetPosition(XMFLOAT3(0, 1, -1));
-		}
-		else {
-			XMFLOAT2 savePos = autoSave->GetSavePos();
-			player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-		}
-	}
+	////復活
+	//if (input_->PushKey(DIK_E)) {
+	//	player->SetisDeath(false);
+	//	if (isClear) {
+	//		isClear = false;
+	//		player->SetPosition(XMFLOAT3(0, 1, -1));
+	//	}
+	//	else {
+	//		XMFLOAT2 savePos = autoSave->GetSavePos();
+	//		player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+	//	}
+	//}
 
 
 	for (int i = 0; i < enemySize; i++) {
@@ -344,12 +378,7 @@ void GameScene::Update()
 
 	for (int i = 0; i < cameraEnemySize; i++) {
 		cameraEnemy[i]->Update();
-		cameraEnemydeg=cameraEnemy[i]->GetDeg();
-	}
-
-	//クリア
-	if (playerpos.x > clearPos) {
-		isClear = true;
+		cameraEnemydeg = cameraEnemy[i]->GetDeg();
 	}
 
 	//ボタン
@@ -381,12 +410,42 @@ void GameScene::Update()
 		titleTimer++;
 	}
 
-	clearSprite->Update();
+	/*clearSprite->Update();*/
 	gameoverSprite->Update();
+	blackSprite->Update();
 	titleUISprite->Update();
 
 	//オートセーブ
 	autoSave->Update();
+
+	//ゴール
+	goal->Update();
+
+	
+	//ゲームオーバー演出
+	if (player->GetDeath()) {
+		if (isback == false) {
+			alpha += 0.005f;
+			player->SetAlpha(alpha);
+			if (alpha >= 1.0f) {
+				isback = true;
+				XMFLOAT2 savePos = autoSave->GetSavePos();
+				player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+			}
+		}
+	}
+	if (isback == true) {
+		player->SetisDeath(false);
+		player->SetAlpha(alpha);
+		alpha -= 0.005f;
+		if (alpha <= 0.0f) {
+			alpha = 0.0f;
+			player->SetAlpha(alpha);
+			isback = false;
+		}
+	}
+	blackSprite->SetAlpha(alpha);
+
 }
 
 void GameScene::Draw()
@@ -443,12 +502,11 @@ void GameScene::Draw()
 		titleUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
-	if (player->GetDeath() == true) {
+	/*if (player->GetDeath() == true) {
 		gameoverSprite->Draw(dxCommon_->GetCommandList());
-	}
+	}*/
+	blackSprite->Draw(dxCommon_->GetCommandList());
 
-	if (isClear == true) {
-		clearSprite->Draw(dxCommon_->GetCommandList());
-	}
+	goal->Draw(dxCommon_->GetCommandList());
 
 }

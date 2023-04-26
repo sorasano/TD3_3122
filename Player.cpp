@@ -10,7 +10,7 @@ void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 	playerObject->Initialize();
 	playerObject->SetModel(playerModel);
 
-	//”»’è
+	//åˆ¤å®š
 	this->cubeObject = cubeObject;
 	this->cubeObject->SetScale(XMFLOAT3(1, 1, 1));
 }
@@ -18,9 +18,9 @@ void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 void Player::Update()
 {
 
-	if (isDeath == false) {
-
-		//À‚É“ü‚Á‚Ä‚¢‚é‚©
+	if (alpha == 0.0f) {
+	
+		//æ²¼ã«å…¥ã£ã¦ã„ã‚‹ã‹
 		if (inSwamp) {
 
 			if (input->PushKey(DIK_A))
@@ -43,7 +43,7 @@ void Player::Update()
 			{
 				position.x += speed;
 			}
-			//ƒWƒƒƒ“ƒv
+			//ã‚¸ãƒ£ãƒ³ãƒ—
 			if (input->PushKey(DIK_SPACE)) {
 				if (isJump == false) {
 					Jump();
@@ -54,21 +54,21 @@ void Player::Update()
 		}
 	}
 
-	//ƒŠƒZƒbƒg
+	//ãƒªã‚»ãƒƒãƒˆ
 	inSwamp = false;
 
-	//d—Í
+	//é‡åŠ›
 	position.y += gravity;
 	gravity -= gravitySpeed;
 
-	//1.0fˆÈ‰º‚É‚È‚Á‚½‚ç(’n–Ê‚É“–‚½‚Á‚Ä‚¢‚ê‚Î)
+	//1.0fä»¥ä¸‹ã«ãªã£ãŸã‚‰(åœ°é¢ã«å½“ãŸã£ã¦ã„ã‚Œã°)
 	if (position.y <= 1.0f) {
 		SetJump(false);
 		gravity = 0.0f;
 		position.y = 1.0f;
 	}
 
-	//”»’è
+	//åˆ¤å®š
 	cubeObject->SetPosition(position);
 	cubeObject->Update();
 

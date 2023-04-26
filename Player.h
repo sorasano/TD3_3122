@@ -22,6 +22,7 @@ public:
 	void SetScale(XMFLOAT3 scale);
 	void Setrotate(XMFLOAT3 rotate);
 
+	void SetAlpha(float alpha) { this->alpha = alpha; }
 	void SetisDeath(int isDeath) { this->isDeath = isDeath; }
 	void SetJump(bool isJump) { this->isJump = isJump; }
 	void SetSwamp(bool inSwamp) { this->inSwamp = inSwamp; }
@@ -42,6 +43,7 @@ public:
 	//ジャンプ処理
 	void Jump();
 
+	void SetisClear(bool isClear) { this->isClear = isClear; };
 	void Swamp();
 
 private:
@@ -65,6 +67,10 @@ private:
 
 	//生きてるか
 	bool isDeath = false;
+	//ゴールしてるか
+	bool isClear = false;
+	//演出のアルファ値
+	float alpha = 0.0f;
 
 	//移動制限　沼に入っているか
 	bool inSwamp = false;
