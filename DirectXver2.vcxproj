@@ -180,6 +180,7 @@
     <ClCompile Include="fbx\FbxModel.cpp" />
     <ClCompile Include="fbx\FbxObject3D.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GpPipeline.cpp" />
     <ClCompile Include="LightGroup.cpp" />
     <ClCompile Include="main.cpp" />
@@ -224,6 +225,7 @@
     <ClInclude Include="fbx\FbxModel.h" />
     <ClInclude Include="fbx\FbxObject3D.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="Goal.h" />
     <ClInclude Include="GpPipeline.h" />
     <ClInclude Include="LightGroup.h" />
     <ClInclude Include="Player.h" />

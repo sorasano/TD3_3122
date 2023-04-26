@@ -21,6 +21,7 @@
 #include"CubeModel.h"
 #include"CubeObject3D.h"
 #include "SpriteManager.h"
+#include"Goal.h"
 #include "Swamp.h"
 
 class GameScene
@@ -150,16 +151,16 @@ private:
 
 	bool isHit = false;
 	bool isFound = false;
-	bool isback = false;
 
 
 	//テクスチャ
 	Sprite* clearSprite = nullptr;
+	Sprite* whiteSprite = nullptr;
 
 	Sprite* gameoverSprite = nullptr;
+	Sprite* blackSprite = nullptr;
 
 	Sprite* titleSprite = nullptr;
-
 	Sprite* titleUISprite = nullptr;
 
 
@@ -172,4 +173,12 @@ private:
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
 	CubeObject3D* ButtonColBox[buttonSize] = {};
+
+	//ゴール判定
+	Goal* goal = nullptr;
+
+	//演出
+	float alpha = 0.0f;
+	bool isback = false;
+
 };
