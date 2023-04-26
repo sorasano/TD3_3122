@@ -28,7 +28,6 @@
     <ClCompile Include="base\Sprite.cpp" />
     <ClCompile Include="base\SpriteManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
-    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraEnemy.cpp" />
@@ -51,7 +50,12 @@
     <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Vector3.cpp" />
-    <ClCompile Include="Goal.cpp" />
+    <ClCompile Include="Goal.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Swamp.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\BlurEffect.h" />
@@ -71,7 +75,6 @@
     <ClInclude Include="base\Sprite.h" />
     <ClInclude Include="base\SpriteManager.h" />
     <ClInclude Include="base\WinApp.h" />
-    <ClInclude Include="Box.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraEnemy.h" />
@@ -94,7 +97,12 @@
     <ClInclude Include="Shadow.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Vector3.h" />
-    <ClInclude Include="Goal.h" />
+    <ClInclude Include="Goal.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Swamp.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="FbxShadowHeader.hlsli" />
@@ -247,7 +255,6 @@
     <ClCompile Include="Easing.cpp">
       <Filter>ソースファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Swamp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -370,7 +377,6 @@
     <ClInclude Include="Easing.h">
       <Filter>ヘッダーファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Swamp.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxHeader.hlsli">

@@ -15,7 +15,7 @@ public:
 private:
 	
 	//セーブ地点個数
-	static const int saveSize = 4;
+	static const int saveSize = 22;
 
 	XMFLOAT2 savePos[saveSize];
 

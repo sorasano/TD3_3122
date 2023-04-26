@@ -1,7 +1,11 @@
 #include "Player.h"
+#include "imgui.h"
+
 
 Input* Player::input = nullptr;
 DXInput* Player::dxInput = nullptr;
+
+#define PI 3.1415
 
 void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 {
@@ -9,6 +13,10 @@ void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 	playerObject = new FbxObject3D;
 	playerObject->Initialize();
 	playerObject->SetModel(playerModel);
+	playerObject->PlayAnimation();
+
+	//ラジアン
+	rotate.y = 90 * (PI / 180);
 
 	//判定
 	this->cubeObject = cubeObject;
@@ -19,29 +27,37 @@ void Player::Update()
 {
 
 	if (alpha == 0.0f) {
-	
+
 		//沼に入っているか
 		if (inSwamp) {
 
 			if (input->PushKey(DIK_A))
 			{
 				position.x -= swampSpeed;
+				rotate.y = 270 * (PI / 180);
+
 			}
 			if (input->PushKey(DIK_D))
 			{
 				position.x += swampSpeed;
+				rotate.y = 90 * (PI / 180);
+
 			}
 
 		}
 		else {
 
-			if (input->PushKey(DIK_A))
+			if (input->PushKey(DIK_A) && position.x > -5)
 			{
 				position.x -= speed;
+				rotate.y = 270 * (PI / 180);
+
 			}
 			if (input->PushKey(DIK_D))
 			{
 				position.x += speed;
+				rotate.y = 90 * (PI / 180);
+
 			}
 			//ジャンプ
 			if (input->PushKey(DIK_SPACE)) {
@@ -76,6 +92,10 @@ void Player::Update()
 	playerObject->SetScale(scale);
 	playerObject->SetRotation(rotate);
 	playerObject->Update();
+
+	ImGui::Begin("pPos");
+	ImGui::Text("pPosX = %f \n",position.x);
+	ImGui::End();
 
 }
 

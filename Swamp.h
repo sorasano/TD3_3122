@@ -22,6 +22,7 @@ public:
 	void SetPosition(XMFLOAT3 position) { this->position = position; }
 	void SetPositionX(float positionX) { this->position.x = positionX; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
+	void SetScaleX(float scaleX) { this->scale.x = scaleX; }
 	void Setrotate(XMFLOAT3 rotate) { this->rotate = rotate; }
 
 	//ƒQƒbƒ^[

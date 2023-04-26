@@ -50,7 +50,7 @@ private:
 	FbxModel* groundModel = nullptr;
 
 	//ブロック
-	static const int blockSize = 4;
+	static const int blockSize = 16;
 	FbxModel* blockModel = nullptr;
 	FbxObject3D2* blockObject[blockSize] = {};
 
@@ -63,7 +63,8 @@ private:
 	SpriteManager* spriteManager = nullptr;
 
 	//敵
-	static const int enemySize = 10;
+	static const int enemySize = 43;
+
 	FbxModel* enemyModel = nullptr;
 	FbxModel* enemyModel2 = nullptr;
 	Enemy* enemy[enemySize] = {};
@@ -83,7 +84,7 @@ private:
 	float distance = 9;
 
 	//監視カメラ
-	static const int cameraEnemySize = 1;
+	static const int cameraEnemySize = 8;
 	FbxModel* cameraEnemyModel = nullptr;
 	CameraEnemy* cameraEnemy[cameraEnemySize] = {};
 	XMFLOAT3 cameraEnemypos[cameraEnemySize];
@@ -102,17 +103,17 @@ private:
 	FbxModel* enemyEyeModel = nullptr;
 
 	//ボタン
-	static const int buttonSize = 7;
+	static const int buttonSize = 22;
 	FbxModel* buttonModel = nullptr;
 	Button* button[buttonSize] = {};
 
 	//爆弾
-	static const int bombSize = 3;
+	static const int bombSize = 14;
 	FbxModel* bombModel = nullptr;
 	Bomb* bomb[buttonSize] = {};
 
 	//沼
-	static const int swampSize = 3;
+	static const int swampSize = 10;
 	FbxModel* swampModel = nullptr;
 	Swamp* swamp[swampSize] = {};
 
@@ -163,6 +164,7 @@ private:
 	Sprite* titleSprite = nullptr;
 	Sprite* titleUISprite = nullptr;
 
+	Sprite* playUISprite = nullptr;
 
 	//タイトルUI用タイマー
 	int titleTimer;
