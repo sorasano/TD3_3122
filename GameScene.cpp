@@ -84,7 +84,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//モデル名を指定してファイル読み込み
 	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/white1x1.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
-	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("Walking", "Resources/color/blue1x1.png");
+	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/transparentYellow1x1.png");
@@ -109,8 +109,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	groundObject->Initialize();
 	groundObject->SetModel(groundModel);
 
-	//==================ギミック=================
-
 	//--------ブロック----------
 	for (int i = 0; i < blockSize; i++) {
 		blockObject[i] = new FbxObject3D2;
@@ -133,7 +131,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Player::SetDXInput(dxInput);
 	player = new Player;
 	player->Initialize(playerModel, playerColBox);
-
+	
 	//---------敵---------
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i] = new Enemy;
@@ -218,10 +216,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	swamp[1]->SetPositionX(-10.0f);
 	swamp[2]->SetPositionX(-10.0f);
 
-	//セーブ
-	autoSave = new Autosave;
-	autoSave->Initialize(player);
-
 	//------テクスチャ------
 
 	spriteManager->LoadFile(0, L"Resources/clear.png");
@@ -271,6 +265,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	titleUISprite->SetPosition(XMFLOAT2(window_width / 2, window_height/ 2 + 200));
 	titleUISprite->Update();
 
+	//セーブ
+	autoSave = new Autosave;
+	autoSave->Initialize(player);
  }
 
 void GameScene::Update()

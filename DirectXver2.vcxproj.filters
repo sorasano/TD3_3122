@@ -147,9 +147,7 @@
     <ClCompile Include="Easing.cpp">
       <Filter>ソースファイル\Math</Filter>
     </ClCompile>
-    <ClCompile Include="Swamp.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
+    <ClCompile Include="Swamp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Player.h">
@@ -272,9 +270,7 @@
     <ClInclude Include="Easing.h">
       <Filter>ヘッダーファイル\Math</Filter>
     </ClInclude>
-    <ClInclude Include="Swamp.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
+    <ClInclude Include="Swamp.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\FbxHeader.hlsli">

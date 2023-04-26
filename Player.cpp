@@ -3,17 +3,12 @@
 Input* Player::input = nullptr;
 DXInput* Player::dxInput = nullptr;
 
-#define PI 3.1415
-
 void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 {
 
 	playerObject = new FbxObject3D;
 	playerObject->Initialize();
 	playerObject->SetModel(playerModel);
-	playerObject->PlayAnimation();
-	//ラジアンで角度変更
-	rotate.y = 90 * (PI / 180);
 
 	//判定
 	this->cubeObject = cubeObject;
