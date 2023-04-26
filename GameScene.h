@@ -151,7 +151,6 @@ private:
 
 	bool isHit = false;
 	bool isFound = false;
-	bool isback = false;
 
 
 	//テクスチャ
@@ -159,6 +158,8 @@ private:
 	Sprite* whiteSprite = nullptr;
 
 	Sprite* gameoverSprite = nullptr;
+	Sprite* blackSprite = nullptr;
+
 	Sprite* titleSprite = nullptr;
 	Sprite* titleUISprite = nullptr;
 
@@ -175,4 +176,9 @@ private:
 
 	//ゴール判定
 	Goal* goal = nullptr;
+
+	//演出
+	float alpha = 0.0f;
+	bool isback = false;
+
 };

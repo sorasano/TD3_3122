@@ -222,6 +222,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	spriteManager->LoadFile(2, L"Resources/title.png");
 	spriteManager->LoadFile(3, L"Resources/titleUI.png");
 	spriteManager->LoadFile(4, L"Resources/white1x1.png");
+	spriteManager->LoadFile(5, L"Resources/black1x1.png");
 
 	//スプライト
 	Sprite::SetDevice(dxCommon->GetDevice());
@@ -255,6 +256,18 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	gameoverSprite->SetScale(XMFLOAT2(390, 254));
 	gameoverSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2));
 	gameoverSprite->Update();
+
+	//黒染め
+	/*alpha = 0;*/
+	blackSprite = new Sprite();
+	blackSprite->SetTextureNum(5);
+	blackSprite->Initialize();
+	blackSprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
+	blackSprite->SetScale(XMFLOAT2(window_width, window_height));
+	blackSprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2));
+	blackSprite->SetAlpha(alpha);
+	blackSprite->Update();
+	
 
 	//---タイトル---
 	titleSprite = new Sprite();
@@ -394,6 +407,7 @@ void GameScene::Update()
 
 	/*clearSprite->Update();*/
 	gameoverSprite->Update();
+	blackSprite->Update();
 	titleUISprite->Update();
 
 
@@ -402,6 +416,29 @@ void GameScene::Update()
 
 	//ゴール
 	goal->Update();
+
+	
+	//ゲームオーバー演出
+	if (player->GetDeath()) {
+		if (isback == false) {
+			alpha += 0.005f;
+			if (alpha >= 1.0f) {
+				isback = true;
+				XMFLOAT2 savePos = autoSave->GetSavePos();
+				player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+			}
+		}
+	}
+	if (isback == true) {
+		player->SetisDeath(false);
+		alpha -= 0.005f;
+		if (alpha <= 0.0f) {
+			alpha = 0.0f;
+			isback = false;
+		}
+	}
+	blackSprite->SetAlpha(alpha);
+
 }
 
 void GameScene::Draw()
@@ -448,9 +485,11 @@ void GameScene::Draw()
 		titleUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
-	if (player->GetDeath() == true) {
+	/*if (player->GetDeath() == true) {
 		gameoverSprite->Draw(dxCommon_->GetCommandList());
-	}
+	}*/
+	blackSprite->Draw(dxCommon_->GetCommandList());
+
 	goal->Draw(dxCommon_->GetCommandList());
 
 }
