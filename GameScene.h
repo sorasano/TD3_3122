@@ -17,11 +17,12 @@
 #include "Button.h"
 #include"CameraEnemy.h"
 #include "Autosave.h"
-#include "Box.h"
+#include "Bomb.h"
 #include"CubeModel.h"
 #include"CubeObject3D.h"
 #include "SpriteManager.h"
 #include"Goal.h"
+#include "Swamp.h"
 
 class GameScene
 {
@@ -44,16 +45,9 @@ private:
 	//カメラ
 	std::unique_ptr<Camera> camera_;
 
-	//fbx
-	FbxModel* model0 = nullptr;
-	FbxObject3D* object0 = nullptr;
-	FbxObject3D* object2 = nullptr;
-
-	FbxObject3D2* object1 = nullptr;
-
-	FbxModel* model1 = nullptr;
-	//FbxObject3D* object1 = nullptr;
-	FbxModel* model2 = nullptr;
+	//床
+	FbxObject3D2* groundObject = nullptr;
+	FbxModel* groundModel = nullptr;
 
 	//ブロック
 	static const int blockSize = 4;
@@ -112,9 +106,15 @@ private:
 	FbxModel* buttonModel = nullptr;
 	Button* button[buttonSize] = {};
 
-	//Box
-	FbxModel* boxModel = nullptr;
-	Box* box = nullptr;
+	//爆弾
+	static const int bombSize = 3;
+	FbxModel* bombModel = nullptr;
+	Bomb* bomb[buttonSize] = {};
+
+	//沼
+	static const int swampSize = 3;
+	FbxModel* swampModel = nullptr;
+	Swamp* swamp[swampSize] = {};
 
 	//オートセーブ
 	Autosave *autoSave;

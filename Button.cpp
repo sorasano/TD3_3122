@@ -2,9 +2,6 @@
 #include "imgui.h"
 #include "FbxLoader.h"
 
-Input* Button::input = nullptr;
-DXInput* Button::dxInput = nullptr;
-
 void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cubeObject)
 {
 	//プレイヤー
@@ -16,7 +13,7 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cube
 	buttonObject->SetModel(ButtonModel);
 
 	//ブロック
-	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/gray1x1.png");
+	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	blockObject = new FbxObject3D2;
 	blockObject->Initialize();
 	blockObject->SetModel(blockModel);
