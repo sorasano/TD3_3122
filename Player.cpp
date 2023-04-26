@@ -18,7 +18,7 @@ void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 void Player::Update()
 {
 
-	if (isDeath == false&&isClear==false) {
+	if (alpha == 0.0f) {
 		if (input->PushKey(DIK_A))
 		{
 			position.x -= 0.1;

@@ -293,6 +293,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//ゴール
 	goal = new Goal();
+	Goal::SetInput(input);
+	Goal::SetDXInput(dxInput);
 	goal->Initialize(whiteSprite,clearSprite, player);
 	goal->SetClearPos(startPos3 + 71 + 10);
 
@@ -360,18 +362,18 @@ void GameScene::Update()
 	player->Update();
 	playerpos = player->GetPosition();
 
-	//復活
-	if (input_->PushKey(DIK_E)) {
-		player->SetisDeath(false);
-		if (isClear) {
-			isClear = false;
-			player->SetPosition(XMFLOAT3(0, 1, -1));
-		}
-		else {
-			XMFLOAT2 savePos = autoSave->GetSavePos();
-			player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-		}
-	}
+	////復活
+	//if (input_->PushKey(DIK_E)) {
+	//	player->SetisDeath(false);
+	//	if (isClear) {
+	//		isClear = false;
+	//		player->SetPosition(XMFLOAT3(0, 1, -1));
+	//	}
+	//	else {
+	//		XMFLOAT2 savePos = autoSave->GetSavePos();
+	//		player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+	//	}
+	//}
 
 
 	for (int i = 0; i < enemySize; i++) {
@@ -422,6 +424,7 @@ void GameScene::Update()
 	if (player->GetDeath()) {
 		if (isback == false) {
 			alpha += 0.005f;
+			player->SetAlpha(alpha);
 			if (alpha >= 1.0f) {
 				isback = true;
 				XMFLOAT2 savePos = autoSave->GetSavePos();
@@ -431,9 +434,11 @@ void GameScene::Update()
 	}
 	if (isback == true) {
 		player->SetisDeath(false);
+		player->SetAlpha(alpha);
 		alpha -= 0.005f;
 		if (alpha <= 0.0f) {
 			alpha = 0.0f;
+			player->SetAlpha(alpha);
 			isback = false;
 		}
 	}

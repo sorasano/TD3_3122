@@ -23,6 +23,7 @@ public:
 
 	void Setrotate(XMFLOAT3 rotate);
 
+	void SetAlpha(float alpha) { this->alpha = alpha; }
 
 	XMFLOAT3 GetPosition() { return position; }
 
@@ -59,6 +60,8 @@ private:
 	bool isDeath = false;
 	//ゴールしてるか
 	bool isClear = false;
+	//演出のアルファ値
+	float alpha = 0.0f;
 
 	//判定
 	CubeObject3D* cubeObject = nullptr;
