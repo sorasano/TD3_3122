@@ -93,9 +93,9 @@ void Player::Update()
 	playerObject->SetRotation(rotate);
 	playerObject->Update();
 
-	ImGui::Begin("pPos");
-	ImGui::Text("pPosX = %f \n",position.x);
-	ImGui::End();
+	//ImGui::Begin("pPos");
+	//ImGui::Text("pPosX = %f \n",position.x);
+	//ImGui::End();
 
 }
 
