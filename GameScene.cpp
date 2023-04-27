@@ -340,21 +340,21 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	bomb[4]->SetPosition(XMFLOAT3(stage3 + 40, 1, -1));
 	bomb[5]->SetPosition(XMFLOAT3(stage3 + 45, 2, -1));
 
-	bomb[3]->SetPosition(XMFLOAT3(stage3 + 90, 2, -1));
-	bomb[4]->SetPosition(XMFLOAT3(stage3 + 96, 1, -1));
-	bomb[5]->SetPosition(XMFLOAT3(stage3 + 102, 2, -1));
+	bomb[6]->SetPosition(XMFLOAT3(stage3 + 90, 2, -1));
+	bomb[7]->SetPosition(XMFLOAT3(stage3 + 96, 1, -1));
+	bomb[8]->SetPosition(XMFLOAT3(stage3 + 102, 2, -1));
 
 	//stage4
-	bomb[6]->SetPosition(XMFLOAT3(stage4 + 74, 2, -1));
-	bomb[7]->SetPosition(XMFLOAT3(stage4 + 86, 1, -1));
+	bomb[9]->SetPosition(XMFLOAT3(stage4 + 74, 2, -1));
+	bomb[10]->SetPosition(XMFLOAT3(stage4 + 86, 1, -1));
 
-	bomb[8]->SetPosition(XMFLOAT3(stage4 + 118, 1, -1));
-	bomb[9]->SetPosition(XMFLOAT3(stage4 + 122, 1, -1));
-	bomb[10]->SetPosition(XMFLOAT3(stage4 + 126, 1, -1));
-	bomb[11]->SetPosition(XMFLOAT3(stage4 + 130, 1, -1));
+	bomb[11]->SetPosition(XMFLOAT3(stage4 + 118, 1, -1));
+	bomb[12]->SetPosition(XMFLOAT3(stage4 + 122, 1, -1));
+	bomb[13]->SetPosition(XMFLOAT3(stage4 + 126, 1, -1));
+	bomb[14]->SetPosition(XMFLOAT3(stage4 + 130, 1, -1));
 
-	bomb[12]->SetPosition(XMFLOAT3(stage4 + 155, 1, -1));
-	bomb[13]->SetPosition(XMFLOAT3(stage4 + 159, 1, -1));
+	bomb[15]->SetPosition(XMFLOAT3(stage4 + 155, 1, -1));
+	bomb[16]->SetPosition(XMFLOAT3(stage4 + 159, 1, -1));
 
 	//----------沼----------
 	for (int i = 0; i < swampSize; i++) {

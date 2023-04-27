@@ -11,7 +11,7 @@ void Autosave::Initialize(Player* player)
 
 	//stage1
 	savePos[1] = XMFLOAT2(27, 1);
-	savePos[2] = XMFLOAT2(36, 1);
+	savePos[2] = XMFLOAT2(37, 1);
 	savePos[3] = XMFLOAT2(60, 1);
 	savePos[4] = XMFLOAT2(115, 1);
 

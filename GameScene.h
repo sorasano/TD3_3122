@@ -108,7 +108,7 @@ private:
 	Button* button[buttonSize] = {};
 
 	//爆弾
-	static const int bombSize = 14;
+	static const int bombSize = 17;
 	FbxModel* bombModel = nullptr;
 	Bomb* bomb[buttonSize] = {};
 
