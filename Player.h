@@ -16,11 +16,13 @@ public:
 	void Update();
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
 
 	//セッター
 	void SetPosition(XMFLOAT3 position);
 	void SetScale(XMFLOAT3 scale);
 	void Setrotate(XMFLOAT3 rotate);
+	void SetSRV(ID3D12DescriptorHeap* SRV);
 
 	void SetAlpha(float alpha) { this->alpha = alpha; }
 	void SetisDeath(int isDeath) { this->isDeath = isDeath; }

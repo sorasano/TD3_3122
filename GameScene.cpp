@@ -49,6 +49,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	spriteManager = new SpriteManager;
 	spriteManager->Initialize();
 
+	//ライト(影)
+	light = new Light;
+	light->Initialize();
+
 	//ライト生成
 	lightGroup0 = LightGroup::Create();
 
@@ -62,7 +66,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	lightGroup0->SetSpotLightActive(1, false);
 	lightGroup0->SetSpotLightActive(2, false);
 	/*lightGroup->SetCircleShadowActive(0, true);*/
-	lightGroup0->SetShadowActive(0, false);
 
 	//ライト生成
 	lightGroup1 = LightGroup::Create();
@@ -77,7 +80,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	lightGroup1->SetSpotLightActive(1, false);
 	lightGroup1->SetSpotLightActive(2, false);
 	///*lightGroup1->SetCircleShadowActive(0, true);*/
-	lightGroup1->SetShadowActive(0, true);
 
 	//FBX読み込み
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
@@ -96,17 +98,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
 	FbxObject3D::SetCamera(camera_.get());
+	FbxObject3D::SetLight(light);
 	FbxObject3D::SetLightGroup(lightGroup0);
+	FbxObject3D::CreateGraphicsPipelineLightView();
 	FbxObject3D::CreateGraphicsPipeline();
 
-	//デバイスをセット
-	FbxObject3D2::SetDevice(dxCommon_->GetDevice());
-	FbxObject3D2::SetCamera(camera_.get());
-	FbxObject3D2::SetLightGroup(lightGroup0);
-	FbxObject3D2::CreateGraphicsPipeline();
-
 	//地面
-	groundObject = new FbxObject3D2;
+	groundObject = new FbxObject3D;
 	groundObject->Initialize();
 	groundObject->SetModel(groundModel);
 
@@ -129,7 +127,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//--------ブロック----------
 	for (int i = 0; i < blockSize; i++) {
-		blockObject[i] = new FbxObject3D2;
+		blockObject[i] = new FbxObject3D;
 		blockObject[i]->Initialize();
 		blockObject[i]->SetModel(blockModel);
 	}
@@ -496,6 +494,12 @@ void GameScene::Update()
 	//コントローラー更新
 	dxInput->InputProcess();
 
+	//ライト
+	light->SetEye(XMFLOAT3(lightPos));
+	light->SetTarget(XMFLOAT3(lightTarget));
+	light->SetDir(XMFLOAT3(lightDir));
+	light->Update();
+
 	//ライト更新
 	lightGroup0->SetAmbientColor(XMFLOAT3(ambientColor0));
 	lightGroup0->SetDirLightDir(0, XMVECTOR({ lightDir0[0],lightDir0[1], lightDir0[2],0 }));
@@ -507,7 +511,6 @@ void GameScene::Update()
 	lightGroup1->SetAmbientColor(XMFLOAT3(ambientColor0));
 	lightGroup1->SetDirLightDir(0, XMVECTOR({ lightDir0[0],lightDir0[1], lightDir0[2],0 }));
 	lightGroup1->SetDirLightColor(0, XMFLOAT3(lightColor0));
-	lightGroup1->SetShadowLightPos(0, XMFLOAT3(shadowLightPos), camera_->GetTraget(), camera_->GetUp());
 	lightGroup1->Update();
 
 	//オブジェクト更新
@@ -631,43 +634,51 @@ void GameScene::Draw()
 {
 	//-------背景スプライト描画処理-------//
 
+	ImGui::Begin("Light");
+	ImGui::SetWindowPos(ImVec2(0, 0));
+	ImGui::SetWindowSize(ImVec2(500, 200));
+	ImGui::InputFloat3("lightTarget", lightTarget);
+	ImGui::InputFloat3("lightPos", lightPos);
+	ImGui::End();
 
-	//object0->Draw(dxCommon_->GetCommandList());
-	groundObject->Draw(dxCommon_->GetCommandList());
-	//object2->Draw(dxCommon_->GetCommandList());
+	DrawFBX();
 
-	//ブロック
-	for (int i = 0; i < blockSize; i++) {
-		blockObject[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////object0->Draw(dxCommon_->GetCommandList());
+	//groundObject->Draw(dxCommon_->GetCommandList());
+	////object2->Draw(dxCommon_->GetCommandList());
 
-	//プレイヤー
-	player->Draw(dxCommon_->GetCommandList());
+	////ブロック
+	//for (int i = 0; i < blockSize; i++) {
+	//	blockObject[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
-	//敵
-	for (int i = 0; i < enemySize; i++) {
-		enemy[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////プレイヤー
+	//player->Draw(dxCommon_->GetCommandList());
 
-	//監視カメラ
-	for (int i = 0; i < cameraEnemySize; i++) {
-		cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////敵
+	//for (int i = 0; i < enemySize; i++) {
+	//	enemy[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
-	//ボタン
-	for (int i = 0; i < buttonSize; i++) {
-		button[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////監視カメラ
+	//for (int i = 0; i < cameraEnemySize; i++) {
+	//	cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
-	//爆弾
-	for (int i = 0; i < bombSize; i++) {
-		bomb[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////ボタン
+	//for (int i = 0; i < buttonSize; i++) {
+	//	button[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
-	//沼
-	for (int i = 0; i < swampSize; i++) {
-		swamp[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////爆弾
+	//for (int i = 0; i < bombSize; i++) {
+	//	bomb[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+	////沼
+	//for (int i = 0; i < swampSize; i++) {
+	//	swamp[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
 	/*cubeObject->Draw(dxCommon_->GetCommandList());*/
 
@@ -692,4 +703,78 @@ void GameScene::Draw()
 		playUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
+}
+
+void GameScene::DrawFBXLightView()
+{
+	//object0->Draw(dxCommon_->GetCommandList());
+	/*groundObject->DrawLightView(dxCommon_->GetCommandList());*/
+	//object2->Draw(dxCommon_->GetCommandList());
+
+	//ブロック
+	for (int i = 0; i < blockSize; i++) {
+		blockObject[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
+
+	//プレイヤー
+	player->DrawLightView(dxCommon_->GetCommandList());
+
+	////敵
+	//for (int i = 0; i < enemySize; i++) {
+	//	enemy[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+	////監視カメラ
+	//for (int i = 0; i < cameraEnemySize; i++) {
+	//	cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+	////ボタン
+	//for (int i = 0; i < buttonSize; i++) {
+	//	button[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+	////爆弾
+	//for (int i = 0; i < bombSize; i++) {
+	//	bomb[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+	////沼
+	//for (int i = 0; i < swampSize; i++) {
+	//	swamp[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+}
+
+void GameScene::DrawFBX()
+{
+	//ブロック
+	for (int i = 0; i < blockSize; i++) {
+		blockObject[i]->Draw(dxCommon_->GetCommandList());
+	}
+	//プレイヤー
+	player->Draw(dxCommon_->GetCommandList());
+}
+
+DirectX::XMMATRIX GameScene::GetLightViewProjection()
+{
+	return light->GetMatViewProjection();
+}
+
+void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
+{
+	/*for (std::unique_ptr<FbxObject3D>& object : objectStone)
+	{
+		object->SetSRV(SRV);
+	}
+	objectTree->SetSRV(SRV);
+	object1->SetSRV(SRV);*/
+
+	//ブロック
+	for (int i = 0; i < blockSize; i++) {
+		blockObject[i]->SetSRV(SRV);
+	}
+
+	//プレイヤー
+	player->SetSRV(SRV);
 }

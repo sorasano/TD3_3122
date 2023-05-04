@@ -1,4 +1,4 @@
-#include "shadowMap2Header.hlsli"
+#include "FbxHeader0.hlsli"
 
 //0番スロットに設定されたテクスチャ
 Texture2D<float4> tex : register(t0);

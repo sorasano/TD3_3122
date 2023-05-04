@@ -15,6 +15,53 @@ cbuffer skinning:register(b3)	//ボーンのスキニング行列が入る
 	matrix matSkinning[MAX_BONES];
 };
 
+static const uint dirLightNum = 1;
+struct DirectionalLight
+{
+	float3 lightv;
+	float3 lightcolor;
+	uint active;
+};
+
+static const uint pointLightNum = 1;
+struct PointLight
+{
+	float3 lightpos;
+	float3 lightcolor;
+	float3 lightatten;
+	uint active;
+};
+
+static const uint spotLightNum = 1;
+struct SpotLight
+{
+	float3 lightv;
+	float3 lightpos;
+	float3 lightcolor;
+	float3 lightatten;
+	float2 lightfactoranglecos;
+	uint active;
+};
+
+static const uint circleShadowNum = 1;
+struct CircleShadow
+{
+	float3 dir;
+	float3 casterPos;
+	float3 atten;
+	float2 factorAngleCos;
+	uint active;
+};
+
+cbuffer cbuff4 : register(b4)
+{
+	float3 ambientColor;
+	DirectionalLight dirLights[dirLightNum];
+	PointLight pointLights[pointLightNum];
+	SpotLight spotLights[spotLightNum];
+	CircleShadow circleShadows[circleShadowNum];
+};
+
 //バーテックスバッファの入力
 struct VSInput
 {
@@ -32,4 +79,5 @@ struct VSOutput
 	float4 worldpos : POSITION;	//システム用頂点座標
 	float3 normal : NORMAL;	//法線
 	float2 uv : TEXCOORD;	//uv値
+	float4 tpos : TPOS;
 };

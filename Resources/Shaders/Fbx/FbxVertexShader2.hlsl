@@ -1,4 +1,4 @@
-#include "FbxShadowHeader.hlsli"
+#include "FbxHeader2.hlsli"
 
 //スキニング後の頂点法線が入る
 struct SkinOutput
@@ -40,21 +40,13 @@ SkinOutput ComputeSkin(VSInput input)
 
 	//ボーン3
 	iBone = input.boneIndices.w;
-	weight = input.boneWeights.w;
+	weight = input.boneWeights.w; 
 	m = matSkinning[iBone];
 	output.pos += weight * mul(m, input.pos);
 	output.normal += weight * mul((float3x3)m, input.normal);
 
 	return output;
 }
-
-//影用ピクセルシェーダーに渡す値
-//struct VSOutput2
-//{
-//	float4 pos : POSITION;	//射影変換座標
-//	float4 zCalcTex : TEXCOORD;	//Z値算出用テクスチャ
-//	float4 col : COLOR0;	//ディフューズ色
-//};
 
 //エントリーポイント
 VSOutput main(VSInput input)
@@ -64,6 +56,7 @@ VSOutput main(VSInput input)
 	//法線にワールド行列によるスケーリング 回転を適用
 	float4 wnormal = normalize(mul(world, float4(skinned.normal, 0)));
 	float4 wpos = mul(world, skinned.pos);
+	wpos = mul(world, wpos);
 	//ピクセルシェーダに渡す値
 	VSOutput output;
 	//行列による座標返還
@@ -72,31 +65,10 @@ VSOutput main(VSInput input)
 	output.normal = wnormal.xyz;
 	//入力値をそのまま次のステージ渡す
 	output.uv = input.uv;
-	//ワールド座標
+
 	output.worldpos = wpos;
 
-	//影を作る場合
-	if (shadows[0].active == true)
-	{
-		////カメラの目線によるワールドビュー変換
-		//float4x4 mat;
-		//mat = mul(world, view);
-		//mat = mul(mat, viewproj);
-		//output.pos = mul(input.pos, mat);
-
-		////ライトの目線によるビュー変換
-
-		//mat = mul(world, shadows[0].lightView);
-		//mat = mul(mat, shadows[0].lightViewProj);
-		//output.zCalcTex = mul(input.pos, mat);
-
-		////法線とライトの方向から頂点の色を決定
-		//float3 N = normalize(mul(input.normal, world));
-		//float3 LightDirect = normalize(float3(shadows[0].lightView._13,
-		//	shadows[0].lightView._23, shadows[0].lightView._33));
-		//output.col = float4(0.0, 0.6, 1.0, 1.0) * (0.3 + dot(N, -LightDirect) * (1 - 0.3f));
-
-	}
-
+	output.tpos = mul(mul(lightviewproj, world), skinned.pos);
+	//ワールド座標x
 	return output;
 }

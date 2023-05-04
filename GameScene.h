@@ -7,7 +7,6 @@
 #include "DirectXCommon.h"
 #include "Camera.h"
 #include "FbxObject3d.h"
-#include "FbxObject3d2.h"
 #include "FbxModel.h"
 #include "LightGroup.h"
 #include "Player.h"
@@ -23,6 +22,7 @@
 #include "SpriteManager.h"
 #include"Goal.h"
 #include "Swamp.h"
+#include "Light.h"
 
 class GameScene
 {
@@ -35,6 +35,12 @@ public:
 	void Update();
 	//描画
 	void Draw();
+	void DrawFBXLightView();
+	void DrawFBX();
+	//セッター
+	void SetSRV(ID3D12DescriptorHeap* SRV);
+	//ゲッター
+	DirectX::XMMATRIX GetLightViewProjection();
 
 	//メンバ変数
 private:
@@ -45,14 +51,20 @@ private:
 	//カメラ
 	std::unique_ptr<Camera> camera_;
 
+	//ライト 影用
+	Light* light = nullptr;
+	float lightDir[3] = { 0.0f,-1.0f , 1.0f };
+	float lightPos[3] = { 0.0f,10.0f,25.0f };
+	float lightTarget[3] = { 0.0f,0.0f,0.0f };
+
 	//床
-	FbxObject3D2* groundObject = nullptr;
+	FbxObject3D* groundObject = nullptr;
 	FbxModel* groundModel = nullptr;
 
 	//ブロック
 	static const int blockSize = 16;
 	FbxModel* blockModel = nullptr;
-	FbxObject3D2* blockObject[blockSize] = {};
+	FbxObject3D* blockObject[blockSize] = {};
 
 	//プレイヤー
 	FbxModel* playerModel = nullptr;

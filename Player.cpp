@@ -108,6 +108,11 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 
 }
 
+void Player::DrawLightView(ID3D12GraphicsCommandList* cmdList)
+{
+	playerObject->DrawLightView(cmdList);
+}
+
 void Player::SetPosition(XMFLOAT3 position)
 {
 	this->position = position;
@@ -121,6 +126,11 @@ void Player::SetScale(XMFLOAT3 scale)
 void Player::Setrotate(XMFLOAT3 rotate)
 {
 	this->rotate = rotate;
+}
+
+void Player::SetSRV(ID3D12DescriptorHeap* SRV)
+{
+	playerObject->SetSRV(SRV);
 }
 
 void Player::Death()

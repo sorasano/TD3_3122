@@ -9,6 +9,66 @@
     <FxCompile Include="Resources\Shaders\SpritePixelShader.hlsl" />
     <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\VertexShader.hlsl" />
+    <FxCompile Include="Resources\Shaders\Blur\BlurPixelShader.hlsl">
+      <Filter>シェーダーファイル\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Blur\BlurVertexShader.hlsl">
+      <Filter>シェーダーファイル\Blur</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\ChromaticAberration\ChromaticAberrationPixelShader.hlsl">
+      <Filter>シェーダーファイル\Chromatic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\ChromaticAberration\ChromaticAberrationVertexShader.hlsl">
+      <Filter>シェーダーファイル\Chromatic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\DepthOfField\DepthOfFieldPixelShader.hlsl">
+      <Filter>シェーダーファイル\DepthOfFIled</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\DepthOfField\DepthOfFieldVertexShader.hlsl">
+      <Filter>シェーダーファイル\DepthOfFIled</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fbx\FbxPixelShader0.hlsl">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fbx\FbxPixelShader2.hlsl">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fbx\FbxVertexShader0.hlsl">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fbx\FbxVertexShader2.hlsl">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Monochrome\MonochromePixelShader.hlsl">
+      <Filter>シェーダーファイル\Monochrome</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Monochrome\MonochromeVertexShader.hlsl">
+      <Filter>シェーダーファイル\Monochrome</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Mosaic\MosaicPixelShader.hlsl">
+      <Filter>シェーダーファイル\Mosaic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Mosaic\MosaicVertexShader.hlsl">
+      <Filter>シェーダーファイル\Mosaic</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Sprite\SpritePixelShader.hlsl">
+      <Filter>シェーダーファイル\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Sprite\SpriteVertexShader.hlsl">
+      <Filter>シェーダーファイル\Sprite</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Reversal\ReversalPixelShader.hlsl">
+      <Filter>シェーダーファイル\Reversal</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Reversal\ReversalVertexShader.hlsl">
+      <Filter>シェーダーファイル\Reversal</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\ShadowMap\ShadowMapPixelShader.hlsl">
+      <Filter>シェーダーファイル\ShadowMap</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\ShadowMap\ShadowMapVertexShader.hlsl">
+      <Filter>シェーダーファイル\ShadowMap</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2d\BlurEffect.cpp" />
@@ -55,6 +115,30 @@
     </ClCompile>
     <ClCompile Include="Swamp.cpp">
       <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\BlurEffect.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\ChromaticAberrationEffect.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\DepthOfField.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\MonochromeEffect.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\MosaicEffect.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\ReversalEffect.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\ShadowMap.cpp">
+      <Filter>ソースファイル\Shaow</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -103,6 +187,27 @@
     <ClInclude Include="Swamp.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
+    <ClInclude Include="2d\BlurEffect.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\ChromaticAberrationEffect.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\DepthOfField.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\MonochromeEffect.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\MosaicEffect.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\ReversalEffect.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\ShadowMap.h">
+      <Filter>ヘッダーファイル\Shadow</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="FbxShadowHeader.hlsli" />
@@ -133,6 +238,36 @@
     <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
+    <None Include="Resources\Shaders\Blur\BlurEffectHeader.hlsli">
+      <Filter>シェーダーファイル\Blur</Filter>
+    </None>
+    <None Include="Resources\Shaders\ChromaticAberration\ChromaticAberrationEffectHeader.hlsli">
+      <Filter>シェーダーファイル\Chromatic</Filter>
+    </None>
+    <None Include="Resources\Shaders\DepthOfField\DepthOfFieldHeader.hlsli">
+      <Filter>シェーダーファイル\DepthOfFIled</Filter>
+    </None>
+    <None Include="Resources\Shaders\Fbx\FbxHeader0.hlsli">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </None>
+    <None Include="Resources\Shaders\Fbx\FbxHeader2.hlsli">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </None>
+    <None Include="Resources\Shaders\Monochrome\MonochromeEffectHeader.hlsli">
+      <Filter>シェーダーファイル\Monochrome</Filter>
+    </None>
+    <None Include="Resources\Shaders\Mosaic\MosaicEffectHeader.hlsli">
+      <Filter>シェーダーファイル\Mosaic</Filter>
+    </None>
+    <None Include="Resources\Shaders\Sprite\SpriteHeader.hlsli">
+      <Filter>シェーダーファイル\Sprite</Filter>
+    </None>
+    <None Include="Resources\Shaders\Reversal\ReversalEffectHeader.hlsli">
+      <Filter>シェーダーファイル\Reversal</Filter>
+    </None>
+    <None Include="Resources\Shaders\ShadowMap\ShadowMapHeader.hlsli">
+      <Filter>シェーダーファイル\ShadowMap</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Autosave.cpp">
@@ -443,6 +578,33 @@
     </Filter>
     <Filter Include="ヘッダーファイル\Fbx\Light">
       <UniqueIdentifier>{ed4a2018-00a4-4dad-8fa3-2422103bab64}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Blur">
+      <UniqueIdentifier>{cf54c392-5501-42ac-827f-6890652d0f01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Chromatic">
+      <UniqueIdentifier>{1a5ffdc4-b759-4f82-923b-0902c60e95ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\DepthOfFIled">
+      <UniqueIdentifier>{eb9ff034-321b-4f68-aab8-f4f753329edc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Fbx">
+      <UniqueIdentifier>{ece935ac-869d-4996-8efe-051eadbff4c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Monochrome">
+      <UniqueIdentifier>{dc4816cb-1917-4b50-a328-20ae5a244950}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Mosaic">
+      <UniqueIdentifier>{7a5847ae-4183-4ffe-84b2-414927ba38fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Reversal">
+      <UniqueIdentifier>{a5f2fb86-85e8-45d3-b857-d576a383abf7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\ShadowMap">
+      <UniqueIdentifier>{8c668eda-aeca-4a4a-a352-b18378c89a7b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Sprite">
+      <UniqueIdentifier>{13f30349-6c8b-4735-9604-c91a462051b1}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

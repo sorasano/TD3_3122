@@ -111,22 +111,20 @@ private:
 
 public:
 	//コンストラクタ
-	FbxModel(){};
+	FbxModel() {};
 	//デストラクタ
 	~FbxModel();
 	//バッファ生成
 	void CreateBuffers(ID3D12Device* device);
 	//描画
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+	//ポストエフェクト用
+	void Draw0(ID3D12GraphicsCommandList* cmdList);
+	void Draw1(ID3D12GraphicsCommandList* cmdList);
 	//モデルの変形行列のゲッター
 	const XMMATRIX& GetModelTransform() { return meshNode->globalTransform; }
 
-
-	/// 頂点配列を取得
-	inline const std::vector<VertexPosNormalUvSkin>& GetVertices() { return vertices; }
-
-	/// インデックス配列を取得
-	inline const std::vector<unsigned short>& GetIndices() { return indices; }
+	ComPtr<ID3D12Resource> GetTexBuff() { return texBuff; }
 
 private:
 	//ボーン配列

@@ -1,7 +1,6 @@
 #pragma once
 #include "DirectXMath.h"
 #include "FbxObject3d.h"
-#include "FbxObject3d2.h"
 #include "FbxModel.h"
 #include "Player.h"
 #include"CubeModel.h"
@@ -78,7 +77,7 @@ private:
 	FbxObject3D* buttonObject = nullptr;
 
 	//ÉuÉçÉbÉN
-	FbxObject3D2* blockObject = nullptr;
+	FbxObject3D* blockObject = nullptr;
 	FbxModel* blockModel = nullptr;
 
 	Player* player;

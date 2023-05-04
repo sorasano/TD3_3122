@@ -8,6 +8,13 @@
 #include "GameScene.h"
 #include "ImGuiManager.h"
 #include "imgui.h"
+#include "MonochromeEffect.h"
+#include "ReversalEffect.h"
+#include "BlurEffect.h"
+#include "MosaicEffect.h"
+#include "ChromaticAberrationEffect.h"
+#include "ShadowMap.h"
+#include "DepthOfField.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -34,6 +41,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	ImGuiManager* imGuiManager = nullptr;
 	imGuiManager = new ImGuiManager();
 	imGuiManager->Initialize(winApp,dxCommon);
+
+	//ShadowMap
+	ShadowMap* shadowMap = nullptr;
+	ShadowMap::SetDevice(dxCommon->GetDevice());
+	shadowMap = new ShadowMap;
+	shadowMap->Initialize();
+	shadowMap->CreateGraphicsPipeLine0();
+
+	//被写界深度
+	DepthOfField* depthOfField = nullptr;
+	DepthOfField::SetDevice(dxCommon->GetDevice());
+	depthOfField = new DepthOfField;
+	depthOfField->Initialize();
+	depthOfField->CreateGraphicsPipeLine();
 
 	//ライト静的初期化
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
@@ -67,12 +88,24 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		imGuiManager->Begin();
 
+		//shadowMap
+		shadowMap->SetAlpha(1.0f);
+		shadowMap->SetLightVP(gameScene->GetLightViewProjection());
+		shadowMap->Update();
+
 		//ゲームシーン更新
 		gameScene->Update();
 
-		dxCommon->PreDraw();
+		//shadowMap
+		shadowMap->PreDrawScene0(dxCommon->GetCommandList());
+		gameScene->DrawFBXLightView();
+		shadowMap->PostDrawScene0(dxCommon->GetCommandList());
+		//ゲームシーンにSRVを渡す
+		gameScene->SetSRV(shadowMap->GetSRV());
 
 		// 4. 描画コマンド
+		dxCommon->PreDraw();
+
 		gameScene->Draw();
 
 		imGuiManager->End();

@@ -14,7 +14,7 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cube
 
 	//ƒuƒƒbƒN
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
-	blockObject = new FbxObject3D2;
+	blockObject = new FbxObject3D;
 	blockObject->Initialize();
 	blockObject->SetModel(blockModel);
 

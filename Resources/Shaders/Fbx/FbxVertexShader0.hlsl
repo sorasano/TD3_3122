@@ -1,4 +1,4 @@
-#include "shadowMap2Header.hlsli"
+#include "FbxHeader0.hlsli"
 
 //スキニング後の頂点法線が入る
 struct SkinOutput

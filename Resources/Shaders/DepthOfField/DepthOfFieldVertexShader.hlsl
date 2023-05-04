@@ -1,4 +1,4 @@
-#include "PostEffectHeader.hlsli"
+#include "DepthOfFieldHeader.hlsli"
 
 VSOutput main(float4 pos : POSITION, float2 uv : TEXCOORD)
 {

@@ -95,13 +95,13 @@ void FbxModel::CreateBuffers(ID3D12Device* device)
 		img->pixels,
 		(UINT)img->rowPitch,
 		(UINT)img->slicePitch
-		);
+	);
 
 	//SRV用デスクリプタヒープを生成
 	D3D12_DESCRIPTOR_HEAP_DESC descHeapDesc = {};
 	descHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	descHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
-	descHeapDesc.NumDescriptors = 1;
+	descHeapDesc.NumDescriptors = 2;
 	result = device->CreateDescriptorHeap(&descHeapDesc, IID_PPV_ARGS(&descHeapSRV));
 
 	//シェーダリソースビュー作成
@@ -131,6 +131,26 @@ void FbxModel::Draw(ID3D12GraphicsCommandList* cmdList)
 	//シェーダリソースビューをセット
 	cmdList->SetGraphicsRootDescriptorTable(1, descHeapSRV->GetGPUDescriptorHandleForHeapStart());
 
+	//描画コマンド
+	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
+}
+
+void FbxModel::Draw0(ID3D12GraphicsCommandList* cmdList)
+{
+	//頂点バッファをセット
+	cmdList->IASetVertexBuffers(0, 1, &vbView);
+	//インデックスバッファをセット
+	cmdList->IASetIndexBuffer(&ibView);
+
+	//デスクリプタヒープのセット
+	ID3D12DescriptorHeap* ppHeaps[] = { descHeapSRV.Get() };
+	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
+	//シェーダリソースビューをセット
+	cmdList->SetGraphicsRootDescriptorTable(1, descHeapSRV->GetGPUDescriptorHandleForHeapStart());
+}
+
+void FbxModel::Draw1(ID3D12GraphicsCommandList* cmdList)
+{
 	//描画コマンド
 	cmdList->DrawIndexedInstanced((UINT)indices.size(), 1, 0, 0, 0);
 }

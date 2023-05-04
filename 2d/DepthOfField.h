@@ -5,7 +5,7 @@
 #include "DirectXTex.h"
 #include "vector"
 
-class PostEffect
+class DepthOfField
 {
 private:	//エイリアス
 	//Microsoft::WRL::を省略
@@ -19,19 +19,30 @@ private:	//エイリアス
 public:	 //定数
 	//SRVの最大個数
 	static const size_t kMaxSrvCount = 2056;
-	//テクスチャの枚数
-	static const size_t textureNum = 2;
 
 public:	//サブクラス
 	//定数バッファ
 	struct ConstBuffMaterial
 	{
+		//色
 		XMFLOAT4 color;
+		//ウィンドウ
+		XMFLOAT2 window;
 	};
 	//定数バッファ2
 	struct ConstBuffTransform
 	{
 		XMMATRIX mat;	//3D変換行列
+	};
+	//定数バッファ3
+	struct ConstBuffStatus
+	{
+		//フォーカス
+		float focus;
+		//f値
+		float fnumber;
+		//強さ
+		float strength;
 	};
 	//頂点データ用構造体
 	struct Vertex
@@ -46,7 +57,7 @@ public:	//メンバ関数
 	//更新
 	void Update();
 	//描画
-    void Draw(ID3D12GraphicsCommandList* cmdList);
+	void Draw(ID3D12GraphicsCommandList* cmdList);
 	//パイプライン設定、作成
 	void CreateGraphicsPipeLine();
 
@@ -56,7 +67,7 @@ public:	//メンバ関数
 	void PostDrawScene(ID3D12GraphicsCommandList* cmdList);
 
 public:	//静的メンバ関数
-	static void SetDevice(ID3D12Device* device) { PostEffect::device = device; }
+	static void SetDevice(ID3D12Device* device) { DepthOfField::device = device; }
 
 public:	//セッター
 	//アルファ値
@@ -69,6 +80,12 @@ public:	//セッター
 	void SetRotation(float rot) { rotation = rot; }
 	//スケール
 	void SetScale(XMFLOAT2 sca) { scale = sca; }
+	//フォーカス
+	void SetFocus(float f) { focus = f; }
+	//F値
+	void SetFNumber(float f) { fNumber = f; }
+	//強さ
+	void SetStrength(float s) { strength = s; }
 
 private:	//静的メンバ変数
 	//デバイス
@@ -92,25 +109,33 @@ private:	//メンバ変数
 	//定数バッファ 変形行列
 	ComPtr<ID3D12Resource>constBuffTransform;
 	ConstBuffTransform* constMapTransform = nullptr;
+	//定数バッファ フォーカスとか
+	ComPtr<ID3D12Resource>constBuffStatus;
+	ConstBuffStatus* constMapStatus = nullptr;
 	//テクスチャの色
 	XMFLOAT4 color = { 1,1,1,1 };
 	//テクスチャバッファ
-	ComPtr<ID3D12Resource>textureBuff[textureNum];
+	ComPtr<ID3D12Resource>textureBuff;
 	//デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap> srvHeap;
-	/*DirectX::TexMetadata metadata;
-	DirectX::ScratchImage scratchImg;*/
 
 	//深度バッファ
 	ComPtr<ID3D12Resource>depthBuff;
 	//RTV用デスクリプタヒープ
 	ComPtr<ID3D12DescriptorHeap>descHeapRTV;
 	//DSV用デスクリプタヒープ
-	ComPtr<ID3D12DescriptorHeap>descHeapDSV;
+	ComPtr<ID3D12DescriptorHeap>depthSRVHeap;
+	ComPtr<ID3D12DescriptorHeap>descSRVHeap;
 
 private:
 	float rotation = 0;
 	XMFLOAT2 position = { 0,0 };
 	XMFLOAT2 scale = { 100.0f,100.0f };
+	//フォーカス
+	float focus = 0.5f;
+	//F値
+	float fNumber = 0.5f;
+	//強さ
+	float strength = 10.0f;
 };
 
