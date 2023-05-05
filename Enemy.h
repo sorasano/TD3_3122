@@ -15,6 +15,7 @@ public:
 	void Update();
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
 
 	void SetPosition(XMFLOAT3 position);
 
@@ -27,6 +28,7 @@ public:
 	void SetTarget(Vector3 target) { this->target = target; }
 
 	void SetIsback(bool isback) { this->isback = isback; }
+	void SetSRV(ID3D12DescriptorHeap* SRV);
 
 	const Vector3& Getvec() { return vec; }
 

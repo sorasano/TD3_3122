@@ -99,6 +99,11 @@ void CameraEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 	enemyEyeObject->Draw(cmdList);
 }
 
+void CameraEnemy::DrawLightView(ID3D12GraphicsCommandList* cmdList)
+{
+	enemyObject->DrawLightView(cmdList);
+}
+
 void CameraEnemy::SetPosition(XMFLOAT3 position)
 {
 	this->position = position;
@@ -117,4 +122,10 @@ void CameraEnemy::Setrotate(XMFLOAT3 rotate)
 void CameraEnemy::SetModel(FbxModel* enemyModel)
 {
 	enemyObject->SetModel(enemyModel);
+}
+
+void CameraEnemy::SetSRV(ID3D12DescriptorHeap* SRV)
+{
+	enemyObject->SetSRV(SRV);
+	enemyEyeObject->SetSRV(SRV);
 }

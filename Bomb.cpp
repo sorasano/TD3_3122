@@ -28,6 +28,11 @@ void Bomb::Draw(ID3D12GraphicsCommandList* cmdList)
 	bombObject->Draw(cmdList);
 }
 
+void Bomb::DrawLightView(ID3D12GraphicsCommandList* cmdList)
+{
+	bombObject->DrawLightView(cmdList);
+}
+
 void Bomb::Colision()
 {
 	float scaleX = scale.x * 100 / 2;
@@ -68,6 +73,11 @@ void Bomb::Colision()
 			}
 		}
 	}
+}
+
+void Bomb::SetSRV(ID3D12DescriptorHeap* SRV)
+{
+	bombObject->SetSRV(SRV);
 }
 
 

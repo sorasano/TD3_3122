@@ -28,6 +28,11 @@ void Swamp::Draw(ID3D12GraphicsCommandList* cmdList)
 	swampObject->Draw(cmdList);
 }
 
+void Swamp::DrawLightView(ID3D12GraphicsCommandList* cmdList)
+{
+	swampObject->DrawLightView(cmdList);
+}
+
 void Swamp::Colision()
 {
 	float scaleX = scale.x * 100 / 2;
@@ -71,6 +76,11 @@ void Swamp::Colision()
 	}
 
 
+}
+
+void Swamp::SetSRV(ID3D12DescriptorHeap* SRV)
+{
+	swampObject->SetSRV(SRV);
 }
 
 

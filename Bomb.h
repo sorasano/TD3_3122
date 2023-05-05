@@ -14,6 +14,7 @@ public:
 	void Update();
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
 
 	//ìñÇΩÇËîªíË
 	void Colision();
@@ -23,6 +24,7 @@ public:
 	void SetPositionX(float positionX) { this->position.x = positionX; }
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 	void Setrotate(XMFLOAT3 rotate) { this->rotate = rotate; }
+	void SetSRV(ID3D12DescriptorHeap* SRV);
 
 	//ÉQÉbÉ^Å[
 	XMFLOAT3 GetPosition() { return position; }

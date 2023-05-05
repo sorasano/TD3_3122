@@ -67,6 +67,13 @@ void Button::Draw(ID3D12GraphicsCommandList* cmdList)
 	cubeObject->Draw(cmdList);
 }
 
+void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)
+{
+	buttonObject->DrawLightView(cmdList);
+	blockObject->DrawLightView(cmdList);
+
+}
+
 void Button::ButtonCol()
 {
 
@@ -184,4 +191,10 @@ void Button::MoveBlock()
 		blockPosition.y -= flameMove;
 	}
 
+}
+
+void Button::SetSRV(ID3D12DescriptorHeap* SRV)
+{
+	buttonObject->SetSRV(SRV);
+	blockObject->SetSRV(SRV);
 }

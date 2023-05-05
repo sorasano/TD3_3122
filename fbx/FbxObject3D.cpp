@@ -166,6 +166,7 @@ void FbxObject3D::Draw(ID3D12GraphicsCommandList* cmdList)
 	//定数バッファビューをセット
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffTransform->GetGPUVirtualAddress());
 	cmdList->SetGraphicsRootConstantBufferView(2, constBuffSkin->GetGPUVirtualAddress());
+
 	//ライト描画
 	lightGroup->Draw(cmdList, 5);
 

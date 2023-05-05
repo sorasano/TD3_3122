@@ -643,45 +643,6 @@ void GameScene::Draw()
 
 	DrawFBX();
 
-	////object0->Draw(dxCommon_->GetCommandList());
-	//groundObject->Draw(dxCommon_->GetCommandList());
-	////object2->Draw(dxCommon_->GetCommandList());
-
-	////ブロック
-	//for (int i = 0; i < blockSize; i++) {
-	//	blockObject[i]->Draw(dxCommon_->GetCommandList());
-	//}
-
-	////プレイヤー
-	//player->Draw(dxCommon_->GetCommandList());
-
-	////敵
-	//for (int i = 0; i < enemySize; i++) {
-	//	enemy[i]->Draw(dxCommon_->GetCommandList());
-	//}
-
-	////監視カメラ
-	//for (int i = 0; i < cameraEnemySize; i++) {
-	//	cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
-	//}
-
-	////ボタン
-	//for (int i = 0; i < buttonSize; i++) {
-	//	button[i]->Draw(dxCommon_->GetCommandList());
-	//}
-
-	////爆弾
-	//for (int i = 0; i < bombSize; i++) {
-	//	bomb[i]->Draw(dxCommon_->GetCommandList());
-	//}
-
-	////沼
-	//for (int i = 0; i < swampSize; i++) {
-	//	swamp[i]->Draw(dxCommon_->GetCommandList());
-	//}
-
-	/*cubeObject->Draw(dxCommon_->GetCommandList());*/
-
 	//-------前景スプライト描画処理-------//
 
 	if (titleSprite->endFlip == false) {
@@ -692,9 +653,6 @@ void GameScene::Draw()
 		titleUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
-	/*if (player->GetDeath() == true) {
-		gameoverSprite->Draw(dxCommon_->GetCommandList());
-	}*/
 	blackSprite->Draw(dxCommon_->GetCommandList());
 
 	goal->Draw(dxCommon_->GetCommandList());
@@ -707,9 +665,8 @@ void GameScene::Draw()
 
 void GameScene::DrawFBXLightView()
 {
-	//object0->Draw(dxCommon_->GetCommandList());
-	/*groundObject->DrawLightView(dxCommon_->GetCommandList());*/
-	//object2->Draw(dxCommon_->GetCommandList());
+
+	groundObject->DrawLightView(dxCommon_->GetCommandList());
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
@@ -719,41 +676,68 @@ void GameScene::DrawFBXLightView()
 	//プレイヤー
 	player->DrawLightView(dxCommon_->GetCommandList());
 
-	////敵
-	//for (int i = 0; i < enemySize; i++) {
-	//	enemy[i]->Draw(dxCommon_->GetCommandList());
-	//}
+	//敵
+	for (int i = 0; i < enemySize; i++) {
+		enemy[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 
-	////監視カメラ
-	//for (int i = 0; i < cameraEnemySize; i++) {
-	//	cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
-	//}
+	//監視カメラ
+	for (int i = 0; i < cameraEnemySize; i++) {
+		cameraEnemy[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 
-	////ボタン
-	//for (int i = 0; i < buttonSize; i++) {
-	//	button[i]->Draw(dxCommon_->GetCommandList());
-	//}
+	//ボタン
+	for (int i = 0; i < buttonSize; i++) {
+		button[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 
-	////爆弾
-	//for (int i = 0; i < bombSize; i++) {
-	//	bomb[i]->Draw(dxCommon_->GetCommandList());
-	//}
+	//爆弾
+	for (int i = 0; i < bombSize; i++) {
+		bomb[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 
-	////沼
-	//for (int i = 0; i < swampSize; i++) {
-	//	swamp[i]->Draw(dxCommon_->GetCommandList());
-	//}
+	//沼
+	for (int i = 0; i < swampSize; i++) {
+		swamp[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 
 }
 
 void GameScene::DrawFBX()
 {
+	groundObject->Draw(dxCommon_->GetCommandList());
+
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
 		blockObject[i]->Draw(dxCommon_->GetCommandList());
 	}
 	//プレイヤー
 	player->Draw(dxCommon_->GetCommandList());
+	//敵
+	for (int i = 0; i < enemySize; i++) {
+		enemy[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//監視カメラ
+	for (int i = 0; i < cameraEnemySize; i++) {
+		cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//ボタン
+	for (int i = 0; i < buttonSize; i++) {
+		button[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//爆弾
+	for (int i = 0; i < bombSize; i++) {
+		bomb[i]->Draw(dxCommon_->GetCommandList());
+	}
+
+	//沼
+	for (int i = 0; i < swampSize; i++) {
+		swamp[i]->Draw(dxCommon_->GetCommandList());
+	}
+
 }
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()
@@ -770,6 +754,8 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	objectTree->SetSRV(SRV);
 	object1->SetSRV(SRV);*/
 
+	groundObject->SetSRV(SRV);
+	
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
 		blockObject[i]->SetSRV(SRV);
@@ -777,4 +763,29 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 
 	//プレイヤー
 	player->SetSRV(SRV);
+
+	//敵
+	for (int i = 0; i < enemySize; i++) {
+		enemy[i]->SetSRV(SRV);
+	}
+
+	//監視カメラ
+	for (int i = 0; i < cameraEnemySize; i++) {
+		cameraEnemy[i]->SetSRV(SRV);
+	}
+
+	//ボタン
+	for (int i = 0; i < buttonSize; i++) {
+		button[i]->SetSRV(SRV);
+	}
+
+	//爆弾
+	for (int i = 0; i < bombSize; i++) {
+		bomb[i]->SetSRV(SRV);
+	}
+
+	//沼
+	for (int i = 0; i < swampSize; i++) {
+		swamp[i]->SetSRV(SRV);
+	}
 }

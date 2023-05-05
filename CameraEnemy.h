@@ -15,6 +15,7 @@ public:
 	void Update();
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
 
 	void SetPosition(XMFLOAT3 position);
 
@@ -25,6 +26,7 @@ public:
 	void SetModel(FbxModel* enemyModel);
 
 	void SetTarget(Vector3 target) { this->target = target; }
+	void SetSRV(ID3D12DescriptorHeap* SRV);
 
 	const Vector3& Getvec() { return vec; }
 

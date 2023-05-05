@@ -16,6 +16,7 @@ public:
 	void Update();
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
 
 	//ボタンとプレイヤーの当たり判定
 	void ButtonCol();
@@ -37,6 +38,7 @@ public:
 	void SetScale(XMFLOAT3 scale) { this->scale = scale; } 
 
 	void Setrotate(XMFLOAT3 rotate) { this->rotate = rotate; }
+	void SetSRV(ID3D12DescriptorHeap* SRV);
 
 	//ブロック
 	void SetBlockPosition(XMFLOAT3 blockPosition) { this->blockPosition = blockPosition ; }
