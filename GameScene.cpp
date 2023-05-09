@@ -494,6 +494,9 @@ void GameScene::Update()
 	//コントローラー更新
 	dxInput->InputProcess();
 
+	lightPos[0] = player->GetPosition().x;
+	lightTarget[0] = player->GetPosition().x;
+
 	//ライト
 	light->SetEye(XMFLOAT3(lightPos));
 	light->SetTarget(XMFLOAT3(lightTarget));

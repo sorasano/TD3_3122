@@ -83,10 +83,6 @@ void Player::Update()
 		}
 	}
 
-	if (isJump == true) {
-		action = JUMP;
-	}
-
 	//リセット
 	inSwamp = false;
 
@@ -99,6 +95,10 @@ void Player::Update()
 		SetJump(false);
 		gravity = 0.0f;
 		position.y = 1.0f;
+	}
+
+	if (isJump == true) {
+		action = JUMP;
 	}
 
 	//モデルの変更
