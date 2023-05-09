@@ -67,7 +67,6 @@ private:
 	FbxObject3D* blockObject[blockSize] = {};
 
 	//プレイヤー
-	FbxModel* playerModel = nullptr;
 	Player* player = nullptr;
 	XMFLOAT3 playerpos;
 

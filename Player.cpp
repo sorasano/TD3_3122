@@ -1,20 +1,25 @@
 #include "Player.h"
 #include "imgui.h"
-
+#include "FbxLoader.h"
 
 Input* Player::input = nullptr;
 DXInput* Player::dxInput = nullptr;
 
 #define PI 3.1415
 
-void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
+void Player::Initialize(CubeObject3D* cubeObject)
 {
 
 	playerObject = new FbxObject3D;
 	playerObject->Initialize();
-	playerObject->SetModel(playerModel);
-	//playerObject->PlayAnimation();
 
+	playerWaitModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWait", "Resources/color/blue1x1.png");
+	playerWalkModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWalk", "Resources/color/blue1x1.png");
+	playerJumpModel = FbxLoader::GetInstance()->LoadModelFromFile("humanJump", "Resources/color/blue1x1.png");
+
+	playerObject->SetModel(playerWaitModel);
+	playerObject->PlayAnimation();
+	
 	//ラジアン
 	rotate.y = 90 * (PI / 180);
 
@@ -26,6 +31,8 @@ void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 void Player::Update()
 {
 
+	action = WAIT;
+
 	if (alpha == 0.0f) {
 
 		//沼に入っているか
@@ -36,12 +43,14 @@ void Player::Update()
 				position.x -= swampSpeed;
 				rotate.y = 270 * (PI / 180);
 
+				action = WALK;
 			}
-			if (input->PushKey(DIK_D))
+			else if (input->PushKey(DIK_D))
 			{
 				position.x += swampSpeed;
 				rotate.y = 90 * (PI / 180);
 
+				action = WALK;
 			}
 
 		}
@@ -52,24 +61,30 @@ void Player::Update()
 				position.x -= speed;
 				rotate.y = 270 * (PI / 180);
 
+				action = WALK;
 			}
-			if (input->PushKey(DIK_D))
+			else if (input->PushKey(DIK_D))
 			{
 				position.x += speed;
 				rotate.y = 90 * (PI / 180);
 
+				action = WALK;
 			}
+
 			//ジャンプ
 			if (input->PushKey(DIK_SPACE)) {
 				if (isJump == false) {
 					Jump();
 					isJump = true;
-					playerObject->PlayAnimation();
 
 				}
 			}
 
 		}
+	}
+
+	if (isJump == true) {
+		action = JUMP;
 	}
 
 	//リセット
@@ -86,6 +101,30 @@ void Player::Update()
 		position.y = 1.0f;
 	}
 
+	//モデルの変更
+
+	if (action != oldAction) {
+
+		if (action == WAIT) {
+			playerObject->SetModel(playerWaitModel);
+			playerObject->PlayAnimation();
+		}
+		else if (action == WALK) {
+			playerObject->SetModel(playerWalkModel);
+			playerObject->PlayAnimation();
+		}
+		else if (action == JUMP) {
+			playerObject->SetModel(playerJumpModel);
+			playerObject->PlayAnimation();
+		}
+	}
+
+	oldAction = action;
+
+	//ImGui::Begin("pPos");
+	//ImGui::Text("pPosX = %f \n",position.x);
+	//ImGui::End();
+
 	//判定
 	cubeObject->SetPosition(position);
 	cubeObject->Update();
@@ -95,15 +134,12 @@ void Player::Update()
 	playerObject->SetRotation(rotate);
 	playerObject->Update();
 
-	//ImGui::Begin("pPos");
-	//ImGui::Text("pPosX = %f \n",position.x);
-	//ImGui::End();
-
 }
 
 void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	if (isDeath == false) {
+
 		playerObject->Draw(cmdList);
 		//cubeObject->Draw(cmdList);
 	}

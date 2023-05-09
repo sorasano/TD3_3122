@@ -86,7 +86,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//モデル名を指定してファイル読み込み
 	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/white1x1.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
-	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("humanJump", "Resources/color/blue1x1.png");
+
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/transparentYellow1x1.png");
@@ -115,7 +115,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Player::SetInput(input_);
 	Player::SetDXInput(dxInput);
 	player = new Player;
-	player->Initialize(playerModel, playerColBox);
+	player->Initialize(playerColBox);
 
 	//=============ギミック===============
 
