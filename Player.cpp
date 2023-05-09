@@ -13,7 +13,7 @@ void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 	playerObject = new FbxObject3D;
 	playerObject->Initialize();
 	playerObject->SetModel(playerModel);
-	playerObject->PlayAnimation();
+	//playerObject->PlayAnimation();
 
 	//ラジアン
 	rotate.y = 90 * (PI / 180);
@@ -64,6 +64,8 @@ void Player::Update()
 				if (isJump == false) {
 					Jump();
 					isJump = true;
+					playerObject->PlayAnimation();
+
 				}
 			}
 
