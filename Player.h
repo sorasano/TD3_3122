@@ -28,6 +28,8 @@ public:
 	void SetisDeath(int isDeath) { this->isDeath = isDeath; }
 	void SetJump(bool isJump) { this->isJump = isJump; }
 	void SetSwamp(bool inSwamp) { this->inSwamp = inSwamp; }
+	void SetGravity(float gravity) { this->gravity = gravity; }
+	void SetisPushBack(bool ispushBack) { this->ispushBack = ispushBack; }
 
 	static void SetInput(Input* input) { Player::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Player::dxInput = dxInput; }
@@ -36,8 +38,10 @@ public:
 	XMFLOAT3 GetPosition() { return position; }
 	//XMFLOAT3 GetScale() { return scale; }
 	XMFLOAT3 GetRotate() { return rotate; }
+	float GetSpeed() { return speed; }
+	float GetGravity() { return gravity; }
 
-	CubeObject3D *GetCubeObject() {return cubeObject; }
+	CubeObject3D *GetCubeObject() {return cubeObject_; }
 	bool GetDeath() { return isDeath; }
 
 	//死亡処理
@@ -47,10 +51,12 @@ public:
 
 	void SetisClear(bool isClear) { this->isClear = isClear; };
 	void Swamp();
+	//押し戻し処理
+	void pushback(CubeObject3D* cubeObject);
 
 private:
 	
-	XMFLOAT3 position = { 0.0f,1.0f,-1.0f};
+	XMFLOAT3 position = { 0.0f,10.0f,-1.0f};
 	XMFLOAT3 scale = { 0.002f,0.001f,0.002f };
 	XMFLOAT3 rotate = { 0.0f,0.0f,0.0f };
 
@@ -89,7 +95,9 @@ private:
 	float gravitySpeed = 0.01f;
 
 	//判定
-	CubeObject3D* cubeObject = nullptr;
-
+	CubeObject3D* cubeObject_ = nullptr;
+	XMFLOAT3 colposition = { 0,0,0 };
+	XMFLOAT3 newposition = { 0,0,0 };
+	bool ispushBack = false;
 };
 

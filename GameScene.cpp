@@ -485,6 +485,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Goal::SetDXInput(dxInput);
 	goal->Initialize(whiteSprite, clearSprite, player);
 	goal->SetClearPos(590);
+
+
+	/*cube = new CubeObject3D();
+	cube->Initialize();
+	cube->SetModel(cubeModel);*/
+
+
 }
 
 void GameScene::Update()
@@ -528,8 +535,7 @@ void GameScene::Update()
 		blockObject[i]->Update();
 	}
 
-	//プレイヤー
-	player->Update();
+
 
 	for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Update();
@@ -555,6 +561,9 @@ void GameScene::Update()
 	for (int i = 0; i < swampSize; i++) {
 		swamp[i]->Update();
 	}
+
+	//プレイヤー
+	player->Update();
 
 	//スプライト
 
@@ -599,7 +608,7 @@ void GameScene::Update()
 	//ゲームオーバー演出
 	if (player->GetDeath()) {
 		if (isback == false) {
-			alpha += 0.005f;
+			alpha += 0.05f;
 			player->SetAlpha(alpha);
 			if (alpha >= 1.0f) {
 				isback = true;
@@ -627,6 +636,7 @@ void GameScene::Update()
 		}
 	}
 	blackSprite->SetAlpha(alpha);
+
 
 }
 

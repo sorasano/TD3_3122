@@ -10,7 +10,6 @@
 #include "DirectXMath.h"
 #include "string.h"
 #include "input.h"
-
 class CubeObject3D
 {
 private:	//エイリアス
@@ -64,6 +63,8 @@ public://メンバ関数
 	CubeModel *GetModel() { return model; }
 	//判定
 	bool CheakCollision(CubeObject3D* cubeObject3D);
+	////押し戻し処理
+	//void pushback(Player* player);
 
 private://メンバ変数
 //定数バッファ
@@ -84,5 +85,8 @@ private:
 	XMMATRIX matWorld;
 	//モデル
 	CubeModel* model = nullptr;
+	//判定用
+	XMFLOAT3 playerPos = { 0,0,0 };
+	
 };
 

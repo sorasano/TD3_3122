@@ -267,13 +267,13 @@ void CubeObject3D::CreateGraphicsPipeline()
 
 bool CubeObject3D::CheakCollision(CubeObject3D* cubeObject3D) {
 
-	XMFLOAT3 minposA = { 
+	XMFLOAT3 minposA = {
 		scale.x * model->GetColPositionMin().x,
 		scale.y * model->GetColPositionMin().y,
 		scale.z * model->GetColPositionMin().z
 	};
-	
-	XMFLOAT3 minposB = { 
+
+	XMFLOAT3 minposB = {
 		cubeObject3D->GetScale().x * cubeObject3D->GetModel()->GetColPositionMin().x,
 		cubeObject3D->GetScale().y * cubeObject3D->GetModel()->GetColPositionMin().y,
 		cubeObject3D->GetScale().z * cubeObject3D->GetModel()->GetColPositionMin().z
@@ -281,9 +281,9 @@ bool CubeObject3D::CheakCollision(CubeObject3D* cubeObject3D) {
 	XMFLOAT3 maxposA = {
 		scale.x * model->GetColPositionMax().x,
 		scale.y * model->GetColPositionMax().y,
-		scale.z * model->GetColPositionMax().z 
+		scale.z * model->GetColPositionMax().z
 	};
-	XMFLOAT3 maxposB = { 
+	XMFLOAT3 maxposB = {
 		cubeObject3D->GetScale().x * cubeObject3D->GetModel()->GetColPositionMax().x,
 		cubeObject3D->GetScale().y * cubeObject3D->GetModel()->GetColPositionMax().y,
 		cubeObject3D->GetScale().z * cubeObject3D->GetModel()->GetColPositionMax().z
@@ -306,3 +306,35 @@ bool CubeObject3D::CheakCollision(CubeObject3D* cubeObject3D) {
 
 	return false;
 }
+
+//void CubeObject3D::pushback(Player* player)
+//{
+//	//‰¡‚Ì”»’è
+//	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+//		if (CheakCollision(player->GetCubeObject())) {
+//			if (input->PushKey(DIK_A)) {
+//				playerPos = player->GetPosition();
+//				playerPos.x += player->GetSpeed();
+//				player->SetPosition(playerPos);
+//			}
+//			else if (input->PushKey(DIK_D)) {
+//				playerPos = player->GetPosition();
+//				playerPos.x -= player->GetSpeed();
+//				player->SetPosition(playerPos);
+//			}
+//		}
+//	}
+//
+//	//—Ž‰º’†(ƒWƒƒƒ“ƒv‚àŠÜ‚Þ)
+//	if (player->GetGravity() != 0.0f) {
+//		if (CheakCollision(player->GetCubeObject())) {
+//			playerPos = player->GetPosition();
+//			playerPos.y -= player->GetGravity();
+//
+//			player->SetJump(false);
+//			player->SetGravity(0.0f);
+//			player->SetPosition(playerPos);
+//		}
+//	}
+//
+//}

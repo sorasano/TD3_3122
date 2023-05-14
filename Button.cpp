@@ -25,14 +25,14 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cube
 
 	//判定
 	this->cubeObject = cubeObject;
-	this->cubeObject->SetScale(XMFLOAT3(blockScale.x*100.0f, blockScale.y* 100.0f, blockScale.z*100.0f));
+	this->cubeObject->SetScale(XMFLOAT3(scale.x*100.0f, scale.y* 100.0f, scale.z*100.0f));
 }
 
 void Button::Update()
 {
 
-	colPosition = blockPosition;
-	colPosition.y += 1.5f;
+	colPosition = position;
+	/*colPosition.y += 1.5f;*/
 
 	//判定
 	cubeObject->SetPosition(colPosition);
@@ -76,46 +76,47 @@ void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 
 void Button::ButtonCol()
 {
+	
 
-	float scale = 0.5;
+	//float scale = 0.5;
 
-	float bPosX1 = position.x - scale;
-	float bPosX2 = position.x + scale;
+	//float bPosX1 = position.x - scale;
+	//float bPosX2 = position.x + scale;
 
-	float bPosY1 = position.y - scale;
-	float bPosY2 = position.y + scale;
+	//float bPosY1 = position.y - scale;
+	//float bPosY2 = position.y + scale;
 
-	float bPosZ1 = position.z - scale;
-	float bPosZ2 = position.z + scale;
+	//float bPosZ1 = position.z - scale;
+	//float bPosZ2 = position.z + scale;
 
-	float pPosX1 = player->GetPosition().x - scale;
-	float pPosX2 = player->GetPosition().x + scale;
+	//float pPosX1 = player->GetPosition().x - scale;
+	//float pPosX2 = player->GetPosition().x + scale;
 
-	float pPosY1 = player->GetPosition().y - scale;
-	float pPosY2 = player->GetPosition().y + scale;
+	//float pPosY1 = player->GetPosition().y - scale;
+	//float pPosY2 = player->GetPosition().y + scale;
 
-	float pPosZ1 = player->GetPosition().z - scale;
-	float pPosZ2 = player->GetPosition().z + scale;
+	//float pPosZ1 = player->GetPosition().z - scale;
+	//float pPosZ2 = player->GetPosition().z + scale;
 
 
 
-	//当たってスペースを押したら
-	if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
+	////当たってスペースを押したら
+	//if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
 
-		if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
+	//	if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
 
-			if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
+	//		if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
 
-				if (push == false)
-				{
-					push = true;
-					pushTimer = 0;
+	//			if (push == false)
+	//			{
+	//				push = true;
+	//				pushTimer = 0;
 
-				}
+	//			}
 
-			}
-		}
-	}
+	//		}
+	//	}
+	//}
 
 }
 
@@ -154,9 +155,11 @@ void Button::BlockCol()
 	//	}
 	//}
 
-	if (cubeObject->CheakCollision(player->GetCubeObject())) {
+	player->pushback(cubeObject);
+
+	/*if (cubeObject->CheakCollision(player->GetCubeObject())) {
 		player->Death();
-	};
+	};*/
 
 }
 

@@ -187,6 +187,8 @@ private:
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
 	CubeObject3D* ButtonColBox[buttonSize] = {};
+	//お試し用
+	CubeObject3D* cube = nullptr;
 
 	//ゴール判定
 	Goal* goal = nullptr;

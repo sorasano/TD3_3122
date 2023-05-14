@@ -19,18 +19,16 @@ void Player::Initialize(FbxModel* playerModel, CubeObject3D* cubeObject)
 	rotate.y = 90 * (PI / 180);
 
 	//判定
-	this->cubeObject = cubeObject;
-	this->cubeObject->SetScale(XMFLOAT3(1, 1, 1));
+	this->cubeObject_ = cubeObject;
+	this->cubeObject_->SetScale(XMFLOAT3(0.5, 1.5, 1));
 }
 
 void Player::Update()
 {
 
 	if (alpha == 0.0f) {
-
 		//沼に入っているか
 		if (inSwamp) {
-
 			if (input->PushKey(DIK_A))
 			{
 				position.x -= swampSpeed;
@@ -43,10 +41,8 @@ void Player::Update()
 				rotate.y = 90 * (PI / 180);
 
 			}
-
 		}
 		else {
-
 			if (input->PushKey(DIK_A) && position.x > -5)
 			{
 				position.x -= speed;
@@ -87,8 +83,10 @@ void Player::Update()
 	}
 
 	//判定
-	cubeObject->SetPosition(position);
-	cubeObject->Update();
+	colposition = position;
+	colposition.y += 0.5f;
+	cubeObject_->SetPosition(colposition);
+	cubeObject_->Update();
 
 	playerObject->SetPosition(position);
 	playerObject->SetScale(scale);
@@ -105,7 +103,7 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	if (isDeath == false) {
 		playerObject->Draw(cmdList);
-		//cubeObject->Draw(cmdList);
+		cubeObject_->Draw(cmdList);
 	}
 
 }
@@ -148,4 +146,85 @@ void Player::Jump()
 void Player::Swamp()
 {
 	inSwamp = true;
+}
+
+void Player::pushback(CubeObject3D* cubeObject)
+{
+
+	//横の判定
+	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+		//沼の中
+		if (inSwamp) {
+			if (input->PushKey(DIK_A)) {
+				newposition = position;
+				newposition.x = (position.x - swampSpeed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					//SetisPushBack(true);
+					///*ispushBack = true;*/
+					//cubeObject_->SetPosition(position);
+					position.x += swampSpeed;
+				}
+				else {
+					SetisPushBack(false);
+				}
+			}
+			if (input->PushKey(DIK_D)) {
+				newposition = position;
+				newposition.x = (position.x + swampSpeed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					//SetisPushBack(true);
+					///*ispushBack = true;*/
+					//cubeObject_->SetPosition(position);
+					position.x -= swampSpeed;
+				}
+				else {
+					SetisPushBack(false);
+				}
+			}
+			cubeObject_->SetPosition(newposition);
+		}
+		else {
+			if (input->PushKey(DIK_A)) {
+				newposition = position;
+				newposition.x = (position.x - speed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					/*SetisPushBack(true);*/
+					/*ispushBack = true;*/
+					position.x += speed;
+				}
+				else {
+					SetisPushBack(false);
+				}
+			}
+			if (input->PushKey(DIK_D)) {
+				newposition = position;
+				newposition.x = (position.x + speed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					/*SetisPushBack(true);*/
+					/*ispushBack = true;*/
+					position.x -= speed;
+				}
+				else {
+					SetisPushBack(false);
+				}
+			}
+
+		}
+	}
+
+	//落下中(ジャンプも含む)
+	if (gravity <= 0.0f) {
+		newposition = position;
+		newposition.y += gravity;
+		cubeObject_->SetPosition(newposition);
+		if (cubeObject_->CheakCollision(cubeObject)) {
+			SetJump(false);
+			gravity = 0.0f;
+		}
+	}
+
 }
