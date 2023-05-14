@@ -76,8 +76,13 @@ void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 
 void Button::ButtonCol()
 {
-	
-
+	player->pushback(cubeObject);
+	if (player->OntheBlock(cubeObject)) {
+		if (push == false) {
+			push = true;
+			pushTimer = 0;
+		}
+	}
 	//float scale = 0.5;
 
 	//float bPosX1 = position.x - scale;
@@ -142,20 +147,18 @@ void Button::BlockCol()
 	float pPosZ1 = player->GetPosition().z - scale;
 	float pPosZ2 = player->GetPosition().z + scale;
 
-	////“–‚½‚Á‚½‚ç
-	//if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
+	//“–‚½‚Á‚½‚ç
+	if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
 
-	//	if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
+		if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
 
-	//		if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
+			if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
 
-	//			player->Death();
+				player->Death();
 
-	//		}
-	//	}
-	//}
-
-	player->pushback(cubeObject);
+			}
+		}
+	}
 
 	/*if (cubeObject->CheakCollision(player->GetCubeObject())) {
 		player->Death();

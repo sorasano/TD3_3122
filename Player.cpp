@@ -160,13 +160,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 				newposition.x = (position.x - swampSpeed);
 				cubeObject_->SetPosition(newposition);
 				if (cubeObject_->CheakCollision(cubeObject)) {
-					//SetisPushBack(true);
-					///*ispushBack = true;*/
-					//cubeObject_->SetPosition(position);
 					position.x += swampSpeed;
-				}
-				else {
-					SetisPushBack(false);
 				}
 			}
 			if (input->PushKey(DIK_D)) {
@@ -174,13 +168,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 				newposition.x = (position.x + swampSpeed);
 				cubeObject_->SetPosition(newposition);
 				if (cubeObject_->CheakCollision(cubeObject)) {
-					//SetisPushBack(true);
-					///*ispushBack = true;*/
-					//cubeObject_->SetPosition(position);
 					position.x -= swampSpeed;
-				}
-				else {
-					SetisPushBack(false);
 				}
 			}
 			cubeObject_->SetPosition(newposition);
@@ -191,12 +179,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 				newposition.x = (position.x - speed);
 				cubeObject_->SetPosition(newposition);
 				if (cubeObject_->CheakCollision(cubeObject)) {
-					/*SetisPushBack(true);*/
-					/*ispushBack = true;*/
 					position.x += speed;
-				}
-				else {
-					SetisPushBack(false);
 				}
 			}
 			if (input->PushKey(DIK_D)) {
@@ -204,18 +187,17 @@ void Player::pushback(CubeObject3D* cubeObject)
 				newposition.x = (position.x + speed);
 				cubeObject_->SetPosition(newposition);
 				if (cubeObject_->CheakCollision(cubeObject)) {
-					/*SetisPushBack(true);*/
-					/*ispushBack = true;*/
 					position.x -= speed;
-				}
-				else {
-					SetisPushBack(false);
 				}
 			}
 
 		}
 	}
 
+}
+
+bool Player::OntheBlock(CubeObject3D* cubeObject)
+{
 	//落下中(ジャンプも含む)
 	if (gravity <= 0.0f) {
 		newposition = position;
@@ -224,7 +206,9 @@ void Player::pushback(CubeObject3D* cubeObject)
 		if (cubeObject_->CheakCollision(cubeObject)) {
 			SetJump(false);
 			gravity = 0.0f;
+			return true;
 		}
 	}
-
+	return false;
+	
 }
