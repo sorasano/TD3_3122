@@ -637,12 +637,12 @@ void GameScene::Draw()
 {
 	//-------背景スプライト描画処理-------//
 
-	ImGui::Begin("Light");
-	ImGui::SetWindowPos(ImVec2(0, 0));
-	ImGui::SetWindowSize(ImVec2(500, 200));
-	ImGui::InputFloat3("lightTarget", lightTarget);
-	ImGui::InputFloat3("lightPos", lightPos);
-	ImGui::End();
+	//ImGui::Begin("Light");
+	//ImGui::SetWindowPos(ImVec2(0, 0));
+	//ImGui::SetWindowSize(ImVec2(500, 200));
+	//ImGui::InputFloat3("lightTarget", lightTarget);
+	//ImGui::InputFloat3("lightPos", lightPos);
+	//ImGui::End();
 
 	DrawFBX();
 
