@@ -152,6 +152,10 @@
     <ClCompile Include="2d\Vignette.cpp">
       <Filter>ソースファイル\Efect</Filter>
     </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Ladder.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\BlurEffect.h" />
@@ -226,6 +230,10 @@
     <ClInclude Include="2d\Vignette.h">
       <Filter>ヘッダーファイル\Efect</Filter>
     </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>ソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Ladder.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\ShaderHeader.hlsli" />
