@@ -84,12 +84,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//FBX読み込み
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
-	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/white1x1.png");
+	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/grassFiled.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
-	playerModel = FbxLoader::GetInstance()->LoadModelFromFile("humanJump", "Resources/color/blue1x1.png");
+
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/green1x1.png");
-	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/transparentYellow1x1.png");
+	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
 	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
@@ -115,7 +115,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Player::SetInput(input_);
 	Player::SetDXInput(dxInput);
 	player = new Player;
-	player->Initialize(playerModel, playerColBox);
+	player->Initialize(playerColBox);
 
 	//=============ギミック===============
 
@@ -501,6 +501,9 @@ void GameScene::Update()
 	//コントローラー更新
 	dxInput->InputProcess();
 
+	lightPos[0] = player->GetPosition().x;
+	lightTarget[0] = player->GetPosition().x;
+
 	//ライト
 	light->SetEye(XMFLOAT3(lightPos));
 	light->SetTarget(XMFLOAT3(lightTarget));
@@ -644,32 +647,32 @@ void GameScene::Draw()
 {
 	//-------背景スプライト描画処理-------//
 
-	/*ImGui::Begin("Light");
-	ImGui::SetWindowPos(ImVec2(0, 0));
-	ImGui::SetWindowSize(ImVec2(500, 200));
-	ImGui::InputFloat3("lightTarget", lightTarget);
-	ImGui::InputFloat3("lightPos", lightPos);
-	ImGui::End();*/
+	//ImGui::Begin("Light");
+	//ImGui::SetWindowPos(ImVec2(0, 0));
+	//ImGui::SetWindowSize(ImVec2(500, 200));
+	//ImGui::InputFloat3("lightTarget", lightTarget);
+	//ImGui::InputFloat3("lightPos", lightPos);
+	//ImGui::End();
 
 	DrawFBX();
 
-	//-------前景スプライト描画処理-------//
+	////-------前景スプライト描画処理-------//
 
-	if (titleSprite->endFlip == false) {
-		titleSprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (titleSprite->endFlip == false) {
+	//	titleSprite->Draw(dxCommon_->GetCommandList());
+	//}
 
-	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-		titleUISprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+	//	titleUISprite->Draw(dxCommon_->GetCommandList());
+	//}
 
-	blackSprite->Draw(dxCommon_->GetCommandList());
+	///*blackSprite->Draw(dxCommon_->GetCommandList());*/
 
-	goal->Draw(dxCommon_->GetCommandList());
+	//goal->Draw(dxCommon_->GetCommandList());
 
-	if (player->GetDeath() == false) {
-		playUISprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (player->GetDeath() == false) {
+	//	playUISprite->Draw(dxCommon_->GetCommandList());
+	//}
 
 }
 
@@ -748,6 +751,27 @@ void GameScene::DrawFBX()
 		swamp[i]->Draw(dxCommon_->GetCommandList());
 	}
 
+}
+
+void GameScene::DrawSprite()
+{
+	//-------前景スプライト描画処理-------//
+
+	if (titleSprite->endFlip == false) {
+		titleSprite->Draw(dxCommon_->GetCommandList());
+	}
+
+	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+		titleUISprite->Draw(dxCommon_->GetCommandList());
+	}
+
+	/*blackSprite->Draw(dxCommon_->GetCommandList());*/
+
+	goal->Draw(dxCommon_->GetCommandList());
+
+	if (player->GetDeath() == false) {
+		playUISprite->Draw(dxCommon_->GetCommandList());
+	}
 }
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()

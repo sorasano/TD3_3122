@@ -6,12 +6,18 @@
 #include"CubeObject3D.h"
 #include "Camera.h"
 
+enum PlayerAction {
+	WAIT,
+	WALK,
+	JUMP
+};
+
 class Player
 {
 
 public:
 
-	void Initialize(FbxModel* playerModel, CubeObject3D* cubeObject);
+	void Initialize(CubeObject3D* cubeObject);
 
 	void Update();
 
@@ -70,6 +76,10 @@ private:
 	//fbx
 	FbxObject3D* playerObject = nullptr;
 
+	FbxModel* playerWaitModel = nullptr;
+	FbxModel* playerWalkModel = nullptr;
+	FbxModel* playerJumpModel = nullptr;
+
 	//移動スピード
 	float speed = 0.1;
 
@@ -98,5 +108,11 @@ private:
 	CubeObject3D* cubeObject_ = nullptr;
 	XMFLOAT3 colposition = { 0,0,0 };
 	XMFLOAT3 newposition = { 0,0,0 };
+
+
+	//行動中の動き
+	int action;
+	//前フレームの動き
+	int oldAction;
 };
 

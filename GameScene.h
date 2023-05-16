@@ -37,6 +37,7 @@ public:
 	void Draw();
 	void DrawFBXLightView();
 	void DrawFBX();
+	void DrawSprite();
 	//セッター
 	void SetSRV(ID3D12DescriptorHeap* SRV);
 	//ゲッター
@@ -67,7 +68,6 @@ private:
 	FbxObject3D* blockObject[blockSize] = {};
 
 	//プレイヤー
-	FbxModel* playerModel = nullptr;
 	Player* player = nullptr;
 	XMFLOAT3 playerpos;
 

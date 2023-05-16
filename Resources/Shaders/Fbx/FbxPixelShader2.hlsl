@@ -72,6 +72,7 @@ PSOutput main(VSOutput input) : SV_TARGET
 	output.target0.x *= shadowWeight;
 	output.target0.y *= shadowWeight;
 	output.target0.z *= shadowWeight;
+	output.target0.w = alpha;
 	output.target1 = float4(1,1,1,1);
 	return output;
 }
