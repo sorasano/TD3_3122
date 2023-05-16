@@ -76,52 +76,54 @@ void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 
 void Button::ButtonCol()
 {
-	if (player->OntheBlock(cubeObject)) {
+	/*if (player->OntheBlock(cubeObject)) {
 		if (push == false) {
 			push = true;
 			pushTimer = 0;
 		}
 	}
-	player->pushback(cubeObject);
-	//float scale = 0.5;
+	
+	player->pushback(cubeObject);*/
 
-	//float bPosX1 = position.x - scale;
-	//float bPosX2 = position.x + scale;
+	float scale = 0.5;
 
-	//float bPosY1 = position.y - scale;
-	//float bPosY2 = position.y + scale;
+	float bPosX1 = position.x - scale;
+	float bPosX2 = position.x + scale;
 
-	//float bPosZ1 = position.z - scale;
-	//float bPosZ2 = position.z + scale;
+	float bPosY1 = position.y - scale;
+	float bPosY2 = position.y + scale;
 
-	//float pPosX1 = player->GetPosition().x - scale;
-	//float pPosX2 = player->GetPosition().x + scale;
+	float bPosZ1 = position.z - scale;
+	float bPosZ2 = position.z + scale;
 
-	//float pPosY1 = player->GetPosition().y - scale;
-	//float pPosY2 = player->GetPosition().y + scale;
+	float pPosX1 = player->GetPosition().x - scale;
+	float pPosX2 = player->GetPosition().x + scale;
 
-	//float pPosZ1 = player->GetPosition().z - scale;
-	//float pPosZ2 = player->GetPosition().z + scale;
+	float pPosY1 = player->GetPosition().y - scale;
+	float pPosY2 = player->GetPosition().y + scale;
+
+	float pPosZ1 = player->GetPosition().z - scale;
+	float pPosZ2 = player->GetPosition().z + scale;
 
 
 
-	////当たってスペースを押したら
-	//if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
+	//当たってスペースを押したら
+	if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
 
-	//	if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
+		if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
 
-	//		if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
+			if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
 
-	//			if (push == false)
-	//			{
-	//				push = true;
-	//				pushTimer = 0;
+				if (push == false)
+				{
+					push = true;
+					pushTimer = 0;
 
-	//			}
+				}
 
-	//		}
-	//	}
-	//}
+			}
+		}
+	}
 
 }
 
