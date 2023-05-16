@@ -7,7 +7,7 @@ cbuffer cbuff0 : register(b0)
 	matrix world;	//ワールド行列
 	float3 cameraPos;	//カメラ座標
 	matrix lightviewproj;	//ビュープロジェクション行列
-	matrix shadow;
+	float alpha;
 };
 
 cbuffer skinning:register(b3)	//ボーンのスキニング行列が入る

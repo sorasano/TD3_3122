@@ -84,12 +84,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//FBX読み込み
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
-	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/white1x1.png");
+	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/grassFiled.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/green1x1.png");
-	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/transparentYellow1x1.png");
+	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
 	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
@@ -646,23 +646,23 @@ void GameScene::Draw()
 
 	DrawFBX();
 
-	//-------前景スプライト描画処理-------//
+	////-------前景スプライト描画処理-------//
 
-	if (titleSprite->endFlip == false) {
-		titleSprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (titleSprite->endFlip == false) {
+	//	titleSprite->Draw(dxCommon_->GetCommandList());
+	//}
 
-	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-		titleUISprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+	//	titleUISprite->Draw(dxCommon_->GetCommandList());
+	//}
 
-	blackSprite->Draw(dxCommon_->GetCommandList());
+	///*blackSprite->Draw(dxCommon_->GetCommandList());*/
 
-	goal->Draw(dxCommon_->GetCommandList());
+	//goal->Draw(dxCommon_->GetCommandList());
 
-	if (player->GetDeath() == false) {
-		playUISprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (player->GetDeath() == false) {
+	//	playUISprite->Draw(dxCommon_->GetCommandList());
+	//}
 
 }
 
@@ -741,6 +741,27 @@ void GameScene::DrawFBX()
 		swamp[i]->Draw(dxCommon_->GetCommandList());
 	}
 
+}
+
+void GameScene::DrawSprite()
+{
+	//-------前景スプライト描画処理-------//
+
+	if (titleSprite->endFlip == false) {
+		titleSprite->Draw(dxCommon_->GetCommandList());
+	}
+
+	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+		titleUISprite->Draw(dxCommon_->GetCommandList());
+	}
+
+	/*blackSprite->Draw(dxCommon_->GetCommandList());*/
+
+	goal->Draw(dxCommon_->GetCommandList());
+
+	if (player->GetDeath() == false) {
+		playUISprite->Draw(dxCommon_->GetCommandList());
+	}
 }
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()

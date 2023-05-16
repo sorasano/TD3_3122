@@ -121,6 +121,7 @@ void FbxObject3D::Update()
 		constMap->world = matWorld;
 		constMap->cameraPos = cameraPos;
 		constMap->lightviewproj = light->GetMatViewProjection();
+		constMap->alpha = alpha;
 		constBuffTransform->Unmap(0, nullptr);
 	}
 

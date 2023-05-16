@@ -37,6 +37,7 @@ public:
 	void Draw();
 	void DrawFBXLightView();
 	void DrawFBX();
+	void DrawSprite();
 	//セッター
 	void SetSRV(ID3D12DescriptorHeap* SRV);
 	//ゲッター
