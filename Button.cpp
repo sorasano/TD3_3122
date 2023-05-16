@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "FbxLoader.h"
 
-void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cubeObject)
+void Button::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D* cubeObject)
 {
 	//ƒvƒŒƒCƒ„[
 	this->player = player;
@@ -25,14 +25,14 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cube
 
 	//”»’è
 	this->cubeObject = cubeObject;
-	this->cubeObject->SetScale(XMFLOAT3(scale.x*100.0f, scale.y* 100.0f, scale.z*100.0f));
+	this->cubeObject->SetScale(XMFLOAT3(scale.x * 100.0f, scale.y * 100.0f, scale.z * 100.0f));
 }
 
 void Button::Update()
 {
 
 	colPosition = position;
-	/*colPosition.y += 1.5f;*/
+	/*colPosition.y -= 0.2f;*/
 
 	//”»’è
 	cubeObject->SetPosition(colPosition);
@@ -76,13 +76,13 @@ void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 
 void Button::ButtonCol()
 {
-	player->pushback(cubeObject);
 	if (player->OntheBlock(cubeObject)) {
 		if (push == false) {
 			push = true;
 			pushTimer = 0;
 		}
 	}
+	player->pushback(cubeObject);
 	//float scale = 0.5;
 
 	//float bPosX1 = position.x - scale;

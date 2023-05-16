@@ -56,7 +56,7 @@ public:
 	bool OntheBlock(CubeObject3D* cubeObject);
 private:
 	
-	XMFLOAT3 position = { 0.0f,10.0f,-1.0f};
+	XMFLOAT3 position = { 0.0f,2.0f,-1.0f};
 	XMFLOAT3 scale = { 0.002f,0.001f,0.002f };
 	XMFLOAT3 rotate = { 0.0f,0.0f,0.0f };
 

@@ -63,8 +63,6 @@ public://メンバ関数
 	CubeModel *GetModel() { return model; }
 	//判定
 	bool CheakCollision(CubeObject3D* cubeObject3D);
-	////押し戻し処理
-	//void pushback(Player* player);
 
 private://メンバ変数
 //定数バッファ

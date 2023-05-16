@@ -103,7 +103,7 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	if (isDeath == false) {
 		playerObject->Draw(cmdList);
-		cubeObject_->Draw(cmdList);
+		/*cubeObject_->Draw(cmdList);*/
 	}
 
 }
@@ -193,6 +193,16 @@ void Player::pushback(CubeObject3D* cubeObject)
 
 		}
 	}
+	//落下中(ジャンプも含む)
+	if (gravity <= 0.0f) {
+		newposition = position;
+		newposition.y += gravity;
+		cubeObject_->SetPosition(newposition);
+		if (cubeObject_->CheakCollision(cubeObject)) {
+			SetJump(false);
+			gravity = 0.0f;
+		}
+	}
 
 }
 
@@ -204,8 +214,8 @@ bool Player::OntheBlock(CubeObject3D* cubeObject)
 		newposition.y += gravity;
 		cubeObject_->SetPosition(newposition);
 		if (cubeObject_->CheakCollision(cubeObject)) {
-			SetJump(false);
-			gravity = 0.0f;
+			/*SetJump(false);
+			gravity = 0.0f;*/
 			return true;
 		}
 	}

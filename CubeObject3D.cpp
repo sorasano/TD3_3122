@@ -307,34 +307,3 @@ bool CubeObject3D::CheakCollision(CubeObject3D* cubeObject3D) {
 	return false;
 }
 
-//void CubeObject3D::pushback(Player* player)
-//{
-//	//‰¡‚Ì”»’è
-//	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
-//		if (CheakCollision(player->GetCubeObject())) {
-//			if (input->PushKey(DIK_A)) {
-//				playerPos = player->GetPosition();
-//				playerPos.x += player->GetSpeed();
-//				player->SetPosition(playerPos);
-//			}
-//			else if (input->PushKey(DIK_D)) {
-//				playerPos = player->GetPosition();
-//				playerPos.x -= player->GetSpeed();
-//				player->SetPosition(playerPos);
-//			}
-//		}
-//	}
-//
-//	//—Ž‰º’†(ƒWƒƒƒ“ƒv‚àŠÜ‚Þ)
-//	if (player->GetGravity() != 0.0f) {
-//		if (CheakCollision(player->GetCubeObject())) {
-//			playerPos = player->GetPosition();
-//			playerPos.y -= player->GetGravity();
-//
-//			player->SetJump(false);
-//			player->SetGravity(0.0f);
-//			player->SetPosition(playerPos);
-//		}
-//	}
-//
-//}
