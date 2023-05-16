@@ -10,7 +10,6 @@
 #include "DirectXMath.h"
 #include "string.h"
 #include "input.h"
-
 class CubeObject3D
 {
 private:	//エイリアス
@@ -84,5 +83,8 @@ private:
 	XMMATRIX matWorld;
 	//モデル
 	CubeModel* model = nullptr;
+	//判定用
+	XMFLOAT3 playerPos = { 0,0,0 };
+	
 };
 

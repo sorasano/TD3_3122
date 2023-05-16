@@ -267,13 +267,13 @@ void CubeObject3D::CreateGraphicsPipeline()
 
 bool CubeObject3D::CheakCollision(CubeObject3D* cubeObject3D) {
 
-	XMFLOAT3 minposA = { 
+	XMFLOAT3 minposA = {
 		scale.x * model->GetColPositionMin().x,
 		scale.y * model->GetColPositionMin().y,
 		scale.z * model->GetColPositionMin().z
 	};
-	
-	XMFLOAT3 minposB = { 
+
+	XMFLOAT3 minposB = {
 		cubeObject3D->GetScale().x * cubeObject3D->GetModel()->GetColPositionMin().x,
 		cubeObject3D->GetScale().y * cubeObject3D->GetModel()->GetColPositionMin().y,
 		cubeObject3D->GetScale().z * cubeObject3D->GetModel()->GetColPositionMin().z
@@ -281,9 +281,9 @@ bool CubeObject3D::CheakCollision(CubeObject3D* cubeObject3D) {
 	XMFLOAT3 maxposA = {
 		scale.x * model->GetColPositionMax().x,
 		scale.y * model->GetColPositionMax().y,
-		scale.z * model->GetColPositionMax().z 
+		scale.z * model->GetColPositionMax().z
 	};
-	XMFLOAT3 maxposB = { 
+	XMFLOAT3 maxposB = {
 		cubeObject3D->GetScale().x * cubeObject3D->GetModel()->GetColPositionMax().x,
 		cubeObject3D->GetScale().y * cubeObject3D->GetModel()->GetColPositionMax().y,
 		cubeObject3D->GetScale().z * cubeObject3D->GetModel()->GetColPositionMax().z
@@ -306,3 +306,4 @@ bool CubeObject3D::CheakCollision(CubeObject3D* cubeObject3D) {
 
 	return false;
 }
+
