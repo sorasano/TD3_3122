@@ -1,13 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="FbxShadowPixelShader.hlsl" />
-    <FxCompile Include="FbxShadowVertexShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\FbxPixelShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\FbxVertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\PixelShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\SpritePixelShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\VertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\Blur\BlurPixelShader.hlsl">
       <Filter>シェーダーファイル\Blur</Filter>
@@ -75,7 +69,6 @@
     <ClCompile Include="2d\ChromaticAberrationEffect.cpp" />
     <ClCompile Include="2d\MonochromeEffect.cpp" />
     <ClCompile Include="2d\MosaicEffect.cpp" />
-    <ClCompile Include="2d\PostEffect.cpp" />
     <ClCompile Include="2d\ReversalEffect.cpp" />
     <ClCompile Include="2d\ShadowMap.cpp" />
     <ClCompile Include="Autosave.cpp" />
@@ -96,7 +89,6 @@
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Easing.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="FbxObject3D2.cpp" />
     <ClCompile Include="fbx\FbxLoader.cpp" />
     <ClCompile Include="fbx\FbxModel.cpp" />
     <ClCompile Include="fbx\FbxObject3D.cpp" />
@@ -107,7 +99,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Random.cpp" />
-    <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Goal.cpp">
@@ -140,13 +131,15 @@
     <ClCompile Include="2d\ShadowMap.cpp">
       <Filter>ソースファイル\Shaow</Filter>
     </ClCompile>
+    <ClCompile Include="CSVLoader.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\BlurEffect.h" />
     <ClInclude Include="2d\ChromaticAberrationEffect.h" />
     <ClInclude Include="2d\MonochromeEffect.h" />
     <ClInclude Include="2d\MosaicEffect.h" />
-    <ClInclude Include="2d\PostEffect.h" />
     <ClInclude Include="2d\ReversalEffect.h" />
     <ClInclude Include="2d\ShadowMap.h" />
     <ClInclude Include="Autosave.h" />
@@ -168,7 +161,6 @@
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="FbxObject3D2.h" />
     <ClInclude Include="fbx\FbxLoader.h" />
     <ClInclude Include="fbx\FbxModel.h" />
     <ClInclude Include="fbx\FbxObject3D.h" />
@@ -178,7 +170,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Random.h" />
-    <ClInclude Include="Shadow.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Goal.h">
@@ -208,12 +199,12 @@
     <ClInclude Include="2d\ShadowMap.h">
       <Filter>ヘッダーファイル\Shadow</Filter>
     </ClInclude>
+    <ClInclude Include="CSVLoader.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FbxShadowHeader.hlsli" />
-    <None Include="Resources\Shaders\FbxHeader.hlsli" />
     <None Include="Resources\Shaders\ShaderHeader.hlsli" />
-    <None Include="Resources\Shaders\SpriteHeader.hlsli" />
     <FxCompile Include="Resources\Shaders\VertexShader.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>

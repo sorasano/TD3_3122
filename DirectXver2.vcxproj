@@ -170,6 +170,7 @@
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraEnemy.cpp" />
+    <ClCompile Include="CSVLoader.cpp" />
     <ClCompile Include="CubeModel.cpp" />
     <ClCompile Include="CubeObject3D.cpp" />
     <ClCompile Include="DirectionalLight.cpp" />
@@ -214,6 +215,7 @@
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CameraEnemy.h" />
     <ClInclude Include="CircleShadow.h" />
+    <ClInclude Include="CSVLoader.h" />
     <ClInclude Include="CubeModel.h" />
     <ClInclude Include="CubeObject3D.h" />
     <ClInclude Include="DirectionalLight.h" />
