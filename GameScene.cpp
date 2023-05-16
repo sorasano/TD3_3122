@@ -492,10 +492,21 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	cube->SetModel(cubeModel);*/
 
 
+	//オーディオ初期化
+	AudioManager::StaticInitialize();
+	//音
+	titleBGM = new AudioManager();
+	titleBGM->SoundLoadWave("Resources/Audio/titleBGM.wav");
+
 }
 
 void GameScene::Update()
 {
+
+	//タイトルBGM流す
+	//titleBGM->SoundPlayWave(true, titleBGMVolume);
+	//titleBGM->StopWave();
+
 	//カメラ更新
 	camera_->Update(player->GetPosition());
 	//コントローラー更新

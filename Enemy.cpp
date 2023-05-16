@@ -15,7 +15,7 @@ void Enemy::Initialize(FbxModel* greenEnemyModel, FbxModel* redEnemyModel, FbxMo
 	enemyEyeObject = new FbxObject3D;
 	enemyEyeObject->Initialize();
 	enemyEyeObject->SetModel(enemyEyeModel);
-	enemyEyeObject->SetAlpha(0.5f);
+	enemyEyeObject->SetAlpha(0.8f);
 
 	target.x = position.x;
 	target.y = position.y;

@@ -23,6 +23,7 @@
 #include"Goal.h"
 #include "Swamp.h"
 #include "Light.h"
+#include "AudioManager.h"
 
 class GameScene
 {
@@ -197,4 +198,7 @@ private:
 	float alpha = 0.0f;
 	bool isback = false;
 
+	//音
+	AudioManager* titleBGM;
+	float titleBGMVolume = 0.1f;
 };
