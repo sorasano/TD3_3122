@@ -23,6 +23,8 @@
 #include"Goal.h"
 #include "Swamp.h"
 #include "Light.h"
+#include "PushBlock.h"
+#include"Block.h"
 
 class GameScene
 {
@@ -62,10 +64,10 @@ private:
 	FbxObject3D* groundObject = nullptr;
 	FbxModel* groundModel = nullptr;
 
-	//ブロック
-	static const int blockSize = 16;
-	FbxModel* blockModel = nullptr;
-	FbxObject3D* blockObject[blockSize] = {};
+	////ブロック
+	//static const int blockSize = 16;
+	//FbxModel* blockModel = nullptr;
+	//FbxObject3D* blockObject[blockSize] = {};
 
 	//プレイヤー
 	Player* player = nullptr;
@@ -129,6 +131,16 @@ private:
 	FbxModel* swampModel = nullptr;
 	Swamp* swamp[swampSize] = {};
 
+	//押せるブロック
+	static const int pushBlockSize = 5;
+	FbxModel* pushBlockModel = nullptr;
+	PushBlock* pushBlock[pushBlockSize] = { };
+
+	//動かせないブロック
+	static const int blockSize = 21;
+	FbxModel* blockModel = nullptr;
+	Block* block[blockSize] = { };
+
 	//オートセーブ
 	Autosave *autoSave;
 
@@ -186,7 +198,9 @@ private:
 	CubeModel* cubeModel = nullptr;
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
-	CubeObject3D* ButtonColBox[buttonSize] = {};
+	CubeObject3D* buttonColBox[buttonSize] = {};
+	CubeObject3D* pushBlockColBox[pushBlockSize] = {};
+	CubeObject3D* blockColBox[blockSize] = {};
 	//お試し用
 	CubeObject3D* cube = nullptr;
 
@@ -196,5 +210,6 @@ private:
 	//演出
 	float alpha = 0.0f;
 	bool isback = false;
+	bool noPush = false;
 
 };

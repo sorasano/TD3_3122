@@ -69,7 +69,7 @@ void Player::Update()
 
 			//ジャンプ
 			if (input->PushKey(DIK_SPACE)) {
-				if (isJump == false) {
+				if (isJump == false&&gravity==0.0f) {
 					Jump();
 					isJump = true;
 
@@ -139,7 +139,7 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 	if (isDeath == false) {
 
 		playerObject->Draw(cmdList);
-		/*cubeObject_->Draw(cmdList);*/
+		cubeObject_->Draw(cmdList);
 	}
 
 }
@@ -257,4 +257,62 @@ bool Player::OntheBlock(CubeObject3D* cubeObject)
 	}
 	return false;
 	
+}
+
+bool Player::pushBlock(CubeObject3D* cubeObject)
+{
+	//落下中(ジャンプも含む)
+	if (gravity < 0.0f) {
+		newposition = position;
+		newposition.y += gravity;
+		cubeObject_->SetPosition(newposition);
+		if (cubeObject_->CheakCollision(cubeObject)) {
+			SetJump(false);
+			gravity = 0.0f;
+			return false;
+		}
+	}
+
+	//横の判定
+	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+		//沼の中
+		if (inSwamp) {
+			if (input->PushKey(DIK_A)) {
+				newposition = position;
+				newposition.x = (position.x - swampSpeed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					return true;
+				}
+			}
+			if (input->PushKey(DIK_D)) {
+				newposition = position;
+				newposition.x = (position.x + swampSpeed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					return true;
+				}
+			}
+			cubeObject_->SetPosition(newposition);
+		}
+		else {
+			if (input->PushKey(DIK_A)) {
+				newposition = position;
+				newposition.x = (position.x - speed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					return true;
+				}
+			}
+			if (input->PushKey(DIK_D)) {
+				newposition = position;
+				newposition.x = (position.x + speed);
+				cubeObject_->SetPosition(newposition);
+				if (cubeObject_->CheakCollision(cubeObject)) {
+					return true;
+				}
+			}
+
+		}
+	}
 }

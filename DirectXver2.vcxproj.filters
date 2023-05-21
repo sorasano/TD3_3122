@@ -152,6 +152,12 @@
     <ClCompile Include="2d\Vignette.cpp">
       <Filter>ソースファイル\Efect</Filter>
     </ClCompile>
+    <ClCompile Include="PushBlock.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Block.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\BlurEffect.h" />
@@ -225,6 +231,12 @@
     </ClInclude>
     <ClInclude Include="2d\Vignette.h">
       <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="PushBlock.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Block.h">
+      <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

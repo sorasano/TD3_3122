@@ -94,6 +94,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
+	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -126,36 +127,36 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	float stage4 = 400.0f;
 
 	//--------ブロック----------
-	for (int i = 0; i < blockSize; i++) {
+	/*for (int i = 0; i < blockSize; i++) {
 		blockObject[i] = new FbxObject3D;
 		blockObject[i]->Initialize();
 		blockObject[i]->SetModel(blockModel);
-	}
+	}*/
 
-	//stage1
-	blockObject[0]->SetPosition({ stage1 + 14,1,0 });
-	blockObject[1]->SetPosition({ stage1 + 20,1,0 });
+	////stage1
+	//blockObject[0]->SetPosition({ stage1 + 14,1,0 });
+	//blockObject[1]->SetPosition({ stage1 + 20,1,0 });
 
-	blockObject[2]->SetPosition({ stage1 + 27,1,0 });
-	blockObject[3]->SetPosition({ stage1 + 37,1,0 });
+	//blockObject[2]->SetPosition({ stage1 + 27,1,0 });
+	//blockObject[3]->SetPosition({ stage1 + 37,1,0 });
 
-	//stage2
-	blockObject[4]->SetPosition({ stage2 + 14,1,0 });
-	blockObject[5]->SetPosition({ stage2 + 20,1,0 });
+	////stage2
+	//blockObject[4]->SetPosition({ stage2 + 14,1,0 });
+	//blockObject[5]->SetPosition({ stage2 + 20,1,0 });
 
-	blockObject[6]->SetPosition({ stage2 + 27,1,0 });
-	blockObject[7]->SetPosition({ stage2 + 37,1,0 });
+	//blockObject[6]->SetPosition({ stage2 + 27,1,0 });
+	//blockObject[7]->SetPosition({ stage2 + 37,1,0 });
 
-	//stage3
-	blockObject[8]->SetPosition({ stage3 + 57,1,0 });
-	blockObject[9]->SetPosition({ stage3 + 63,1,0 });
-	blockObject[10]->SetPosition({ stage3 + 69,1,0 });
-	blockObject[11]->SetPosition({ stage3 + 75,1,0 });
+	////stage3
+	//blockObject[8]->SetPosition({ stage3 + 57,1,0 });
+	//blockObject[9]->SetPosition({ stage3 + 63,1,0 });
+	//blockObject[10]->SetPosition({ stage3 + 69,1,0 });
+	//blockObject[11]->SetPosition({ stage3 + 75,1,0 });
 
-	blockObject[12]->SetPosition({ stage3 + 87,1,0 });
-	blockObject[13]->SetPosition({ stage3 + 93,1,0 });
-	blockObject[14]->SetPosition({ stage3 + 99,1,0 });
-	blockObject[15]->SetPosition({ stage3 + 105,1,0 });
+	//blockObject[12]->SetPosition({ stage3 + 87,1,0 });
+	//blockObject[13]->SetPosition({ stage3 + 93,1,0 });
+	//blockObject[14]->SetPosition({ stage3 + 99,1,0 });
+	//blockObject[15]->SetPosition({ stage3 + 105,1,0 });
 
 	//---------敵---------
 	for (int i = 0; i < enemySize; i++) {
@@ -243,12 +244,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//--------ボタン----------
 
 	for (int i = 0; i < buttonSize; i++) {
-		ButtonColBox[i] = new CubeObject3D();
-		ButtonColBox[i]->Initialize();
-		ButtonColBox[i]->SetModel(cubeModel);
+		buttonColBox[i] = new CubeObject3D();
+		buttonColBox[i]->Initialize();
+		buttonColBox[i]->SetModel(cubeModel);
 
 		button[i] = new Button;
-		button[i]->Initialize(buttonModel, player, ButtonColBox[i]);
+		button[i]->Initialize(buttonModel, player, buttonColBox[i]);
 
 	}
 
@@ -393,6 +394,65 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	swamp[9]->SetPositionX(stage4 + 143);
 	swamp[9]->SetScaleX(0.15);
 
+	//----------動かせるブロック----------
+	PushBlock::SetInput(input_);
+	/*PushBlock::SetDXInput(dxInput);*/
+	for (int i = 0; i < pushBlockSize; i++) {
+		pushBlockColBox[i] = new CubeObject3D();
+		pushBlockColBox[i]->Initialize();
+		pushBlockColBox[i]->SetModel(cubeModel);
+
+		pushBlock[i] = new PushBlock();
+		pushBlock[i]->Initialize(pushBlockModel, player, pushBlockColBox[i]);
+	}
+
+	pushBlock[0]->SetPositionX(-5.0f);
+	pushBlock[1]->SetPositionX(10.0f);
+	pushBlock[2]->SetPositionX(15.0f);
+	pushBlock[3]->SetPositionX(20.0f);
+	pushBlock[4]->SetPositionX(30.0f);
+	//----------ブロック----------
+	for (int i = 0; i < blockSize; i++) {
+		blockColBox[i]=new CubeObject3D();
+		blockColBox[i]->Initialize();
+		blockColBox[i]->SetModel(cubeModel);
+
+		block[i] = new Block();
+		block[i]->Initialize(blockModel, player, blockColBox[i]);
+	}
+	//stage1
+	block[0]->SetPosition({ stage1 + 14,1,0 });
+	block[1]->SetPosition({ stage1 + 20,1,0 });
+
+	block[2]->SetPosition({ stage1 + 27,1,0 });
+	block[3]->SetPosition({ stage1 + 37,1,0 });
+
+	//stage2
+	block[4]->SetPosition({ stage2 + 14,1,0 });
+	block[5]->SetPosition({ stage2 + 20,1,0 });
+
+	block[6]->SetPosition({ stage2 + 27,1,0 });
+	block[7]->SetPosition({ stage2 + 37,1,0 });
+
+	//stage3
+	block[8]->SetPosition({ stage3 + 57,1,0 });
+	block[9]->SetPosition({ stage3 + 63,1,0 });
+	block[10]->SetPosition({ stage3 + 69,1,0 });
+	block[11]->SetPosition({ stage3 + 75,1,0 });
+
+	block[12]->SetPosition({ stage3 + 87,1,0 });
+	block[13]->SetPosition({ stage3 + 93,1,0 });
+	block[14]->SetPosition({ stage3 + 99,1,0 });
+	block[15]->SetPosition({ stage3 + 105,1,0 });
+
+
+	block[16]->SetPositionX(17.0f);
+	block[17]->SetPositionX(33.0f);
+	block[18]->SetPositionX(40.0f);
+	block[19]->SetPositionX(50.0f);
+	block[20 ]->SetPositionX(60.0f);
+
+
 	//セーブ
 	autoSave = new Autosave;
 	autoSave->Initialize(player);
@@ -530,13 +590,13 @@ void GameScene::Update()
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
 
-	//ブロック
+	////ブロック
 
-	for (int i = 0; i < blockSize; i++) {
-		blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
-		blockObject[i]->SetRotation({ 0,0,0 });
-		blockObject[i]->Update();
-	}
+	//for (int i = 0; i < blockSize; i++) {
+	//	blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
+	//	blockObject[i]->SetRotation({ 0,0,0 });
+	//	blockObject[i]->Update();
+	//}
 
 
 
@@ -563,6 +623,47 @@ void GameScene::Update()
 	//沼
 	for (int i = 0; i < swampSize; i++) {
 		swamp[i]->Update();
+	}
+	//動かせるブロック
+	for (int i = 0; i < pushBlockSize; i++) {
+		pushBlock[i]->Collision();
+		if (pushBlock[i]->GetIsPush()) {
+			//動かせるブロック同士の判定
+			for (int j = 0; j < pushBlockSize; j++) {
+				if (i != j) {
+					pushBlock[i]->pushback(pushBlockColBox[j]);
+					//押さないかどうか
+					if (pushBlock[i]->GetNoPush()) {
+						noPush = true;
+					}
+				}
+			}
+			//ギミックの判定追加場所
+			for (int j = 0; j < blockSize; j++) {
+				if (i != j) {
+					pushBlock[i]->pushback(blockColBox[j]);
+					//押さないかどうか
+					if (pushBlock[i]->GetNoPush()) {
+						noPush = true;
+					}
+				}
+			}
+
+			if (noPush) {
+				pushBlock[i]->NoPush();
+			}
+			else {
+				pushBlock[i]->Push();
+			}
+		}
+
+		pushBlock[i]->Update();
+	}
+	noPush = false;
+
+	//ブロック
+	for (int i = 0; i < blockSize; i++) {
+		block[i]->Update();
 	}
 
 	//プレイヤー
@@ -683,7 +784,7 @@ void GameScene::DrawFBXLightView()
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
-		blockObject[i]->DrawLightView(dxCommon_->GetCommandList());
+		block[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
 	//プレイヤー
@@ -713,7 +814,10 @@ void GameScene::DrawFBXLightView()
 	for (int i = 0; i < swampSize; i++) {
 		swamp[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
-
+	//動かせるブロック
+	for (int i = 0; i < pushBlockSize; i++) {
+		pushBlock[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 }
 
 void GameScene::DrawFBX()
@@ -722,7 +826,7 @@ void GameScene::DrawFBX()
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
-		blockObject[i]->Draw(dxCommon_->GetCommandList());
+		block[i]->Draw(dxCommon_->GetCommandList());
 	}
 	//プレイヤー
 	player->Draw(dxCommon_->GetCommandList());
@@ -750,7 +854,10 @@ void GameScene::DrawFBX()
 	for (int i = 0; i < swampSize; i++) {
 		swamp[i]->Draw(dxCommon_->GetCommandList());
 	}
-
+	//動かせるブロック
+	for (int i = 0; i < pushBlockSize; i++) {
+		pushBlock[i]->Draw(dxCommon_->GetCommandList());
+	}
 }
 
 void GameScene::DrawSprite()
@@ -789,10 +896,10 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	object1->SetSRV(SRV);*/
 
 	groundObject->SetSRV(SRV);
-	
+
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
-		blockObject[i]->SetSRV(SRV);
+		block[i]->SetSRV(SRV);
 	}
 
 	//プレイヤー
@@ -821,5 +928,9 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	//沼
 	for (int i = 0; i < swampSize; i++) {
 		swamp[i]->SetSRV(SRV);
+	}
+	//動かせるブロック
+	for (int i = 0; i < pushBlockSize; i++) {
+		pushBlock[i]->SetSRV(SRV);
 	}
 }
