@@ -9,7 +9,8 @@
 enum PlayerAction {
 	WAIT,
 	WALK,
-	JUMP
+	JUMP,
+	CLIMB
 };
 
 class Player
@@ -34,6 +35,7 @@ public:
 	void SetisDeath(int isDeath) { this->isDeath = isDeath; }
 	void SetJump(bool isJump) { this->isJump = isJump; }
 	void SetSwamp(bool inSwamp) { this->inSwamp = inSwamp; }
+	void SetGravity(float gravity) { this->gravity = gravity; }
 
 	static void SetInput(Input* input) { Player::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Player::dxInput = dxInput; }
@@ -42,8 +44,10 @@ public:
 	XMFLOAT3 GetPosition() { return position; }
 	//XMFLOAT3 GetScale() { return scale; }
 	XMFLOAT3 GetRotate() { return rotate; }
+	float GetSpeed() { return speed; }
+	float GetGravity() { return gravity; }
 
-	CubeObject3D *GetCubeObject() {return cubeObject; }
+	CubeObject3D *GetCubeObject() {return cubeObject_; }
 	bool GetDeath() { return isDeath; }
 
 	//死亡処理
@@ -52,11 +56,17 @@ public:
 	void Jump();
 
 	void SetisClear(bool isClear) { this->isClear = isClear; };
+	//沼に入っているか
 	void Swamp();
+	//梯子に登っているか
+	void Ladder();
+	//押し戻し処理
+	void pushback(CubeObject3D* cubeObject);
 
+	bool OntheBlock(CubeObject3D* cubeObject);
 private:
 	
-	XMFLOAT3 position = { 0.0f,1.0f,-1.0f};
+	XMFLOAT3 position = { 0.0f,2.0f,-1.0f};
 	XMFLOAT3 scale = { 0.002f,0.001f,0.002f };
 	XMFLOAT3 rotate = { 0.0f,0.0f,0.0f };
 
@@ -73,6 +83,7 @@ private:
 	FbxModel* playerWaitModel = nullptr;
 	FbxModel* playerWalkModel = nullptr;
 	FbxModel* playerJumpModel = nullptr;
+	FbxModel* playerClimbModel = nullptr;
 
 	//移動スピード
 	float speed = 0.1;
@@ -88,6 +99,12 @@ private:
 	bool inSwamp = false;
 	float swampSpeed = 0.05;
 
+	//梯子
+	//乗っているか
+	bool onLadder = false;
+	//当たっているか
+	bool colLadder = false;
+
 	//ジャンプ
 	bool isJump = false;
 
@@ -99,12 +116,14 @@ private:
 	float gravitySpeed = 0.01f;
 
 	//判定
-	CubeObject3D* cubeObject = nullptr;
+	CubeObject3D* cubeObject_ = nullptr;
+	XMFLOAT3 colposition = { 0,0,0 };
+	XMFLOAT3 newposition = { 0,0,0 };
+
 
 	//行動中の動き
 	int action;
 	//前フレームの動き
 	int oldAction;
-
 };
 

@@ -15,13 +15,15 @@
 #include "ChromaticAberrationEffect.h"
 #include "ShadowMap.h"
 #include "DepthOfField.h"
+#include "Fog.h"
+#include "Vignette.h"
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
 	//ウィンドウ生成
 	WinApp* winApp = nullptr;
 	winApp = WinApp::GetInstance();
-	winApp->CreateWindow_(L"3122");
+	winApp->CreateWindow_(L"CAGE");
 
 	//メッセージ
 	Message* message;
@@ -55,6 +57,20 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	depthOfField = new DepthOfField;
 	depthOfField->Initialize();
 	depthOfField->CreateGraphicsPipeLine();
+
+	//Fog
+	Fog* fog = nullptr;
+	Fog::SetDevice(dxCommon->GetDevice());
+	fog = new Fog;
+	fog->Initialize();
+	fog->CreateGraphicsPipeLine0();
+
+	//Vignette
+	Vignette* vignette = nullptr;
+	Vignette::SetDevice(dxCommon->GetDevice());
+	vignette = new Vignette;
+	vignette->Initialize();
+	vignette->CreateGraphicsPipeLine();
 
 	//ライト静的初期化
 	LightGroup::StaticInitialize(dxCommon->GetDevice());
@@ -95,6 +111,17 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		shadowMap->SetLightVP(gameScene->GetLightViewProjection());
 		shadowMap->Update();
 
+		//Fog
+		fog->SetAlpha(1.0f);
+		fog->SetStrength(3.0f);
+		fog->SetStartDepth(0.2f);
+		fog->Update();
+
+		//vignette
+		vignette->SetAlpha(1.0f);
+		vignette->SetStrength(0.1f);
+		vignette->Update();
+
 		//ゲームシーン更新
 		gameScene->Update();
 
@@ -105,10 +132,22 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//ゲームシーンにSRVを渡す
 		gameScene->SetSRV(shadowMap->GetSRV());
 
+		//fog
+		fog->PreDrawScene(dxCommon->GetCommandList());
+		gameScene->Draw();
+		fog->PostDrawScene(dxCommon->GetCommandList());
+
+		//Vingnette
+		vignette->PreDrawScene(dxCommon->GetCommandList());
+		fog->Draw(dxCommon->GetCommandList());
+		vignette->PostDrawScene(dxCommon->GetCommandList());
+
 		// 4. 描画コマンド
 		dxCommon->PreDraw();
 
-		gameScene->Draw();
+		//vignette
+		vignette->Draw(dxCommon->GetCommandList());
+		gameScene->DrawSprite();
 
 		imGuiManager->End();
 		imGuiManager->Draw();

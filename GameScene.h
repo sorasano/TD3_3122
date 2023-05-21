@@ -23,6 +23,8 @@
 #include"Goal.h"
 #include "Swamp.h"
 #include "Light.h"
+#include "AudioManager.h"
+#include "Ladder.h"
 
 class GameScene
 {
@@ -37,6 +39,7 @@ public:
 	void Draw();
 	void DrawFBXLightView();
 	void DrawFBX();
+	void DrawSprite();
 	//セッター
 	void SetSRV(ID3D12DescriptorHeap* SRV);
 	//ゲッター
@@ -128,6 +131,11 @@ private:
 	FbxModel* swampModel = nullptr;
 	Swamp* swamp[swampSize] = {};
 
+	//梯子
+	static const int ladderSize = 4;
+	FbxModel* ladderModel = nullptr;
+	Ladder* ladder[ladderSize] = {};
+
 	//オートセーブ
 	Autosave *autoSave;
 
@@ -186,6 +194,8 @@ private:
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
 	CubeObject3D* ButtonColBox[buttonSize] = {};
+	//お試し用
+	CubeObject3D* cube = nullptr;
 
 	//ゴール判定
 	Goal* goal = nullptr;
@@ -194,4 +204,7 @@ private:
 	float alpha = 0.0f;
 	bool isback = false;
 
+	//音
+	AudioManager* titleBGM;
+	float titleBGMVolume = 0.1f;
 };

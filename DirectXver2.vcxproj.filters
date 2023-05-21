@@ -1,13 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <FxCompile Include="FbxShadowPixelShader.hlsl" />
-    <FxCompile Include="FbxShadowVertexShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\FbxPixelShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\FbxVertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\PixelShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\SpritePixelShader.hlsl" />
-    <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\VertexShader.hlsl" />
     <FxCompile Include="Resources\Shaders\Blur\BlurPixelShader.hlsl">
       <Filter>シェーダーファイル\Blur</Filter>
@@ -69,13 +63,24 @@
     <FxCompile Include="Resources\Shaders\ShadowMap\ShadowMapVertexShader.hlsl">
       <Filter>シェーダーファイル\ShadowMap</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fog\FogPixelShader.hlsl">
+      <Filter>シェーダーファイル\Fog</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fog\FogVertexShader.hlsl">
+      <Filter>シェーダーファイル\Fog</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Vignette\VignettePixelShader.hlsl">
+      <Filter>シェーダーファイル\Vignette</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Vignette\VignetteVertexShader.hlsl">
+      <Filter>シェーダーファイル\Vignette</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2d\BlurEffect.cpp" />
     <ClCompile Include="2d\ChromaticAberrationEffect.cpp" />
     <ClCompile Include="2d\MonochromeEffect.cpp" />
     <ClCompile Include="2d\MosaicEffect.cpp" />
-    <ClCompile Include="2d\PostEffect.cpp" />
     <ClCompile Include="2d\ReversalEffect.cpp" />
     <ClCompile Include="2d\ShadowMap.cpp" />
     <ClCompile Include="Autosave.cpp" />
@@ -96,7 +101,6 @@
     <ClCompile Include="DirectionalLight.cpp" />
     <ClCompile Include="Easing.cpp" />
     <ClCompile Include="Enemy.cpp" />
-    <ClCompile Include="FbxObject3D2.cpp" />
     <ClCompile Include="fbx\FbxLoader.cpp" />
     <ClCompile Include="fbx\FbxModel.cpp" />
     <ClCompile Include="fbx\FbxObject3D.cpp" />
@@ -107,7 +111,6 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="Random.cpp" />
-    <ClCompile Include="Shadow.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Vector3.cpp" />
     <ClCompile Include="Goal.cpp">
@@ -140,13 +143,27 @@
     <ClCompile Include="2d\ShadowMap.cpp">
       <Filter>ソースファイル\Shaow</Filter>
     </ClCompile>
+    <ClCompile Include="CSVLoader.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\Fog.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="2d\Vignette.cpp">
+      <Filter>ソースファイル\Efect</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Ladder.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\BlurEffect.h" />
     <ClInclude Include="2d\ChromaticAberrationEffect.h" />
     <ClInclude Include="2d\MonochromeEffect.h" />
     <ClInclude Include="2d\MosaicEffect.h" />
-    <ClInclude Include="2d\PostEffect.h" />
     <ClInclude Include="2d\ReversalEffect.h" />
     <ClInclude Include="2d\ShadowMap.h" />
     <ClInclude Include="Autosave.h" />
@@ -168,7 +185,6 @@
     <ClInclude Include="DirectionalLight.h" />
     <ClInclude Include="Easing.h" />
     <ClInclude Include="Enemy.h" />
-    <ClInclude Include="FbxObject3D2.h" />
     <ClInclude Include="fbx\FbxLoader.h" />
     <ClInclude Include="fbx\FbxModel.h" />
     <ClInclude Include="fbx\FbxObject3D.h" />
@@ -178,7 +194,6 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="Random.h" />
-    <ClInclude Include="Shadow.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="Goal.h">
@@ -208,34 +223,28 @@
     <ClInclude Include="2d\ShadowMap.h">
       <Filter>ヘッダーファイル\Shadow</Filter>
     </ClInclude>
+    <ClInclude Include="CSVLoader.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\Fog.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="2d\Vignette.h">
+      <Filter>ヘッダーファイル\Efect</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>ソースファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Ladder.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="FbxShadowHeader.hlsli" />
-    <None Include="Resources\Shaders\FbxHeader.hlsli" />
     <None Include="Resources\Shaders\ShaderHeader.hlsli" />
-    <None Include="Resources\Shaders\SpriteHeader.hlsli" />
     <FxCompile Include="Resources\Shaders\VertexShader.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
-    <FxCompile Include="Resources\Shaders\FbxPixelShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="FbxShadowPixelShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="FbxShadowVertexShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\FbxVertexShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
     <FxCompile Include="Resources\Shaders\PixelShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\SpritePixelShader.hlsl">
-      <Filter>シェーダーファイル</Filter>
-    </FxCompile>
-    <FxCompile Include="Resources\Shaders\SpriteVertexShader.hlsl">
       <Filter>シェーダーファイル</Filter>
     </FxCompile>
     <None Include="Resources\Shaders\Blur\BlurEffectHeader.hlsli">
@@ -267,6 +276,12 @@
     </None>
     <None Include="Resources\Shaders\ShadowMap\ShadowMapHeader.hlsli">
       <Filter>シェーダーファイル\ShadowMap</Filter>
+    </None>
+    <None Include="Resources\Shaders\Fog\FogHeader.hlsli">
+      <Filter>シェーダーファイル\Fog</Filter>
+    </None>
+    <None Include="Resources\Shaders\Vignette\VignetteHeader.hlsli">
+      <Filter>シェーダーファイル\Vignette</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -302,9 +317,6 @@
     </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FbxObject3D2.cpp">
-      <Filter>ソースファイル\Fbx</Filter>
     </ClCompile>
     <ClCompile Include="fbx\FbxLoader.cpp">
       <Filter>ソースファイル\Fbx</Filter>
@@ -342,9 +354,6 @@
     <ClCompile Include="2d\BlurEffect.cpp">
       <Filter>ソースファイル\Efect</Filter>
     </ClCompile>
-    <ClCompile Include="2d\PostEffect.cpp">
-      <Filter>ソースファイル\Efect</Filter>
-    </ClCompile>
     <ClCompile Include="2d\MosaicEffect.cpp">
       <Filter>ソースファイル\Efect</Filter>
     </ClCompile>
@@ -365,9 +374,6 @@
     </ClCompile>
     <ClCompile Include="2d\ReversalEffect.cpp">
       <Filter>ソースファイル\Efect</Filter>
-    </ClCompile>
-    <ClCompile Include="Shadow.cpp">
-      <Filter>ソースファイル\Shaow</Filter>
     </ClCompile>
     <ClCompile Include="2d\ShadowMap.cpp">
       <Filter>ソースファイル\Shaow</Filter>
@@ -425,9 +431,6 @@
     <ClInclude Include="Autosave.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
-    <ClInclude Include="FbxObject3D2.h">
-      <Filter>ヘッダーファイル\Fbx</Filter>
-    </ClInclude>
     <ClInclude Include="fbx\FbxObject3D.h">
       <Filter>ヘッダーファイル\Fbx</Filter>
     </ClInclude>
@@ -473,9 +476,6 @@
     <ClInclude Include="PointLight.h">
       <Filter>ヘッダーファイル\Shadow</Filter>
     </ClInclude>
-    <ClInclude Include="Shadow.h">
-      <Filter>ヘッダーファイル\Shadow</Filter>
-    </ClInclude>
     <ClInclude Include="2d\ShadowMap.h">
       <Filter>ヘッダーファイル\Shadow</Filter>
     </ClInclude>
@@ -483,9 +483,6 @@
       <Filter>ヘッダーファイル\Sprite</Filter>
     </ClInclude>
     <ClInclude Include="2d\ReversalEffect.h">
-      <Filter>ヘッダーファイル\Efect</Filter>
-    </ClInclude>
-    <ClInclude Include="2d\PostEffect.h">
       <Filter>ヘッダーファイル\Efect</Filter>
     </ClInclude>
     <ClInclude Include="2d\MosaicEffect.h">
@@ -514,16 +511,7 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Shaders\FbxHeader.hlsli">
-      <Filter>シェーダーファイル</Filter>
-    </None>
-    <None Include="FbxShadowHeader.hlsli">
-      <Filter>シェーダーファイル</Filter>
-    </None>
     <None Include="Resources\Shaders\ShaderHeader.hlsli">
-      <Filter>シェーダーファイル</Filter>
-    </None>
-    <None Include="Resources\Shaders\SpriteHeader.hlsli">
       <Filter>シェーダーファイル</Filter>
     </None>
   </ItemGroup>
@@ -605,6 +593,12 @@
     </Filter>
     <Filter Include="シェーダーファイル\Sprite">
       <UniqueIdentifier>{13f30349-6c8b-4735-9604-c91a462051b1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Fog">
+      <UniqueIdentifier>{dfe9d5ff-c160-45e2-8f37-b614807071f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="シェーダーファイル\Vignette">
+      <UniqueIdentifier>{93ea9c12-f500-464b-bd1a-e4fae5e22106}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

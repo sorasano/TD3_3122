@@ -34,6 +34,7 @@ public:
 		XMMATRIX world;
 		XMFLOAT3 cameraPos;
 		XMMATRIX lightviewproj;
+		float alpha;
 	};
 	//定数バッファ用データ構造体(スキニング)
 	struct ConstBufferDataSkin
@@ -75,6 +76,7 @@ public://メンバ関数
 	void SetRotation(XMFLOAT3 rot) { rotation = rot; }
 	void SetScale(XMFLOAT3 sca) { scale = sca; }
 	void SetSRV(ID3D12DescriptorHeap* SRV) { depthSRV = SRV; }
+	void SetAlpha(float f) { alpha = f; }
 
 private://メンバ変数
 	//定数バッファ
@@ -114,4 +116,6 @@ private:
 	FbxTime currentTime;
 	//アニメーション再生中
 	bool isPlay = false;
+
+	float alpha = 1.0f;
 };

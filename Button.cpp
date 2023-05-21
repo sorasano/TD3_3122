@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "FbxLoader.h"
 
-void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cubeObject)
+void Button::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D* cubeObject)
 {
 	//ƒvƒŒƒCƒ„[
 	this->player = player;
@@ -25,14 +25,14 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player,CubeObject3D* cube
 
 	//”»’è
 	this->cubeObject = cubeObject;
-	this->cubeObject->SetScale(XMFLOAT3(blockScale.x*100.0f, blockScale.y* 100.0f, blockScale.z*100.0f));
+	this->cubeObject->SetScale(XMFLOAT3(scale.x * 100.0f, scale.y * 100.0f, scale.z * 100.0f));
 }
 
 void Button::Update()
 {
 
-	colPosition = blockPosition;
-	colPosition.y += 1.5f;
+	colPosition = position;
+	/*colPosition.y -= 0.2f;*/
 
 	//”»’è
 	cubeObject->SetPosition(colPosition);
@@ -76,6 +76,14 @@ void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 
 void Button::ButtonCol()
 {
+	/*if (player->OntheBlock(cubeObject)) {
+		if (push == false) {
+			push = true;
+			pushTimer = 0;
+		}
+	}
+	
+	player->pushback(cubeObject);*/
 
 	float scale = 0.5;
 
@@ -141,22 +149,22 @@ void Button::BlockCol()
 	float pPosZ1 = player->GetPosition().z - scale;
 	float pPosZ2 = player->GetPosition().z + scale;
 
-	////“–‚½‚Á‚½‚ç
-	//if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
+	//“–‚½‚Á‚½‚ç
+	if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
 
-	//	if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
+		if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
 
-	//		if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
+			if (pPosZ1 < bPosZ2 && bPosZ1 < pPosZ2) {
 
-	//			player->Death();
+				player->Death();
 
-	//		}
-	//	}
-	//}
+			}
+		}
+	}
 
-	if (cubeObject->CheakCollision(player->GetCubeObject())) {
+	/*if (cubeObject->CheakCollision(player->GetCubeObject())) {
 		player->Death();
-	};
+	};*/
 
 }
 
