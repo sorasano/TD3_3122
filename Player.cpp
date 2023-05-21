@@ -36,37 +36,40 @@ void Player::Update()
 	if (alpha == 0.0f) {
 		//沼に入っているか
 		if (inSwamp) {
-			if (input->PushKey(DIK_A))
-			{
-				position.x -= swampSpeed;
-				rotate.y = 270 * (PI / 180);
+			if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+				if (input->PushKey(DIK_A))
+				{
+					position.x -= swampSpeed;
+					rotate.y = 270 * (PI / 180);
 
-				action = WALK;
-			}
-			else if (input->PushKey(DIK_D))
-			{
-				position.x += swampSpeed;
-				rotate.y = 90 * (PI / 180);
+					action = WALK;
+				}
+				else if (input->PushKey(DIK_D))
+				{
+					position.x += swampSpeed;
+					rotate.y = 90 * (PI / 180);
 
-				action = WALK;
+					action = WALK;
+				}
 			}
 		}
 		else {
-			if (input->PushKey(DIK_A) && position.x > -5)
-			{
-				position.x -= speed;
-				rotate.y = 270 * (PI / 180);
+			if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+				if (input->PushKey(DIK_A) && position.x > -5)
+				{
+					position.x -= speed;
+					rotate.y = 270 * (PI / 180);
 
-				action = WALK;
+					action = WALK;
+				}
+				else if (input->PushKey(DIK_D))
+				{
+					position.x += speed;
+					rotate.y = 90 * (PI / 180);
+
+					action = WALK;
+				}
 			}
-			else if (input->PushKey(DIK_D))
-			{
-				position.x += speed;
-				rotate.y = 90 * (PI / 180);
-
-				action = WALK;
-			}
-
 			//ジャンプ
 			if (input->PushKey(DIK_SPACE)) {
 				if (isJump == false&&gravity==0.0f) {
@@ -199,7 +202,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 					position.x += swampSpeed;
 				}
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x = (position.x + swampSpeed);
 				cubeObject_->SetPosition(newposition);
@@ -218,7 +221,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 					position.x += speed;
 				}
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x = (position.x + speed);
 				cubeObject_->SetPosition(newposition);
@@ -285,7 +288,7 @@ bool Player::pushBlock(CubeObject3D* cubeObject)
 					return true;
 				}
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x = (position.x + swampSpeed);
 				cubeObject_->SetPosition(newposition);
@@ -304,7 +307,7 @@ bool Player::pushBlock(CubeObject3D* cubeObject)
 					return true;
 				}
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x = (position.x + speed);
 				cubeObject_->SetPosition(newposition);

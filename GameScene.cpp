@@ -624,6 +624,11 @@ void GameScene::Update()
 	for (int i = 0; i < swampSize; i++) {
 		swamp[i]->Update();
 	}
+	//ブロック
+	for (int i = 0; i < blockSize; i++) {
+		block[i]->Update();
+	}
+
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
 		pushBlock[i]->Collision();
@@ -639,6 +644,7 @@ void GameScene::Update()
 				}
 			}
 			//ギミックの判定追加場所
+			//動かないブロックとの判定
 			for (int j = 0; j < blockSize; j++) {
 				if (i != j) {
 					pushBlock[i]->pushback(blockColBox[j]);
@@ -649,6 +655,8 @@ void GameScene::Update()
 				}
 			}
 
+
+			//ギミックの判定追加場所ここまで
 			if (noPush) {
 				pushBlock[i]->NoPush();
 			}
@@ -661,10 +669,7 @@ void GameScene::Update()
 	}
 	noPush = false;
 
-	//ブロック
-	for (int i = 0; i < blockSize; i++) {
-		block[i]->Update();
-	}
+
 
 	//プレイヤー
 	player->Update();
@@ -712,7 +717,7 @@ void GameScene::Update()
 	//ゲームオーバー演出
 	if (player->GetDeath()) {
 		if (isback == false) {
-			alpha += 0.05f;
+			alpha += 0.1f;
 			player->SetAlpha(alpha);
 			if (alpha >= 1.0f) {
 				isback = true;
@@ -732,7 +737,7 @@ void GameScene::Update()
 		}
 		player->SetisDeath(false);
 		player->SetAlpha(alpha);
-		alpha -= 0.005f;
+		alpha -= 0.05f;
 		if (alpha <= 0.0f) {
 			alpha = 0.0f;
 			player->SetAlpha(alpha);
@@ -872,7 +877,7 @@ void GameScene::DrawSprite()
 		titleUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
-	/*blackSprite->Draw(dxCommon_->GetCommandList());*/
+	blackSprite->Draw(dxCommon_->GetCommandList());
 
 	goal->Draw(dxCommon_->GetCommandList());
 

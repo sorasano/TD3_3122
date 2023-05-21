@@ -65,7 +65,7 @@ void PushBlock::Push()
 			if (input->PushKey(DIK_A)) {
 				position.x -= player->GetSwampSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				position.x += player->GetSwampSpeed();
 			}
 		}
@@ -73,7 +73,7 @@ void PushBlock::Push()
 			if (input->PushKey(DIK_A)) {
 				position.x -= player->GetSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				position.x += player->GetSpeed();
 			}
 		}
@@ -112,7 +112,7 @@ void PushBlock::pushback(CubeObject3D* cubeObject)
 				newposition = position;
 				newposition.x -= player->GetSwampSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x += player->GetSwampSpeed();
 			}
@@ -122,7 +122,7 @@ void PushBlock::pushback(CubeObject3D* cubeObject)
 				newposition = position;
 				newposition.x -= player->GetSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			else if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x += player->GetSpeed();
 			}
