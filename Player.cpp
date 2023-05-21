@@ -16,10 +16,11 @@ void Player::Initialize(CubeObject3D* cubeObject)
 	playerWaitModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWait", "Resources/color/blue1x1.png");
 	playerWalkModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWalk", "Resources/color/blue1x1.png");
 	playerJumpModel = FbxLoader::GetInstance()->LoadModelFromFile("humanJump", "Resources/color/blue1x1.png");
-
+	playerClimbModel = FbxLoader::GetInstance()->LoadModelFromFile("humanClimb", "Resources/color/blue1x1.png");
+	
 	playerObject->SetModel(playerWaitModel);
 	playerObject->PlayAnimation();
-	
+
 	//ラジアン
 	rotate.y = 90 * (PI / 180);
 
@@ -34,57 +35,107 @@ void Player::Update()
 	action = WAIT;
 
 	if (alpha == 0.0f) {
-		//沼に入っているか
-		if (inSwamp) {
-			if (input->PushKey(DIK_A))
-			{
-				position.x -= swampSpeed;
-				rotate.y = 270 * (PI / 180);
 
-				action = WALK;
-			}
-			else if (input->PushKey(DIK_D))
+		//梯子に当たっているときにWかSを押したら梯子に登る
+		if (colLadder) {
+			if (input->PushKey(DIK_W) || input->PushKey(DIK_S))
 			{
-				position.x += swampSpeed;
-				rotate.y = 90 * (PI / 180);
-
-				action = WALK;
+				onLadder = true;
 			}
 		}
-		else {
-			if (input->PushKey(DIK_A) && position.x > -5)
+
+		//梯子に乗っているか
+		if (onLadder) {
+
+			action = CLIMB;
+
+			if (input->PushKey(DIK_W))
 			{
-				position.x -= speed;
-				rotate.y = 270 * (PI / 180);
+				if (colLadder) {
+					position.y += speed;
+					rotate.y = 180 * (PI / 180);
+				}
 
-				action = WALK;
 			}
-			else if (input->PushKey(DIK_D))
+			else if (input->PushKey(DIK_S))
 			{
-				position.x += speed;
-				rotate.y = 90 * (PI / 180);
+				position.y -= speed;
+				rotate.y = 180 * (PI / 180);
 
-				action = WALK;
+				if (position.y <= 1.0f) {
+					//下降して地面についたら梯子から離れる
+					onLadder = false;
+				}
 			}
 
-			//ジャンプ
+			//SPACEで梯子から離れる+ジャンプ
 			if (input->PushKey(DIK_SPACE)) {
 				if (isJump == false) {
 					Jump();
 					isJump = true;
-
+					rotate.y = 360 * (PI / 180);
 				}
+				onLadder = false;
 			}
 
+			SetJump(false);
+
+		}
+		else {
+
+			//沼に入っているか
+			if (inSwamp) {
+				if (input->PushKey(DIK_A))
+				{
+					position.x -= swampSpeed;
+					rotate.y = 270 * (PI / 180);
+
+					action = WALK;
+				}
+				else if (input->PushKey(DIK_D))
+				{
+					position.x += swampSpeed;
+					rotate.y = 90 * (PI / 180);
+
+					action = WALK;
+				}
+			}
+			else {
+				if (input->PushKey(DIK_A) && position.x > -5)
+				{
+					position.x -= speed;
+					rotate.y = 270 * (PI / 180);
+
+					action = WALK;
+				}
+				else if (input->PushKey(DIK_D))
+				{
+					position.x += speed;
+					rotate.y = 90 * (PI / 180);
+
+					action = WALK;
+				}
+
+				//ジャンプ
+				if (input->PushKey(DIK_SPACE)) {
+					if (isJump == false) {
+						Jump();
+						isJump = true;
+					}
+				}
+			}
 		}
 	}
 
 	//リセット
 	inSwamp = false;
+	colLadder = false;
 
 	//重力
-	position.y += gravity;
-	gravity -= gravitySpeed;
+	if (!onLadder) {
+		position.y += gravity;
+		gravity -= gravitySpeed;
+	}
 
 	//1.0f以下になったら(地面に当たっていれば)
 	if (position.y <= 1.0f) {
@@ -113,6 +164,11 @@ void Player::Update()
 			playerObject->SetModel(playerJumpModel);
 			playerObject->PlayAnimation();
 		}
+		else if (action == CLIMB) {
+			playerObject->SetModel(playerClimbModel);
+			playerObject->PlayAnimation();
+		}
+
 	}
 
 	oldAction = action;
@@ -182,6 +238,11 @@ void Player::Jump()
 void Player::Swamp()
 {
 	inSwamp = true;
+}
+
+void Player::Ladder()
+{
+	colLadder = true;
 }
 
 void Player::pushback(CubeObject3D* cubeObject)
@@ -256,5 +317,5 @@ bool Player::OntheBlock(CubeObject3D* cubeObject)
 		}
 	}
 	return false;
-	
+
 }

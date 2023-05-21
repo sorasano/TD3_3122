@@ -155,7 +155,9 @@
     <ClCompile Include="AudioManager.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Ladder.cpp" />
+    <ClCompile Include="Ladder.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\BlurEffect.h" />
@@ -233,7 +235,9 @@
     <ClInclude Include="AudioManager.h">
       <Filter>ソースファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Ladder.h" />
+    <ClInclude Include="Ladder.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Shaders\ShaderHeader.hlsli" />
