@@ -9,7 +9,8 @@
 enum PlayerAction {
 	WAIT,
 	WALK,
-	JUMP
+	JUMP,
+	CLIMB
 };
 
 class Player
@@ -55,7 +56,10 @@ public:
 	void Jump();
 
 	void SetisClear(bool isClear) { this->isClear = isClear; };
+	//沼に入っているか
 	void Swamp();
+	//梯子に登っているか
+	void Ladder();
 	//押し戻し処理
 	void pushback(CubeObject3D* cubeObject);
 
@@ -79,6 +83,7 @@ private:
 	FbxModel* playerWaitModel = nullptr;
 	FbxModel* playerWalkModel = nullptr;
 	FbxModel* playerJumpModel = nullptr;
+	FbxModel* playerClimbModel = nullptr;
 
 	//移動スピード
 	float speed = 0.1;
@@ -93,6 +98,12 @@ private:
 	//移動制限　沼に入っているか
 	bool inSwamp = false;
 	float swampSpeed = 0.05;
+
+	//梯子
+	//乗っているか
+	bool onLadder = false;
+	//当たっているか
+	bool colLadder = false;
 
 	//ジャンプ
 	bool isJump = false;

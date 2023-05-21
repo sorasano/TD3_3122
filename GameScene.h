@@ -24,6 +24,7 @@
 #include "Swamp.h"
 #include "Light.h"
 #include "AudioManager.h"
+#include "Ladder.h"
 
 class GameScene
 {
@@ -129,6 +130,11 @@ private:
 	static const int swampSize = 10;
 	FbxModel* swampModel = nullptr;
 	Swamp* swamp[swampSize] = {};
+
+	//梯子
+	static const int ladderSize = 4;
+	FbxModel* ladderModel = nullptr;
+	Ladder* ladder[ladderSize] = {};
 
 	//オートセーブ
 	Autosave *autoSave;
