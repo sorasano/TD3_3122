@@ -83,6 +83,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//✖ボタンでゲームループ終了
 		if (message->Update() == 1)break;
 
+		fps->FpsControlBegin();
+
 		//キーボード更新
 		input->Update();
 
@@ -112,9 +114,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager->Draw();
 
 		dxCommon->PostDraw();
-	}
 
 	fps->FpsControlEnd();
+
+	}
 
 	dxCommon->EndImgui();
 
