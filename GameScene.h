@@ -25,6 +25,7 @@
 #include "Light.h"
 #include "AudioManager.h"
 #include "Ladder.h"
+#include "MoveEnemy.h"
 
 class GameScene
 {
@@ -40,6 +41,10 @@ public:
 	void DrawFBXLightView();
 	void DrawFBX();
 	void DrawSprite();
+
+	//リセット
+	void Reset();
+
 	//セッター
 	void SetSRV(ID3D12DescriptorHeap* SRV);
 	//ゲッター
@@ -135,6 +140,11 @@ private:
 	static const int ladderSize = 4;
 	FbxModel* ladderModel = nullptr;
 	Ladder* ladder[ladderSize] = {};
+
+	//動く敵
+	static const int moveEnemySize = 2;
+	MoveEnemy* moveEnemy[moveEnemySize] = {};
+
 
 	//オートセーブ
 	Autosave *autoSave;

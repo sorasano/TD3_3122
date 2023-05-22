@@ -158,6 +158,9 @@
     <ClCompile Include="Ladder.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
+    <ClCompile Include="MoveEnemy.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="2d\BlurEffect.h" />
@@ -236,6 +239,9 @@
       <Filter>ソースファイル</Filter>
     </ClInclude>
     <ClInclude Include="Ladder.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveEnemy.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
