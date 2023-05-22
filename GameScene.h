@@ -41,6 +41,10 @@ public:
 	void DrawFBXLightView();
 	void DrawFBX();
 	void DrawSprite();
+
+	//リセット
+	void Reset();
+
 	//セッター
 	void SetSRV(ID3D12DescriptorHeap* SRV);
 	//ゲッター
@@ -137,8 +141,8 @@ private:
 	FbxModel* ladderModel = nullptr;
 	Ladder* ladder[ladderSize] = {};
 
+	//動く敵
 	static const int moveEnemySize = 2;
-	FbxModel* moveEnemyModel = nullptr;
 	MoveEnemy* moveEnemy[moveEnemySize] = {};
 
 

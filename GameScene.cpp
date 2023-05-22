@@ -95,7 +95,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 	ladderModel = FbxLoader::GetInstance()->LoadModelFromFile("ladder", "Resources/color/brown1x1.png");
-	moveEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWalk", "Resources/color/red1x1.png");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -412,11 +411,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	for (int i = 0; i < moveEnemySize; i++) {
 
 		moveEnemy[i] = new MoveEnemy();
-		moveEnemy[i]->Initialize(moveEnemyModel, player);
+		moveEnemy[i]->Initialize(player);
 
 	}
 
-	moveEnemy[0]->SetPositionX(5.0f);
+	moveEnemy[0]->SetPositionX(10.0f);
 	moveEnemy[1]->SetPositionX(20.0f);
 
 	//セーブ
@@ -661,9 +660,11 @@ void GameScene::Update()
 			alpha += 0.05f;
 			player->SetAlpha(alpha);
 			if (alpha >= 1.0f) {
+
 				isback = true;
-				XMFLOAT2 savePos = autoSave->GetSavePos();
-				player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+
+				//リセット
+				Reset();
 			}
 		}
 	}
@@ -838,6 +839,19 @@ void GameScene::DrawSprite()
 	if (player->GetDeath() == false) {
 		playUISprite->Draw(dxCommon_->GetCommandList());
 	}
+}
+
+void GameScene::Reset()
+{
+	//プレイヤー
+	XMFLOAT2 savePos = autoSave->GetSavePos();
+	player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->Reset();
+	}
+
 }
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()
