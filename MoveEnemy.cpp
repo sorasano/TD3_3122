@@ -64,14 +64,18 @@ void MoveEnemy::Move()
 		action = WALK;
 
 		//プレイヤーの座標より右の時
-		if (player->GetPosition().x <= position.x) {
+		if (player->GetPosition().x < position.x - scale.x * 100 / 2) {
 			position.x -= speed;
 			rotate.y = 270 * (PI / 180);
 		}
 		//左の時
-		else {
+		else if (player->GetPosition().x > position.x + scale.x * 100 / 2) {
 			position.x += speed;
 			rotate.y = 90 * (PI / 180);
+		}
+		//座標が重なったら
+		else {
+			action = WAIT;
 		}
 
 	}
