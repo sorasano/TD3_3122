@@ -25,6 +25,7 @@
 #include "Light.h"
 #include "AudioManager.h"
 #include "Ladder.h"
+#include "MoveEnemy.h"
 
 class GameScene
 {
@@ -135,6 +136,11 @@ private:
 	static const int ladderSize = 4;
 	FbxModel* ladderModel = nullptr;
 	Ladder* ladder[ladderSize] = {};
+
+	static const int moveEnemySize = 2;
+	FbxModel* moveEnemyModel = nullptr;
+	MoveEnemy* moveEnemy[moveEnemySize] = {};
+
 
 	//オートセーブ
 	Autosave *autoSave;

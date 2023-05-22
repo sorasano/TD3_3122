@@ -95,6 +95,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 	ladderModel = FbxLoader::GetInstance()->LoadModelFromFile("ladder", "Resources/color/brown1x1.png");
+	moveEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWalk", "Resources/color/red1x1.png");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -406,6 +407,18 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	ladder[2]->SetPosition({ 6, 2, -1 });
 	ladder[3]->SetPosition({ 6, 3, -1 });
 
+	//動く敵
+
+	for (int i = 0; i < moveEnemySize; i++) {
+
+		moveEnemy[i] = new MoveEnemy();
+		moveEnemy[i]->Initialize(moveEnemyModel, player);
+
+	}
+
+	moveEnemy[0]->SetPositionX(5.0f);
+	moveEnemy[1]->SetPositionX(20.0f);
+
 	//セーブ
 	autoSave = new Autosave;
 	autoSave->Initialize(player);
@@ -594,6 +607,11 @@ void GameScene::Update()
 		ladder[i]->Update();
 	}
 
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->Update();
+	}
+
 	//プレイヤー
 	player->Update();
 
@@ -748,6 +766,10 @@ void GameScene::DrawFBXLightView()
 		ladder[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 }
 
 void GameScene::DrawFBX()
@@ -790,7 +812,11 @@ void GameScene::DrawFBX()
 		ladder[i]->Draw(dxCommon_->GetCommandList());
 	}
 
-
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->Draw(dxCommon_->GetCommandList());
+	}
+	
 }
 
 void GameScene::DrawSprite()
@@ -866,5 +892,10 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	//梯子
 	for (int i = 0; i < ladderSize; i++) {
 		ladder[i]->SetSRV(SRV);
+	}
+
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->SetSRV(SRV);
 	}
 }
