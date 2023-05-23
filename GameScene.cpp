@@ -614,20 +614,11 @@ void GameScene::Update()
 	//プレイヤー
 	player->Update();
 
-	//スプライト
 
-	//	//復活
-	//if (input_->PushKey(DIK_E)) {
-	//	player->SetisDeath(false);
-	//	if (isClear) {
-	//		isClear = false;
-	//		player->SetPosition(XMFLOAT3(0, 1, -1));
-	//	}
-	//	else {
-	//		XMFLOAT2 savePos = autoSave->GetSavePos();
-	//		player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-	//	}
-	//}
+	//リセット
+	if (input_->PushKey(DIK_R)) {
+		Reset();
+	}
 
 
 	//タイトル
@@ -846,12 +837,15 @@ void GameScene::Reset()
 	//プレイヤー
 	XMFLOAT2 savePos = autoSave->GetSavePos();
 	player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+	player->SetisDeath(false);
 
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {
 		moveEnemy[i]->Reset();
 	}
 
+	//クリア
+	isClear = false;
 }
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()
