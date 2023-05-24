@@ -405,6 +405,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	ladder[1]->SetPosition({ 6, 1, -1 });
 	ladder[2]->SetPosition({ 6, 2, -1 });
 	ladder[3]->SetPosition({ 6, 3, -1 });
+	ladder[4]->SetPosition({ 6, 4, -1 });
+	ladder[5]->SetPosition({ 6, 5, -1 });
+
 
 	//動く敵
 
@@ -608,7 +611,7 @@ void GameScene::Update()
 
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {
-		moveEnemy[i]->Update();
+		//moveEnemy[i]->Update();
 	}
 
 	//プレイヤー
@@ -814,13 +817,13 @@ void GameScene::DrawSprite()
 {
 	//-------前景スプライト描画処理-------//
 
-	if (titleSprite->endFlip == false) {
-		titleSprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (titleSprite->endFlip == false) {
+	//	titleSprite->Draw(dxCommon_->GetCommandList());
+	//}
 
-	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-		titleUISprite->Draw(dxCommon_->GetCommandList());
-	}
+	//if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+	//	titleUISprite->Draw(dxCommon_->GetCommandList());
+	//}
 
 	blackSprite->Draw(dxCommon_->GetCommandList());
 

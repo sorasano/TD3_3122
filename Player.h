@@ -11,7 +11,6 @@ enum PlayerAction {
 	WALK,
 	JUMP,
 	CLIMB,
-	CLIMBWAIT
 };
 
 class Player
@@ -132,5 +131,9 @@ private:
 	int action;
 	//前フレームの動き
 	int oldAction;
+
+	//アニメーションするか
+	bool stopAnimation = false;
+	bool oldStopAnimation = false;
 };
 

@@ -137,7 +137,7 @@ private:
 	Swamp* swamp[swampSize] = {};
 
 	//梯子
-	static const int ladderSize = 4;
+	static const int ladderSize = 6;
 	FbxModel* ladderModel = nullptr;
 	Ladder* ladder[ladderSize] = {};
 

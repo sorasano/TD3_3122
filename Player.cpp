@@ -54,7 +54,13 @@ void Player::Update()
 				if (colLadder) {
 					position.y += speed;
 					rotate.y = 180 * (PI / 180);
+
+					stopAnimation = false;
 				}
+				else {
+					stopAnimation = true;
+				}
+
 			}
 			else if (input->PushKey(DIK_S))
 			{
@@ -65,9 +71,11 @@ void Player::Update()
 					//下降して地面についたら梯子から離れる
 					onLadder = false;
 				}
+
+				stopAnimation = false;
 			}
 			else {
-				action = CLIMBWAIT;
+				stopAnimation = true;
 			}
 
 			//SPACEで梯子から離れる+ジャンプ
@@ -172,16 +180,22 @@ void Player::Update()
 			playerObject->PlayAnimation();
 
 		}
-		else if (action == CLIMBWAIT) {
+	}
 
-			playerObject->SetModel(playerClimbModel);
+	oldAction = action;
+
+	if (stopAnimation != oldStopAnimation) {
+
+		if (stopAnimation) {
 			playerObject->StopAnimation();
-
+		}
+		else {
+			playerObject->RestartAnimation();
 		}
 
 	}
 
-	oldAction = action;
+	oldStopAnimation = stopAnimation;
 
 	//ImGui::Begin("pPos");
 	//ImGui::Text("pPosX = %f \n",position.x);
