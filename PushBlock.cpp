@@ -105,7 +105,7 @@ void PushBlock::NoPush()
 
 void PushBlock::pushback(CubeObject3D* cubeObject)
 {
-	
+
 	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
 		if (player->GetinSwamp()) {
 			if (input->PushKey(DIK_A)) {
@@ -134,7 +134,7 @@ void PushBlock::pushback(CubeObject3D* cubeObject)
 	if (this->cubeObject->CheakCollision(cubeObject)) {
 		/*NoPush();*/
 		/*this->cubeObject->SetPosition(position);*/
-		
+
 		noPush = true;
 	}
 	//“®‚©‚·
@@ -143,11 +143,10 @@ void PushBlock::pushback(CubeObject3D* cubeObject)
 		/*Push();*/
 		noPush = false;
 	}
-	
+
 }
 
 void PushBlock::SetSRV(ID3D12DescriptorHeap* SRV)
 {
 	blockObject->SetSRV(SRV);
 }
-

@@ -191,6 +191,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PushBlock.cpp" />
+    <ClCompile Include="PushButton.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Swamp.cpp" />
@@ -238,6 +239,7 @@
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="PushBlock.h" />
+    <ClInclude Include="PushButton.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Swamp.h" />

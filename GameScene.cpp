@@ -406,11 +406,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		pushBlock[i]->Initialize(pushBlockModel, player, pushBlockColBox[i]);
 	}
 
-	pushBlock[0]->SetPositionX(-5.0f);
-	pushBlock[1]->SetPositionX(10.0f);
-	pushBlock[2]->SetPositionX(15.0f);
+	pushBlock[0]->SetPositionX(5.0f);
+	pushBlock[1]->SetPositionX(15.0f);
+	/*pushBlock[2]->SetPositionX(15.0f);
 	pushBlock[3]->SetPositionX(20.0f);
-	pushBlock[4]->SetPositionX(30.0f);
+	pushBlock[4]->SetPositionX(30.0f);*/
 	//----------ブロック----------
 	for (int i = 0; i < blockSize; i++) {
 		blockColBox[i]=new CubeObject3D();
@@ -420,37 +420,58 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		block[i] = new Block();
 		block[i]->Initialize(blockModel, player, blockColBox[i]);
 	}
-	//stage1
-	block[0]->SetPosition({ stage1 + 14,1,0 });
-	block[1]->SetPosition({ stage1 + 20,1,0 });
+	////stage1
+	//block[0]->SetPosition({ stage1 + 14,1,0 });
+	//block[1]->SetPosition({ stage1 + 20,1,0 });
 
-	block[2]->SetPosition({ stage1 + 27,1,0 });
-	block[3]->SetPosition({ stage1 + 37,1,0 });
+	//block[2]->SetPosition({ stage1 + 27,1,0 });
+	//block[3]->SetPosition({ stage1 + 37,1,0 });
 
-	//stage2
-	block[4]->SetPosition({ stage2 + 14,1,0 });
-	block[5]->SetPosition({ stage2 + 20,1,0 });
+	////stage2
+	//block[4]->SetPosition({ stage2 + 14,1,0 });
+	//block[5]->SetPosition({ stage2 + 20,1,0 });
 
-	block[6]->SetPosition({ stage2 + 27,1,0 });
-	block[7]->SetPosition({ stage2 + 37,1,0 });
+	//block[6]->SetPosition({ stage2 + 27,1,0 });
+	//block[7]->SetPosition({ stage2 + 37,1,0 });
 
-	//stage3
-	block[8]->SetPosition({ stage3 + 57,1,0 });
-	block[9]->SetPosition({ stage3 + 63,1,0 });
-	block[10]->SetPosition({ stage3 + 69,1,0 });
-	block[11]->SetPosition({ stage3 + 75,1,0 });
+	////stage3
+	//block[8]->SetPosition({ stage3 + 57,1,0 });
+	//block[9]->SetPosition({ stage3 + 63,1,0 });
+	//block[10]->SetPosition({ stage3 + 69,1,0 });
+	//block[11]->SetPosition({ stage3 + 75,1,0 });
 
-	block[12]->SetPosition({ stage3 + 87,1,0 });
-	block[13]->SetPosition({ stage3 + 93,1,0 });
-	block[14]->SetPosition({ stage3 + 99,1,0 });
-	block[15]->SetPosition({ stage3 + 105,1,0 });
+	//block[12]->SetPosition({ stage3 + 87,1,0 });
+	//block[13]->SetPosition({ stage3 + 93,1,0 });
+	//block[14]->SetPosition({ stage3 + 99,1,0 });
+	//block[15]->SetPosition({ stage3 + 105,1,0 });
 
 
-	block[16]->SetPositionX(17.0f);
-	block[17]->SetPositionX(33.0f);
-	block[18]->SetPositionX(40.0f);
-	block[19]->SetPositionX(50.0f);
-	block[20 ]->SetPositionX(60.0f);
+	block[0]->SetPositionX(17.0f);
+	block[1]->SetPositionX(33.0f);
+	block[2]->SetPositionX(40.0f);
+	block[3]->SetPositionX(50.0f);
+	block[4]->SetPositionX(60.0f);
+
+	//----------押している間のスイッチ----------
+	for (int i = 0; i < pushButtonSize; i++) {
+		pushButtonColBox[i] = new CubeObject3D();
+		pushButtonColBox[i]->Initialize();
+		pushButtonColBox[i]->SetModel(cubeModel);
+
+		pushButtonBlockColBox[i] = new CubeObject3D();
+		pushButtonBlockColBox[i]->Initialize();
+		pushButtonBlockColBox[i]->SetModel(cubeModel);
+		
+
+		pushButton[i] = new PushButton();
+		pushButton[i]->Initialize(buttonModel, player, pushButtonColBox[i], pushButtonBlockColBox[i]);
+	}
+
+	pushButton[0]->SetPositionX(20);
+	pushButton[0]->SetBlockPositionX(25);
+
+	pushButton[1]->SetPositionX(10);
+	pushButton[1]->SetBlockPositionX(30);
 
 
 	//セーブ
@@ -600,7 +621,7 @@ void GameScene::Update()
 
 
 
-	for (int i = 0; i < enemySize; i++) {
+	/*for (int i = 0; i < enemySize; i++) {
 		enemy[i]->Update();
 		enemydeg = enemy[0]->GetDeg();
 	}
@@ -608,12 +629,12 @@ void GameScene::Update()
 	for (int i = 0; i < cameraEnemySize; i++) {
 		cameraEnemy[i]->Update();
 		cameraEnemydeg = cameraEnemy[i]->GetDeg();
-	}
+	}*/
 
-	//ボタン
-	for (int i = 0; i < buttonSize; i++) {
-		button[i]->Update();
-	}
+	////ボタン
+	//for (int i = 0; i < buttonSize; i++) {
+	//	button[i]->Update();
+	//}
 
 	//爆弾
 	for (int i = 0; i < bombSize; i++) {
@@ -624,10 +645,10 @@ void GameScene::Update()
 	for (int i = 0; i < swampSize; i++) {
 		swamp[i]->Update();
 	}
-	//ブロック
-	for (int i = 0; i < blockSize; i++) {
-		block[i]->Update();
-	}
+	////ブロック
+	//for (int i = 0; i < blockSize; i++) {
+	//	block[i]->Update();
+	//}
 
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
@@ -654,7 +675,16 @@ void GameScene::Update()
 					}
 				}
 			}
-
+			//押している間のスイッチ
+			for (int j = 0; j < pushButtonSize; j++) {
+				if (i != j) {
+					pushBlock[i]->pushback(pushButtonBlockColBox[j]);
+					//押さないかどうか
+					if (pushBlock[i]->GetNoPush()) {
+						noPush = true;
+					}
+				}
+			}
 
 			//ギミックの判定追加場所ここまで
 			if (noPush) {
@@ -669,6 +699,14 @@ void GameScene::Update()
 	}
 	noPush = false;
 
+	//押している間のスイッチ
+	for (int i = 0; i < pushButtonSize; i++) {
+		for (int j = 0; j < pushBlockSize; j++) {
+			pushButton[i]->ButtonCol(pushBlockColBox[j]);
+		}
+		pushButton[i]->ButtonCol(playerColBox);
+		pushButton[i]->Update();
+	}
 
 
 	//プレイヤー
@@ -787,28 +825,28 @@ void GameScene::DrawFBXLightView()
 
 	groundObject->DrawLightView(dxCommon_->GetCommandList());
 
-	//ブロック
-	for (int i = 0; i < blockSize; i++) {
-		block[i]->DrawLightView(dxCommon_->GetCommandList());
-	}
+	////ブロック
+	//for (int i = 0; i < blockSize; i++) {
+	//	block[i]->DrawLightView(dxCommon_->GetCommandList());
+	//}
 
 	//プレイヤー
 	player->DrawLightView(dxCommon_->GetCommandList());
 
-	//敵
-	for (int i = 0; i < enemySize; i++) {
-		enemy[i]->DrawLightView(dxCommon_->GetCommandList());
-	}
+	////敵
+	//for (int i = 0; i < enemySize; i++) {
+	//	enemy[i]->DrawLightView(dxCommon_->GetCommandList());
+	//}
 
-	//監視カメラ
-	for (int i = 0; i < cameraEnemySize; i++) {
-		cameraEnemy[i]->DrawLightView(dxCommon_->GetCommandList());
-	}
+	////監視カメラ
+	//for (int i = 0; i < cameraEnemySize; i++) {
+	//	cameraEnemy[i]->DrawLightView(dxCommon_->GetCommandList());
+	//}
 
-	//ボタン
-	for (int i = 0; i < buttonSize; i++) {
-		button[i]->DrawLightView(dxCommon_->GetCommandList());
-	}
+	////ボタン
+	//for (int i = 0; i < buttonSize; i++) {
+	//	button[i]->DrawLightView(dxCommon_->GetCommandList());
+	//}
 
 	//爆弾
 	for (int i = 0; i < bombSize; i++) {
@@ -823,32 +861,37 @@ void GameScene::DrawFBXLightView()
 	for (int i = 0; i < pushBlockSize; i++) {
 		pushBlock[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
+	//押している間のスイッチ
+	for (int i = 0; i < pushButtonSize; i++) {
+		pushButton[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
+
 }
 
 void GameScene::DrawFBX()
 {
 	groundObject->Draw(dxCommon_->GetCommandList());
 
-	//ブロック
-	for (int i = 0; i < blockSize; i++) {
-		block[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////ブロック
+	//for (int i = 0; i < blockSize; i++) {
+	//	block[i]->Draw(dxCommon_->GetCommandList());
+	//}
 	//プレイヤー
 	player->Draw(dxCommon_->GetCommandList());
-	//敵
-	for (int i = 0; i < enemySize; i++) {
-		enemy[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////敵
+	//for (int i = 0; i < enemySize; i++) {
+	//	enemy[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
-	//監視カメラ
-	for (int i = 0; i < cameraEnemySize; i++) {
-		cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////監視カメラ
+	//for (int i = 0; i < cameraEnemySize; i++) {
+	//	cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
-	//ボタン
-	for (int i = 0; i < buttonSize; i++) {
-		button[i]->Draw(dxCommon_->GetCommandList());
-	}
+	////ボタン
+	//for (int i = 0; i < buttonSize; i++) {
+	//	button[i]->Draw(dxCommon_->GetCommandList());
+	//}
 
 	//爆弾
 	for (int i = 0; i < bombSize; i++) {
@@ -862,6 +905,10 @@ void GameScene::DrawFBX()
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
 		pushBlock[i]->Draw(dxCommon_->GetCommandList());
+	}
+	//押している間のスイッチ
+	for (int i = 0; i < pushButtonSize; i++) {
+		pushButton[i]->Draw(dxCommon_->GetCommandList());
 	}
 }
 
@@ -902,28 +949,28 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 
 	groundObject->SetSRV(SRV);
 
-	//ブロック
-	for (int i = 0; i < blockSize; i++) {
-		block[i]->SetSRV(SRV);
-	}
+	////ブロック
+	//for (int i = 0; i < blockSize; i++) {
+	//	block[i]->SetSRV(SRV);
+	//}
 
 	//プレイヤー
 	player->SetSRV(SRV);
 
-	//敵
-	for (int i = 0; i < enemySize; i++) {
-		enemy[i]->SetSRV(SRV);
-	}
+	////敵
+	//for (int i = 0; i < enemySize; i++) {
+	//	enemy[i]->SetSRV(SRV);
+	//}
 
-	//監視カメラ
-	for (int i = 0; i < cameraEnemySize; i++) {
-		cameraEnemy[i]->SetSRV(SRV);
-	}
+	////監視カメラ
+	//for (int i = 0; i < cameraEnemySize; i++) {
+	//	cameraEnemy[i]->SetSRV(SRV);
+	//}
 
-	//ボタン
-	for (int i = 0; i < buttonSize; i++) {
-		button[i]->SetSRV(SRV);
-	}
+	////ボタン
+	//for (int i = 0; i < buttonSize; i++) {
+	//	button[i]->SetSRV(SRV);
+	//}
 
 	//爆弾
 	for (int i = 0; i < bombSize; i++) {
@@ -937,5 +984,9 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
 		pushBlock[i]->SetSRV(SRV);
+	}
+	//押している間のスイッチ
+	for (int i = 0; i < pushButtonSize; i++) {
+		pushButton[i]->SetSRV(SRV);
 	}
 }

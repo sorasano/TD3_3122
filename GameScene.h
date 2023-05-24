@@ -25,6 +25,7 @@
 #include "Light.h"
 #include "PushBlock.h"
 #include"Block.h"
+#include"PushButton.h"
 
 class GameScene
 {
@@ -121,6 +122,11 @@ private:
 	FbxModel* buttonModel = nullptr;
 	Button* button[buttonSize] = {};
 
+	//押している間のボタン
+	static const int pushButtonSize = 2;
+	FbxModel* pushButtonModel = nullptr;
+	PushButton* pushButton[pushButtonSize] = {};
+
 	//爆弾
 	static const int bombSize = 17;
 	FbxModel* bombModel = nullptr;
@@ -132,12 +138,13 @@ private:
 	Swamp* swamp[swampSize] = {};
 
 	//押せるブロック
-	static const int pushBlockSize = 5;
+	static const int pushBlockSize = 2;
 	FbxModel* pushBlockModel = nullptr;
 	PushBlock* pushBlock[pushBlockSize] = { };
 
 	//動かせないブロック
-	static const int blockSize = 21;
+	//21
+	static const int blockSize = 5;
 	FbxModel* blockModel = nullptr;
 	Block* block[blockSize] = { };
 
@@ -201,6 +208,8 @@ private:
 	CubeObject3D* buttonColBox[buttonSize] = {};
 	CubeObject3D* pushBlockColBox[pushBlockSize] = {};
 	CubeObject3D* blockColBox[blockSize] = {};
+	CubeObject3D* pushButtonColBox[pushButtonSize] = {};
+	CubeObject3D* pushButtonBlockColBox[pushButtonSize] = {};
 	//お試し用
 	CubeObject3D* cube = nullptr;
 

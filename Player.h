@@ -64,6 +64,7 @@ public:
 	bool OntheBlock(CubeObject3D* cubeObject);
 	//横の判定
 	bool pushBlock(CubeObject3D* cubeObject);
+	
 private:
 	
 	XMFLOAT3 position = { 0.0f,2.0f,-1.0f};
