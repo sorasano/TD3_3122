@@ -11,6 +11,7 @@ public:
 	void Update();
 
 	XMFLOAT2 GetSavePos() { return savePos[nowSavePos]; }
+	XMFLOAT2 GetStartPos() { return savePos[0]; }
 
 private:
 	

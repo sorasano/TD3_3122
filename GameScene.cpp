@@ -435,6 +435,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	spriteManager->LoadFile(5, L"Resources/color/black1x1.png");
 	spriteManager->LoadFile(6, L"Resources/playUI.png");
 
+	//メニュー用
+	spriteManager->LoadFile(7, L"Resources/Menu/menuBase.png");
+	spriteManager->LoadFile(8, L"Resources/Menu/menuRestart.png");
+	spriteManager->LoadFile(9, L"Resources/Menu/menuTitle.png");
+
+
 	//スプライト
 	Sprite::SetDevice(dxCommon->GetDevice());
 	Sprite::SetSpriteManager(spriteManager);
@@ -526,6 +532,10 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	titleBGM = new AudioManager();
 	titleBGM->SoundLoadWave("Resources/Audio/titleBGM.wav");
 
+	//メニュー
+	menu = new Menu();
+	menu->Initialize();
+
 }
 
 void GameScene::Update()
@@ -611,7 +621,7 @@ void GameScene::Update()
 
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {
-		//moveEnemy[i]->Update();
+		moveEnemy[i]->Update();
 	}
 
 	//プレイヤー
@@ -644,6 +654,9 @@ void GameScene::Update()
 
 	//オートセーブ
 	autoSave->Update();
+
+	//メニュー
+	menu->Update();
 
 	//ゴール
 	goal->Update();
@@ -817,13 +830,13 @@ void GameScene::DrawSprite()
 {
 	//-------前景スプライト描画処理-------//
 
-	//if (titleSprite->endFlip == false) {
-	//	titleSprite->Draw(dxCommon_->GetCommandList());
-	//}
+	if (titleSprite->endFlip == false) {
+		titleSprite->Draw(dxCommon_->GetCommandList());
+	}
 
-	//if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-	//	titleUISprite->Draw(dxCommon_->GetCommandList());
-	//}
+	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+		titleUISprite->Draw(dxCommon_->GetCommandList());
+	}
 
 	blackSprite->Draw(dxCommon_->GetCommandList());
 
@@ -832,15 +845,14 @@ void GameScene::DrawSprite()
 	if (player->GetDeath() == false) {
 		playUISprite->Draw(dxCommon_->GetCommandList());
 	}
+
+	menu->Draw(dxCommon_->GetCommandList());
 }
 
 void GameScene::Reset()
 {
 	//プレイヤー
 	XMFLOAT2 savePos = autoSave->GetSavePos();
-	//player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-	//player->SetisDeath(false);
-	
 	player->Reset(savePos);
 
 	//動く敵
@@ -848,8 +860,16 @@ void GameScene::Reset()
 		moveEnemy[i]->Reset();
 	}
 
-	//クリア
-	isClear = false;
+	//ゴールしていれば
+	if (isClear) {
+		isClear = false;
+		titleSprite->Reset();
+		titleTimer = 0;
+
+		//初期地点
+		XMFLOAT2 startPos = autoSave->GetStartPos();
+		player->Reset(startPos);
+	}
 }
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()

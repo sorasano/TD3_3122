@@ -26,6 +26,7 @@
 #include "AudioManager.h"
 #include "Ladder.h"
 #include "MoveEnemy.h"
+#include "Menu.h"
 
 class GameScene
 {
@@ -145,7 +146,6 @@ private:
 	static const int moveEnemySize = 2;
 	MoveEnemy* moveEnemy[moveEnemySize] = {};
 
-
 	//オートセーブ
 	Autosave *autoSave;
 
@@ -217,4 +217,7 @@ private:
 	//音
 	AudioManager* titleBGM;
 	float titleBGMVolume = 0.1f;
+
+	//メニュー
+	Menu* menu;
 };

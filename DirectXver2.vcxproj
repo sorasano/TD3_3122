@@ -189,6 +189,7 @@
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightGroup.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="MoveEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
@@ -237,6 +238,7 @@
     <ClInclude Include="GpPipeline.h" />
     <ClInclude Include="Ladder.h" />
     <ClInclude Include="LightGroup.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="MoveEnemy.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />

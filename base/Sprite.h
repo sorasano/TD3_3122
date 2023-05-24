@@ -52,7 +52,7 @@ public:	//セッター
 	//テクスチャの番号をセット
 	void SetTextureNum(int num) { textureNum = num; }
 	//座標
-	void SetPosition(XMFLOAT2 pos) { position = pos; }
+	void SetPosition(XMFLOAT2 pos) { position = pos,InitPosition = pos; }
 	//角度
 	void SetRotation(float rot) { rotation = rot; }
 	//スケール
@@ -102,8 +102,8 @@ public:
 	XMFLOAT4 color = { 1,1,1,1 };
 
 	//---演出用---
-	//画面外から入ってくる演出用
-	Easing flipInEase;
+	//画面外にでる演出用
+	Easing flipOutEase;
 	//フリップ初期化
 	bool initFlip = false;
 	//演出中か
@@ -143,9 +143,15 @@ public:
 	void StartSway(DirectX::XMFLOAT2 center) { isSway = true, swayCenterPos = center; }
 	void Sway();
 
+	//リセット
+	void Reset();
+
 private:
 	float rotation = 0;
 	XMFLOAT2 position = { 0,0 };
 	XMFLOAT2 scale = { 100.0f,100.0f };
+
+	XMFLOAT2 InitPosition = { 0,0 };
+
 };
 
