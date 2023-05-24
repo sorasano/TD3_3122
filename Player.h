@@ -10,7 +10,8 @@ enum PlayerAction {
 	WAIT,
 	WALK,
 	JUMP,
-	CLIMB
+	CLIMB,
+	CLIMBWAIT
 };
 
 class Player
@@ -24,6 +25,9 @@ public:
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
+
+	//リセット
+	void Reset(XMFLOAT2 savePos);
 
 	//セッター
 	void SetPosition(XMFLOAT3 position);
@@ -77,6 +81,9 @@ private:
 	static Input* input;
 	//コントローラー
 	static DXInput* dxInput;
+
+	bool isInput = false;
+
 	//fbx
 	FbxObject3D* playerObject = nullptr;
 

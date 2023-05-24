@@ -235,13 +235,13 @@
     <ClInclude Include="2d\Vignette.h">
       <Filter>ヘッダーファイル\Efect</Filter>
     </ClInclude>
-    <ClInclude Include="AudioManager.h">
-      <Filter>ソースファイル</Filter>
-    </ClInclude>
     <ClInclude Include="Ladder.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="MoveEnemy.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>

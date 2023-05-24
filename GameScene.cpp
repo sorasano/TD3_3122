@@ -651,14 +651,13 @@ void GameScene::Update()
 			alpha += 0.05f;
 			player->SetAlpha(alpha);
 			if (alpha >= 1.0f) {
-
 				isback = true;
-
 				//リセット
 				Reset();
 			}
 		}
 	}
+
 	if (isback == true) {
 		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
 			//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
@@ -823,7 +822,7 @@ void GameScene::DrawSprite()
 		titleUISprite->Draw(dxCommon_->GetCommandList());
 	}
 
-	/*blackSprite->Draw(dxCommon_->GetCommandList());*/
+	blackSprite->Draw(dxCommon_->GetCommandList());
 
 	goal->Draw(dxCommon_->GetCommandList());
 
@@ -836,8 +835,10 @@ void GameScene::Reset()
 {
 	//プレイヤー
 	XMFLOAT2 savePos = autoSave->GetSavePos();
-	player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-	player->SetisDeath(false);
+	//player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+	//player->SetisDeath(false);
+	
+	player->Reset(savePos);
 
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {

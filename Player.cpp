@@ -17,7 +17,7 @@ void Player::Initialize(CubeObject3D* cubeObject)
 	playerWalkModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWalk", "Resources/color/blue1x1.png");
 	playerJumpModel = FbxLoader::GetInstance()->LoadModelFromFile("humanJump", "Resources/color/blue1x1.png");
 	playerClimbModel = FbxLoader::GetInstance()->LoadModelFromFile("humanClimb", "Resources/color/blue1x1.png");
-	
+
 	playerObject->SetModel(playerWaitModel);
 	playerObject->PlayAnimation();
 
@@ -55,7 +55,6 @@ void Player::Update()
 					position.y += speed;
 					rotate.y = 180 * (PI / 180);
 				}
-
 			}
 			else if (input->PushKey(DIK_S))
 			{
@@ -66,6 +65,9 @@ void Player::Update()
 					//下降して地面についたら梯子から離れる
 					onLadder = false;
 				}
+			}
+			else {
+				action = CLIMBWAIT;
 			}
 
 			//SPACEで梯子から離れる+ジャンプ
@@ -165,8 +167,16 @@ void Player::Update()
 			playerObject->PlayAnimation();
 		}
 		else if (action == CLIMB) {
+
 			playerObject->SetModel(playerClimbModel);
 			playerObject->PlayAnimation();
+
+		}
+		else if (action == CLIMBWAIT) {
+
+			playerObject->SetModel(playerClimbModel);
+			playerObject->StopAnimation();
+
 		}
 
 	}
@@ -203,6 +213,20 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 void Player::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 {
 	playerObject->DrawLightView(cmdList);
+}
+
+void Player::Reset(XMFLOAT2 savePos)
+{
+	inSwamp = false;
+	onLadder = false;
+	isClear = false;
+	colLadder = false;
+	isDeath = false;
+
+	position = { savePos.x,savePos.y,-1.0f };
+
+	playerObject->SetModel(playerWaitModel);
+	playerObject->PlayAnimation();
 }
 
 void Player::SetPosition(XMFLOAT3 position)
