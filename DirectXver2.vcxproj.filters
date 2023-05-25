@@ -159,6 +159,8 @@
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="PushButton.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
     <ClCompile Include="AudioManager.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -252,6 +254,8 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="PushButton.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
     <ClInclude Include="Ladder.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
