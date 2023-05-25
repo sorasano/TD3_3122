@@ -161,7 +161,7 @@ private:
 
 	//動かせないブロック
 	//21
-	static const int blockSize = 5;
+	static const int blockSize = 16;
 	FbxModel* blockModel = nullptr;
 	Block* block[blockSize] = { };
 	//梯子
