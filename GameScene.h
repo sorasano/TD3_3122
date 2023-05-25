@@ -88,6 +88,19 @@ private:
 
 	//csvの変数
 	CSVLoader* treeCsv = nullptr;
+	CSVLoader* enemyCsv = nullptr;
+	CSVLoader* cameraEnemyCsv = nullptr;
+	CSVLoader* buttonCsv = nullptr;
+	CSVLoader* buttonBlockCsv = nullptr;
+	CSVLoader* pushButtonCsv = nullptr;
+	CSVLoader* pushButtonBlockCsv = nullptr;
+	CSVLoader* bombCsv = nullptr;
+	CSVLoader* swampCsv = nullptr;
+	CSVLoader* pushBlockCsv = nullptr;
+	CSVLoader* blockCsv = nullptr;
+	CSVLoader* ladderCsv = nullptr;
+	CSVLoader* moveEnemyCsv = nullptr;
+
 	//木の数
 	size_t treeNum = 20;
 	//木のモデル
@@ -100,64 +113,54 @@ private:
 	XMFLOAT3 playerpos;
 
 	//敵
-	CSVLoader* enemyCsv = nullptr;
-	size_t enemySize = 43;
+	size_t enemySize = 3;
 	FbxModel* enemyModel = nullptr;
 	FbxModel* enemyModel2 = nullptr;
 	FbxModel* enemyEyeModel = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys;
 
 	//監視カメラ
-	CSVLoader* cameraEnemyCsv = nullptr;
-	size_t cameraEnemySize = 8;
+	size_t cameraEnemySize = 3;
 	FbxModel* cameraEnemyModel = nullptr;
 	std::list<std::unique_ptr<CameraEnemy>> cameraEnemys;
 
 	//ボタン
-	CSVLoader* buttonCsv = nullptr;
-	size_t buttonSize = 22;
+	size_t buttonSize = 3;
 	FbxModel* buttonModel = nullptr;
 	std::list<std::unique_ptr<Button>> buttons;
 
 	//押している間のボタン
-	CSVLoader* pushButtonCsv = nullptr;
-	size_t pushButtonSize = 2;
+	size_t pushButtonSize = 3;
 	FbxModel* pushButtonModel = nullptr;
 	std::list<std::unique_ptr<PushButton>> pushButtons;
 
 	//爆弾
-	CSVLoader* bombCsv = nullptr;
-	size_t bombSize = 17;
+	size_t bombSize = 3;
 	FbxModel* bombModel = nullptr;
 	std::list<std::unique_ptr<Bomb>> bombs;
 
 	//沼
-	CSVLoader* swampCsv = nullptr;
-	size_t swampSize = 10;
+	size_t swampSize = 3;
 	FbxModel* swampModel = nullptr;
 	std::list<std::unique_ptr<Swamp>> swamps;
 
 	//押せるブロック
-	CSVLoader* pushBlockCsv = nullptr;
-	size_t pushBlockSize = 2;
+	size_t pushBlockSize = 3;
 	FbxModel* pushBlockModel = nullptr;
 	std::list<std::unique_ptr<PushBlock>> pushBlocks;
 
 	//動かせないブロック
-	CSVLoader* blockCsv = nullptr;
-	size_t blockSize = 16;
+	size_t blockSize = 3;
 	FbxModel* blockModel = nullptr;
 	std::list<std::unique_ptr<Block>> blocks;
 
 	//梯子
-	CSVLoader* ladderCsv = nullptr;
-	size_t ladderSize = 6;
+	size_t ladderSize = 3;
 	FbxModel* ladderModel = nullptr;
 	std::list<std::unique_ptr<Ladder>> ladders;
 
 	//動く敵
-	CSVLoader* moveEnemyCsv = nullptr;
-	size_t moveEnemySize = 2;
+	size_t moveEnemySize = 3;
 	std::list<std::unique_ptr<MoveEnemy>> moveEnemys;
 
 	//オートセーブ
@@ -219,10 +222,10 @@ private:
 	CubeObject3D* playerColBox = nullptr;
 
 	std::list<std::unique_ptr<CubeObject3D>> buttonColBoxs;
-	std::list<std::unique_ptr<CubeObject3D>> pushBlockColBox;
-	std::list<std::unique_ptr<CubeObject3D>> blockColBox;
-	std::list<std::unique_ptr<CubeObject3D>> pushButtonColBox;
-	std::list<std::unique_ptr<CubeObject3D>> pushButtonBlockColBox;
+	std::list<std::unique_ptr<CubeObject3D>> pushBlockColBoxs;
+	std::list<std::unique_ptr<CubeObject3D>> blockColBoxs;
+	std::list<std::unique_ptr<CubeObject3D>> pushButtonColBoxs;
+	std::list<std::unique_ptr<CubeObject3D>> pushButtonBlockColBoxs;
 
 	//お試し用
 	CubeObject3D* cube = nullptr;
