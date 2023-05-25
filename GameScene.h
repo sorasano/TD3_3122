@@ -79,100 +79,89 @@ private:
 	//シーン
 	int scene = PLAY;
 
+	//スプライトマネージャー
+	SpriteManager* spriteManager = nullptr;
+
 	//床
 	FbxObject3D* groundObject = nullptr;
 	FbxModel* groundModel = nullptr;
 
-	////ブロック
-	//static const int blockSize = 16;
-	//FbxModel* blockModel = nullptr;
-	//FbxObject3D* blockObject[blockSize] = {};
+	//csvの変数
+	CSVLoader* treeCsv = nullptr;
+	CSVLoader* enemyCsv = nullptr;
+	CSVLoader* cameraEnemyCsv = nullptr;
+	CSVLoader* buttonCsv = nullptr;
+	CSVLoader* buttonBlockCsv = nullptr;
+	CSVLoader* pushButtonCsv = nullptr;
+	CSVLoader* pushButtonBlockCsv = nullptr;
+	CSVLoader* bombCsv = nullptr;
+	CSVLoader* swampCsv = nullptr;
+	CSVLoader* pushBlockCsv = nullptr;
+	CSVLoader* blockCsv = nullptr;
+	CSVLoader* ladderCsv = nullptr;
+	CSVLoader* moveEnemyCsv = nullptr;
+
+	//木の数
+	size_t treeNum = 20;
+	//木のモデル
+	FbxModel* modelTree = nullptr;
+	//木のオブジェクト
+	std::list<std::unique_ptr<FbxObject3D>> objectTree;
 
 	//プレイヤー
 	Player* player = nullptr;
 	XMFLOAT3 playerpos;
 
-	//スプライトマネージャー
-	SpriteManager* spriteManager = nullptr;
-
 	//敵
-	static const int enemySize = 43;
-
+	size_t enemySize = 3;
 	FbxModel* enemyModel = nullptr;
 	FbxModel* enemyModel2 = nullptr;
-	Enemy* enemy[enemySize] = {};
-	XMFLOAT3 enemypos[enemySize];
-	Vector3 enemyvec[enemySize];
-	//判定用
-	XMFLOAT3 enemypos2[enemySize];
-	XMFLOAT3 enemyposset[enemySize];
-	Vector3 enemytargetvec[enemySize];
-	float enemydot[enemySize];
-	float enemydeg;
-	Vector3 enemytarget[enemySize];
-	float enemyangle = 0.0f;
-	
-	int time = 0;
-	int maxTime = 170;
-	float distance = 9;
+	FbxModel* enemyEyeModel = nullptr;
+	std::list<std::unique_ptr<Enemy>> enemys;
 
 	//監視カメラ
-	static const int cameraEnemySize = 8;
+	size_t cameraEnemySize = 3;
 	FbxModel* cameraEnemyModel = nullptr;
-	CameraEnemy* cameraEnemy[cameraEnemySize] = {};
-	XMFLOAT3 cameraEnemypos[cameraEnemySize];
-	Vector3 cameraEnemyvec[cameraEnemySize];
-
-	//判定用
-	XMFLOAT3 cameraEnemyposset[cameraEnemySize];
-	Vector3 cameraEnemytargetvec[cameraEnemySize];
-	float cameraEnemydot[cameraEnemySize];
-	float cameraEnemydeg;
-	Vector3 cameraEnemytarget[cameraEnemySize];
-	float cameraEnemyangle = 0.0f;
-	XMFLOAT3 cameraEnemypos2[cameraEnemySize];
-
-
-	FbxModel* enemyEyeModel = nullptr;
+	std::list<std::unique_ptr<CameraEnemy>> cameraEnemys;
 
 	//ボタン
-	static const int buttonSize = 22;
+	size_t buttonSize = 3;
 	FbxModel* buttonModel = nullptr;
-	Button* button[buttonSize] = {};
+	std::list<std::unique_ptr<Button>> buttons;
 
 	//押している間のボタン
-	static const int pushButtonSize = 2;
+	size_t pushButtonSize = 3;
 	FbxModel* pushButtonModel = nullptr;
-	PushButton* pushButton[pushButtonSize] = {};
+	std::list<std::unique_ptr<PushButton>> pushButtons;
 
 	//爆弾
-	static const int bombSize = 17;
+	size_t bombSize = 3;
 	FbxModel* bombModel = nullptr;
-	Bomb* bomb[buttonSize] = {};
+	std::list<std::unique_ptr<Bomb>> bombs;
 
 	//沼
-	static const int swampSize = 10;
+	size_t swampSize = 3;
 	FbxModel* swampModel = nullptr;
-	Swamp* swamp[swampSize] = {};
+	std::list<std::unique_ptr<Swamp>> swamps;
 
 	//押せるブロック
-	static const int pushBlockSize = 2;
+	size_t pushBlockSize = 3;
 	FbxModel* pushBlockModel = nullptr;
-	PushBlock* pushBlock[pushBlockSize] = { };
+	std::list<std::unique_ptr<PushBlock>> pushBlocks;
 
 	//動かせないブロック
-	//21
-	static const int blockSize = 16;
+	size_t blockSize = 3;
 	FbxModel* blockModel = nullptr;
-	Block* block[blockSize] = { };
+	std::list<std::unique_ptr<Block>> blocks;
+
 	//梯子
-	static const int ladderSize = 6;
+	size_t ladderSize = 3;
 	FbxModel* ladderModel = nullptr;
-	Ladder* ladder[ladderSize] = {};
+	std::list<std::unique_ptr<Ladder>> ladders;
 
 	//動く敵
-	static const int moveEnemySize = 2;
-	MoveEnemy* moveEnemy[moveEnemySize] = {};
+	size_t moveEnemySize = 3;
+	std::list<std::unique_ptr<MoveEnemy>> moveEnemys;
 
 	//オートセーブ
 	Autosave *autoSave;
@@ -231,11 +220,13 @@ private:
 	CubeModel* cubeModel = nullptr;
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
-	CubeObject3D* buttonColBox[buttonSize] = {};
-	CubeObject3D* pushBlockColBox[pushBlockSize] = {};
-	CubeObject3D* blockColBox[blockSize] = {};
-	CubeObject3D* pushButtonColBox[pushButtonSize] = {};
-	CubeObject3D* pushButtonBlockColBox[pushButtonSize] = {};
+
+	std::list<std::unique_ptr<CubeObject3D>> buttonColBoxs;
+	std::list<std::unique_ptr<CubeObject3D>> pushBlockColBoxs;
+	std::list<std::unique_ptr<CubeObject3D>> blockColBoxs;
+	std::list<std::unique_ptr<CubeObject3D>> pushButtonColBoxs;
+	std::list<std::unique_ptr<CubeObject3D>> pushButtonBlockColBoxs;
+
 	//お試し用
 	CubeObject3D* cube = nullptr;
 
@@ -253,13 +244,4 @@ private:
 
 	//メニュー
 	Menu* menu;
-
-	//csvの変数
-	CSVLoader* treeCsv = nullptr;
-	//木のモデル
-	FbxModel* modelTree = nullptr;
-	//木のオブジェクト
-	std::list<std::unique_ptr<FbxObject3D>> objectTree;
-	//木の数
-	size_t treeNum = 20;
 };

@@ -70,13 +70,15 @@ void Camera::Update(XMFLOAT3 playerPos)
 	//{
 	//	target_.x += 0.1;
 	//}
-	
+
+	target_.x = playerPos.x;
+
 	//éãì_ç¿ïWÇ…ë„ì¸
 	eye_.x = sin(DebugChangeRot) * DebugTargetDistance + target_.x;
 	eye_.y = sin(DebugChangeRot2) * DebugTargetDistance + target_.y;
 	eye_.z = cos(DebugChangeRot) * DebugTargetDistance + target_.z;
 
-	target_.x = playerPos.x;
+	//target_.x = playerPos.x;
 
 	matView_ = XMMatrixLookAtLH(XMLoadFloat3(&eye_), XMLoadFloat3(&target_), XMLoadFloat3(&up_));
 }
