@@ -152,13 +152,6 @@
     <ClCompile Include="2d\Vignette.cpp">
       <Filter>ソースファイル\Efect</Filter>
     </ClCompile>
-    <ClCompile Include="PushBlock.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Block.cpp">
-      <Filter>ソースファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="PushButton.cpp">
     <ClCompile Include="AudioManager.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
@@ -245,13 +238,6 @@
     <ClInclude Include="2d\Vignette.h">
       <Filter>ヘッダーファイル\Efect</Filter>
     </ClInclude>
-    <ClInclude Include="PushBlock.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Block.h">
-      <Filter>ヘッダーファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PushButton.h">
     <ClInclude Include="Ladder.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>

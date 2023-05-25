@@ -21,21 +21,21 @@ void Fog::Initialize()
 	SetScale({ window_width,window_height });
 	SetPosition({ 0.0f, 0.0 });
 
-	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿
-	vertices[0] = { {    0.0f, scale.y, 0.0f },{ 0.0f,1.0f } };	//å·¦ä¸‹
-	vertices[1] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//å·¦ä¸Š
-	vertices[2] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//å³ä¸‹
-	vertices[3] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//å³ä¸‹
-	vertices[4] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//å·¦ä¸Š
-	vertices[5] = { { scale.x,    0.0f, 0.0f },{ 1.0f,0.0f } };	//å³ä¸Š
+	//’¸“_ƒf[ƒ^
+	vertices[0] = { {    0.0f, scale.y, 0.0f },{ 0.0f,1.0f } };	//¶‰º
+	vertices[1] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//¶ã
+	vertices[2] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//‰E‰º
+	vertices[3] = { { scale.x, scale.y, 0.0f },{ 1.0f,1.0f } };	//‰E‰º
+	vertices[4] = { {    0.0f,    0.0f, 0.0f },{ 0.0f,0.0f } };	//¶ã
+	vertices[5] = { { scale.x,    0.0f, 0.0f },{ 1.0f,0.0f } };	//‰Eã
 
-	//é ‚ç‚¹ãƒ‡ãƒ¼ã‚¿ã®ã‚µã‚¤ã‚º
+	//’¸“_ƒf[ƒ^‚ÌƒTƒCƒY
 	UINT sizeVB = static_cast<UINT>(sizeof(Vertex) * _countof(vertices));
 
-	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
-	D3D12_HEAP_PROPERTIES heapProp{};	//ãƒ’ãƒ¼ãƒ—è¨­å®š
-	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPUã¸ã®è»¢é€ç”¨
-	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	//’¸“_ƒoƒbƒtƒ@‚Ìİ’è
+	D3D12_HEAP_PROPERTIES heapProp{};	//ƒq[ƒvİ’è
+	heapProp.Type = D3D12_HEAP_TYPE_UPLOAD;	//GPU‚Ö‚Ì“]‘——p
+	//ƒŠƒ\[ƒXİ’è
 	D3D12_RESOURCE_DESC resDesc{};
 	resDesc.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	resDesc.Width = sizeVB;
@@ -45,7 +45,7 @@ void Fog::Initialize()
 	resDesc.SampleDesc.Count = 1;
 	resDesc.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
 
-	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
+	//’¸“_ƒoƒbƒtƒ@‚Ì¶¬
 	ID3D12Resource* vertBuff = nullptr;
 	result = device->CreateCommittedResource(
 		&heapProp,
@@ -57,31 +57,31 @@ void Fog::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//GPUä¸Šã®ãƒãƒƒãƒ•ã‚¡ã«å¯¾å¿œã—ãŸä»®æƒ³ãƒ¡ãƒ¢ãƒªã‚’å–å¾—
+	//GPUã‚Ìƒoƒbƒtƒ@‚É‘Î‰‚µ‚½‰¼‘zƒƒ‚ƒŠ‚ğæ“¾
 	/*Vertex* vertMap = nullptr;*/
 	result = vertBuff->Map(0, nullptr, (void**)&vertMap);
 	assert(SUCCEEDED(result));
-	//å…¨é ‚ç‚¹ã«å¯¾ã—ã¦
+	//‘S’¸“_‚É‘Î‚µ‚Ä
 	for (int i = 0; i < _countof(vertices); i++)
 	{
-		vertMap[i] = vertices[i];	//åº§æ¨™ã‚’ã‚³ãƒ”ãƒ¼
+		vertMap[i] = vertices[i];	//À•W‚ğƒRƒs[
 	}
-	//ç¹‹ãŒã‚Šã‚’è§£é™¤
+	//Œq‚ª‚è‚ğ‰ğœ
 	vertBuff->Unmap(0, nullptr);
 
-	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
-	//GPUä»®æƒ³ã‚¢ãƒ‰ãƒ¬ã‚¹
+	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìì¬
+	//GPU‰¼‘zƒAƒhƒŒƒX
 	vbView.BufferLocation = vertBuff->GetGPUVirtualAddress();
-	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ã®ã‚µã‚¤ã‚º
+	//’¸“_ƒoƒbƒtƒ@‚ÌƒTƒCƒY
 	vbView.SizeInBytes = sizeVB;
-	//é ‚ç‚¹1ã¤åˆ†ã®ãƒ‡ãƒ¼ã‚¿ã‚µã‚¤ã‚º
+	//’¸“_1‚Â•ª‚Ìƒf[ƒ^ƒTƒCƒY
 	vbView.StrideInBytes = sizeof(Vertex);
 
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®è¨­å®š
-	//ãƒ’ãƒ¼ãƒ—è¨­å®š
+	//’è”ƒoƒbƒtƒ@‚Ìİ’è
+	//ƒq[ƒvİ’è
 	D3D12_HEAP_PROPERTIES v0{};
 	v0.Type = D3D12_HEAP_TYPE_UPLOAD;
-	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	//ƒŠƒ\[ƒXİ’è
 	D3D12_RESOURCE_DESC v1{};
 	v1.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	v1.Width = (sizeof(ConstBuffMaterial) + 0xff) & ~0xff;
@@ -90,7 +90,7 @@ void Fog::Initialize()
 	v1.MipLevels = 1;
 	v1.SampleDesc.Count = 1;
 	v1.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
+	//’è”ƒoƒbƒtƒ@‚Ì¶¬
 	result = device->CreateCommittedResource(
 		&v0,
 		D3D12_HEAP_FLAG_NONE,
@@ -101,14 +101,14 @@ void Fog::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ”ãƒ³ã‚°
+	//’è”ƒoƒbƒtƒ@ƒ}ƒbƒsƒ“ƒO
 	result = constBuffMaterial->Map(0, nullptr, (void**)&constMapMaterial);
 	assert(SUCCEEDED(result));
 
-	//è¡Œåˆ—ç”¨å®šæ•°ãƒãƒƒãƒ•ã‚¡è¨­å®š
+	//s—ñ—p’è”ƒoƒbƒtƒ@İ’è
 	D3D12_HEAP_PROPERTIES v2{};
 	v2.Type = D3D12_HEAP_TYPE_UPLOAD;
-	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	//ƒŠƒ\[ƒXİ’è
 	D3D12_RESOURCE_DESC v3{};
 	v3.Dimension = D3D12_RESOURCE_DIMENSION_BUFFER;
 	v3.Width = (sizeof(ConstBuffTransform) + 0xff) & ~0xff;
@@ -117,7 +117,7 @@ void Fog::Initialize()
 	v3.MipLevels = 1;
 	v3.SampleDesc.Count = 1;
 	v3.Layout = D3D12_TEXTURE_LAYOUT_ROW_MAJOR;
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
+	//’è”ƒoƒbƒtƒ@‚Ì¶¬
 	result = device->CreateCommittedResource(
 		&v2,
 		D3D12_HEAP_FLAG_NONE,
@@ -127,12 +127,12 @@ void Fog::Initialize()
 		IID_PPV_ARGS(&constBuffTransform)
 	);
 
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒãƒƒãƒ”ãƒ³ã‚°
+	//’è”ƒoƒbƒtƒ@ƒ}ƒbƒsƒ“ƒO
 	result = constBuffTransform->Map(0, nullptr, (void**)&constMapTransform);
 	assert(SUCCEEDED(result));
 	constMapTransform->mat = DirectX::XMMatrixIdentity();
 
-	//ãƒªã‚½ãƒ¼ã‚¹è¨­å®š
+	//ƒŠƒ\[ƒXİ’è
 	D3D12_RESOURCE_DESC textureResourceDesc = CD3DX12_RESOURCE_DESC::Tex2D(
 		DXGI_FORMAT_R8G8B8A8_UNORM_SRGB,
 		window_width,
@@ -143,7 +143,7 @@ void Fog::Initialize()
 
 	CD3DX12_HEAP_PROPERTIES a0 = CD3DX12_HEAP_PROPERTIES(D3D12_CPU_PAGE_PROPERTY_WRITE_BACK, D3D12_MEMORY_POOL_L0);
 	CD3DX12_CLEAR_VALUE a1 = CD3DX12_CLEAR_VALUE(DXGI_FORMAT_R8G8B8A8_UNORM_SRGB, clearColor);
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã®ç”Ÿæˆ
+	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Ì¶¬
 	result = device->CreateCommittedResource(
 		&a0,
 		D3D12_HEAP_FLAG_NONE,
@@ -154,18 +154,18 @@ void Fog::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”Ÿæˆç”¨è¨­å®š
+	//ƒeƒNƒXƒ`ƒƒ¶¬—pİ’è
 	const UINT pixelCount = window_width * window_height;
 	const UINT rowPitch = sizeof(UINT) * window_width;
 	const UINT depthPitch = rowPitch * window_height;
-	//ç”»åƒã‚¤ãƒ¡ãƒ¼ã‚¸
+	//‰æ‘œƒCƒ[ƒW
 	UINT* img = new UINT[pixelCount];
 	for (int i = 0; i < pixelCount; i++)
 	{
 		img[i] = 0xff0000ff;
 	}
 
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒãƒƒãƒ•ã‚¡ã«ãƒ‡ãƒ¼ã‚¿é€ä¿¡
+	//ƒeƒNƒXƒ`ƒƒƒoƒbƒtƒ@‚Éƒf[ƒ^‘—M
 	result = textureBuff->WriteToSubresource(
 		0,
 		nullptr,
@@ -176,40 +176,40 @@ void Fog::Initialize()
 	assert(SUCCEEDED(result));
 	delete[] img;
 
-	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®è¨­å®š
+	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìİ’è
 	D3D12_DESCRIPTOR_HEAP_DESC srvHeapDesc = {};
 	srvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV;
 	srvHeapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	srvHeapDesc.NumDescriptors = 2;
 
-	//è¨­å®šã‚’å…ƒã«SRVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
+	//İ’è‚ğŒ³‚ÉSRV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
 	result = device->CreateDescriptorHeap(&srvHeapDesc, IID_PPV_ARGS(&srvHeap));
 	assert(SUCCEEDED(result));
 
-	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìì¬
 	D3D12_SHADER_RESOURCE_VIEW_DESC srvDesc{};
 	srvDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	srvDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
 	srvDesc.ViewDimension = D3D12_SRV_DIMENSION_TEXTURE2D;
 	srvDesc.Texture2D.MipLevels = 1;
-	//ãƒãƒ³ãƒ‰ãƒ«ã®æŒ‡ã™ä½ç½®ã«ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ä½œæˆ
+	//ƒnƒ“ƒhƒ‹‚Ìw‚·ˆÊ’u‚ÉƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[ì¬
 	device->CreateShaderResourceView(textureBuff.Get(), &srvDesc, srvHeap->GetCPUDescriptorHandleForHeapStart());
 
 
-	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—è¨­å®š
+	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒvİ’è
 	D3D12_DESCRIPTOR_HEAP_DESC rtvDesc{};
 	rtvDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_RTV;
 	rtvDesc.NumDescriptors = 2;
-	//RTVç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã‚’ç”Ÿæˆ
+	//RTV—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ğ¶¬
 	result = device->CreateDescriptorHeap(&rtvDesc, IID_PPV_ARGS(&descHeapRTV));
 	assert(SUCCEEDED(result));
 
 
-	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ã®è¨­å®š
+	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[‚Ìİ’è
 	D3D12_RENDER_TARGET_VIEW_DESC renderDesc{};
 	renderDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;
 	renderDesc.ViewDimension = D3D12_RTV_DIMENSION_TEXTURE2D;
-	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã«RTVä½œæˆ
+	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚ÉRTVì¬
 	device->CreateRenderTargetView(
 		textureBuff.Get(),
 		&renderDesc,
@@ -217,7 +217,7 @@ void Fog::Initialize()
 	);
 
 
-	//æ·±åº¦ãƒãƒƒãƒ•ã‚¡ã®ä½œæˆ
+	//[“xƒoƒbƒtƒ@‚Ìì¬
 	D3D12_RESOURCE_DESC depthResDesc = {};
 	depthResDesc.Dimension = D3D12_RESOURCE_DIMENSION_TEXTURE2D;
 	depthResDesc.Width = window_width;
@@ -227,13 +227,13 @@ void Fog::Initialize()
 	depthResDesc.SampleDesc.Count = 1;
 	depthResDesc.Flags = D3D12_RESOURCE_FLAG_ALLOW_DEPTH_STENCIL;
 
-	//æ·±åº¦å€¤ç”¨ãƒ’ãƒ¼ãƒ—è¨­å®š
+	//[“x’l—pƒq[ƒvİ’è
 	D3D12_HEAP_PROPERTIES depthHeapProp = {};
 	depthHeapProp.Type = D3D12_HEAP_TYPE_DEFAULT;
 	depthHeapProp.CPUPageProperty = D3D12_CPU_PAGE_PROPERTY_UNKNOWN;
 	depthHeapProp.MemoryPoolPreference = D3D12_MEMORY_POOL_UNKNOWN;
 
-	//ã‚¯ãƒªã‚¢ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼
+	//ƒNƒŠƒAƒoƒbƒtƒ@ƒrƒ…[
 	/*D3D12_CLEAR_VALUE depthClearValue = {};
 	depthClearValue.DepthStencil.Depth = 1.0f;
 	depthClearValue.Format = DXGI_FORMAT_D32_FLOAT;*/
@@ -248,13 +248,13 @@ void Fog::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//ã§ã‚¹ã‚¯ãƒªãƒ—ã‚¿ç”¨è¨­å®š
+	//‚ÅƒXƒNƒŠƒvƒ^—pİ’è
 	D3D12_DESCRIPTOR_HEAP_DESC dsvHeapDesc = {};
 	dsvHeapDesc.NumDescriptors = 2;
 	dsvHeapDesc.Type = D3D12_DESCRIPTOR_HEAP_TYPE_DSV;
 	result = device->CreateDescriptorHeap(&dsvHeapDesc, IID_PPV_ARGS(&descHeapDSV));
 
-	//æ·±åº¦ãƒ“ãƒ¥ãƒ¼ä½œæˆ
+	//[“xƒrƒ…[ì¬
 	D3D12_DEPTH_STENCIL_VIEW_DESC dsvDesc = {};
 	dsvDesc.Format = DXGI_FORMAT_D32_FLOAT;
 	dsvDesc.ViewDimension = D3D12_DSV_DIMENSION_TEXTURE2D;
@@ -267,7 +267,7 @@ void Fog::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//æ·±åº¦ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ãƒ’ãƒ¼ãƒ—
+	//[“xƒeƒNƒXƒ`ƒƒ—pƒq[ƒv
 	D3D12_DESCRIPTOR_HEAP_DESC heapDesc = {};
 	heapDesc.Flags = D3D12_DESCRIPTOR_HEAP_FLAG_SHADER_VISIBLE;
 	heapDesc.NodeMask = 0;
@@ -279,7 +279,7 @@ void Fog::Initialize()
 	);
 	assert(SUCCEEDED(result));
 
-	//ã‚·ã‚§ãƒ¼ãƒ€ãƒªã‚½ãƒ¼ã‚¹ãƒ“ãƒ¥ãƒ¼ã®ä½œæˆ
+	//ƒVƒF[ƒ_ƒŠƒ\[ƒXƒrƒ…[‚Ìì¬
 	D3D12_SHADER_RESOURCE_VIEW_DESC sResDesc{};
 	sResDesc.Format = DXGI_FORMAT_R32_FLOAT;
 	sResDesc.Shader4ComponentMapping = D3D12_DEFAULT_SHADER_4_COMPONENT_MAPPING;
@@ -294,7 +294,7 @@ void Fog::Update()
 {
 	std::copy(std::begin(vertices), std::end(vertices), vertMap);
 
-	//ãƒãƒ†ãƒªã‚¢ãƒ«
+	//ƒ}ƒeƒŠƒAƒ‹
 	constMapMaterial->color = color;
 	constMapMaterial->window.x = window_width;
 	constMapMaterial->window.y = window_height;
@@ -302,23 +302,23 @@ void Fog::Update()
 	constMapMaterial->startDepth = startDepth;
 	constMapMaterial->strength = strength;
 
-	//å¤‰å½¢è¡Œåˆ—
-	//ãƒ¯ãƒ¼ãƒ«ãƒ‰å¤‰æ›è¡Œåˆ—
+	//•ÏŒ`s—ñ
+	//ƒ[ƒ‹ƒh•ÏŠ·s—ñ
 	XMMATRIX matWorld;
 	matWorld = DirectX::XMMatrixIdentity();
-	//å›è»¢
+	//‰ñ“]
 	XMMATRIX matRot;
 	matRot = DirectX::XMMatrixIdentity();
 	matRot *= DirectX::XMMatrixRotationZ(rotation);
 	matWorld *= matRot;
-	//å¹³è¡Œç§»å‹•
+	//•½sˆÚ“®
 	XMMATRIX matTrans;
 	matTrans = DirectX::XMMatrixTranslation(position.x, position.y, 0.0f);
 	matWorld *= matTrans;
 
-	//åˆæˆ
+	//‡¬
 	constMapTransform->mat = matWorld;
-	//2Dåº§æ¨™ã«å¤‰æ›
+	//2DÀ•W‚É•ÏŠ·
 	constMapTransform->mat.r[0].m128_f32[0] = 2.0f / window_width;
 	constMapTransform->mat.r[1].m128_f32[1] = -2.0f / window_height;
 	constMapTransform->mat.r[3].m128_f32[0] = -1.0f + (position.x / window_width) * 2;
@@ -328,25 +328,25 @@ void Fog::Update()
 //void ShadowMap::Draw0(ID3D12GraphicsCommandList* cmdList)
 //{
 //
-//	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã€ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
+//	//ƒpƒCƒvƒ‰ƒCƒ“Aƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
 //	cmdList->SetPipelineState(pipelinestate1.Get());
 //	cmdList->SetGraphicsRootSignature(rootsignature1.Get());
 //
-//	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+//	//ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒh
 //	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 //
-//	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+//	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
 //	cmdList->IASetVertexBuffers(0, 1, &vbView);
 //
-//	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+//	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
 //	cmdList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
-//	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®é…åˆ—ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
+//	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì”z—ñ‚ğƒZƒbƒg‚·‚éƒRƒ}ƒ“ƒh
 //	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap.Get() };
 //	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-//	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
+//	//SRVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
 //	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap.Get()->GetGPUDescriptorHandleForHeapStart();
 //
-//	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1æ™©ã«è¨­å®š
+//	//SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ó‚Éİ’è
 //	cmdList->SetGraphicsRootDescriptorTable(2, srvGpuHandle);
 //
 //	D3D12_GPU_DESCRIPTOR_HANDLE handle = depthSRVHeap->GetGPUDescriptorHandleForHeapStart();
@@ -354,35 +354,35 @@ void Fog::Update()
 //	cmdList->SetDescriptorHeaps(1, depthSRVHeap.GetAddressOf());
 //	cmdList->SetGraphicsRootDescriptorTable(3, handle);
 //
-//	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+//	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
 //	cmdList->SetGraphicsRootConstantBufferView(1, constBuffTransform->GetGPUVirtualAddress());
 //
-//	//æç”»ã‚³ãƒãƒ³ãƒ‰
+//	//•`‰æƒRƒ}ƒ“ƒh
 //	cmdList->DrawInstanced(_countof(vertices), 1, 0, 0);
 //}
 
 void Fog::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 
-	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã€ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
+	//ƒpƒCƒvƒ‰ƒCƒ“Aƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
 	cmdList->SetPipelineState(pipelinestate.Get());
 	cmdList->SetGraphicsRootSignature(rootsignature.Get());
 
-	//ãƒ—ãƒªãƒŸãƒ†ã‚£ãƒ–å½¢çŠ¶ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	//ƒvƒŠƒ~ƒeƒBƒuŒ`ó‚Ìİ’èƒRƒ}ƒ“ƒh
 	cmdList->IASetPrimitiveTopology(D3D_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-	//é ‚ç‚¹ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	//’¸“_ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
 	cmdList->IASetVertexBuffers(0, 1, &vbView);
 
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
 	cmdList->SetGraphicsRootConstantBufferView(0, constBuffMaterial->GetGPUVirtualAddress());
-	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®é…åˆ—ã‚’ã‚»ãƒƒãƒˆã™ã‚‹ã‚³ãƒãƒ³ãƒ‰
+	//ƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ì”z—ñ‚ğƒZƒbƒg‚·‚éƒRƒ}ƒ“ƒh
 	ID3D12DescriptorHeap* ppHeaps[] = { srvHeap.Get() };
 	cmdList->SetDescriptorHeaps(_countof(ppHeaps), ppHeaps);
-	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
+	//SRVƒq[ƒv‚Ìæ“ªƒnƒ“ƒhƒ‹‚ğæ“¾
 	D3D12_GPU_DESCRIPTOR_HANDLE srvGpuHandle = srvHeap.Get()->GetGPUDescriptorHandleForHeapStart();
 
-	//SRVãƒ’ãƒ¼ãƒ—ã®å…ˆé ­ã«ã‚ã‚‹SRVã‚’ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿1æ™©ã«è¨­å®š
+	//SRVƒq[ƒv‚Ìæ“ª‚É‚ ‚éSRV‚ğƒ‹[ƒgƒpƒ‰ƒ[ƒ^1”Ó‚Éİ’è
 	cmdList->SetGraphicsRootDescriptorTable(2, srvGpuHandle);
 
 	cmdList->SetDescriptorHeaps(1, depthSRVHeap.GetAddressOf());
@@ -391,10 +391,10 @@ void Fog::Draw(ID3D12GraphicsCommandList* cmdList)
 	/*handle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_CBV_SRV_UAV);
 	cmdList->SetGraphicsRootDescriptorTable(4, handle);*/
 
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡ãƒ“ãƒ¥ãƒ¼ã®è¨­å®šã‚³ãƒãƒ³ãƒ‰
+	//’è”ƒoƒbƒtƒ@ƒrƒ…[‚Ìİ’èƒRƒ}ƒ“ƒh
 	cmdList->SetGraphicsRootConstantBufferView(1, constBuffTransform->GetGPUVirtualAddress());
 
-	//æç”»ã‚³ãƒãƒ³ãƒ‰
+	//•`‰æƒRƒ}ƒ“ƒh
 	cmdList->DrawInstanced(_countof(vertices), 1, 0, 0);
 }
 
@@ -402,11 +402,11 @@ void Fog::CreateGraphicsPipeLine0()
 {
 	HRESULT result;
 
-	ID3DBlob* vsBlob = nullptr;	//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
-	ID3DBlob* psBlob = nullptr;	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
-	ID3DBlob* errorBlob = nullptr;	//ã‚¨ãƒ©ãƒ¼ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆ
+	ID3DBlob* vsBlob = nullptr;	//’¸“_ƒVƒF[ƒ_[ƒIƒuƒWƒFƒNƒg
+	ID3DBlob* psBlob = nullptr;	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_[ƒIƒuƒWƒFƒNƒg
+	ID3DBlob* errorBlob = nullptr;	//ƒGƒ‰[ƒIƒuƒWƒFƒNƒg
 
-	//é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
+	//’¸“_ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ ƒRƒ“ƒpƒCƒ‹
 	result = D3DCompileFromFile(
 		L"Resources/Shaders/Fog/FogVertexShader.hlsl",
 		nullptr,
@@ -416,9 +416,9 @@ void Fog::CreateGraphicsPipeLine0()
 		0,
 		&vsBlob, &errorBlob);
 
-	//ã‚¨ãƒ©ãƒ¼ã®å ´åˆ
+	//ƒGƒ‰[‚Ìê‡
 	if (FAILED(result)) {
-		// errorBlobã‹ã‚‰ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’stringå‹ã«ã‚³ãƒ”ãƒ¼
+		// errorBlob‚©‚çƒGƒ‰[“à—e‚ğstringŒ^‚ÉƒRƒs[
 		std::string errstr;
 		errstr.resize(errorBlob->GetBufferSize());
 
@@ -426,12 +426,12 @@ void Fog::CreateGraphicsPipeLine0()
 			errorBlob->GetBufferSize(),
 			errstr.begin());
 		errstr += "\n";
-		// ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤º
+		// ƒGƒ‰[“à—e‚ğo—ÍƒEƒBƒ“ƒhƒE‚É•\¦
 		OutputDebugStringA(errstr.c_str());
 		exit(1);
 	}
 
-	//ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€ã®èª­ã¿è¾¼ã¿ ã‚³ãƒ³ãƒ‘ã‚¤ãƒ«
+	//ƒsƒNƒZƒ‹ƒVƒF[ƒ_‚Ì“Ç‚İ‚İ ƒRƒ“ƒpƒCƒ‹
 	result = D3DCompileFromFile(
 		L"Resources/Shaders/Fog/FogPixelShader.hlsl",
 		nullptr,
@@ -441,9 +441,9 @@ void Fog::CreateGraphicsPipeLine0()
 		0,
 		&psBlob, &errorBlob);
 
-	//ã‚¨ãƒ©ãƒ¼ã®å ´åˆ
+	//ƒGƒ‰[‚Ìê‡
 	if (FAILED(result)) {
-		// errorBlobã‹ã‚‰ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’stringå‹ã«ã‚³ãƒ”ãƒ¼
+		// errorBlob‚©‚çƒGƒ‰[“à—e‚ğstringŒ^‚ÉƒRƒs[
 		std::string errstr;
 		errstr.resize(errorBlob->GetBufferSize());
 
@@ -451,12 +451,12 @@ void Fog::CreateGraphicsPipeLine0()
 			errorBlob->GetBufferSize(),
 			errstr.begin());
 		errstr += "\n";
-		// ã‚¨ãƒ©ãƒ¼å†…å®¹ã‚’å‡ºåŠ›ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã«è¡¨ç¤º
+		// ƒGƒ‰[“à—e‚ğo—ÍƒEƒBƒ“ƒhƒE‚É•\¦
 		OutputDebugStringA(errstr.c_str());
 		exit(1);
 	}
 
-	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆ
+	//’¸“_ƒŒƒCƒAƒEƒg
 	D3D12_INPUT_ELEMENT_DESC inputLayout[] =
 	{
 		{
@@ -471,46 +471,46 @@ void Fog::CreateGraphicsPipeLine0()
 		},
 	};
 
-	//ã‚°ãƒ©ãƒ•ã‚£ãƒƒã‚¯ã‚¹ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³è¨­å®š
+	//ƒOƒ‰ƒtƒBƒbƒNƒXƒpƒCƒvƒ‰ƒCƒ“İ’è
 	D3D12_GRAPHICS_PIPELINE_STATE_DESC pipelineDesc{};
 
-	//ã‚·ã‚§ãƒ¼ãƒ€ã®è¨­å®š
+	//ƒVƒF[ƒ_‚Ìİ’è
 	pipelineDesc.VS.pShaderBytecode = vsBlob->GetBufferPointer();
 	pipelineDesc.VS.BytecodeLength = vsBlob->GetBufferSize();
 	pipelineDesc.PS.pShaderBytecode = psBlob->GetBufferPointer();
 	pipelineDesc.PS.BytecodeLength = psBlob->GetBufferSize();
 
-	//ã‚µãƒ³ãƒ—ãƒ«ãƒã‚¹ã‚¯ã®è¨­å®š
-	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//æ¨™æº–è¨­å®š
+	//ƒTƒ“ƒvƒ‹ƒ}ƒXƒN‚Ìİ’è
+	pipelineDesc.SampleMask = D3D12_DEFAULT_SAMPLE_MASK;	//•W€İ’è
 
-	//ãƒ©ã‚¹ã‚¿ãƒ©ã‚¤ã‚¶ã®è¨­å®š
-	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//ã‚«ãƒªãƒ³ã‚°ã—ãªã„
-	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ãƒãƒªã‚´ãƒ³å†…å¡—ã‚Šã¤ã¶ã—
-	pipelineDesc.RasterizerState.DepthClipEnable = true;	//æ·±åº¦ã‚¯ãƒªãƒƒãƒ”ãƒ³ã‚°ã‚’æœ‰åŠ¹ã«
+	//ƒ‰ƒXƒ^ƒ‰ƒCƒU‚Ìİ’è
+	pipelineDesc.RasterizerState.CullMode = D3D12_CULL_MODE_NONE;	//ƒJƒŠƒ“ƒO‚µ‚È‚¢
+	pipelineDesc.RasterizerState.FillMode = D3D12_FILL_MODE_SOLID;	//ƒ|ƒŠƒSƒ““à“h‚è‚Â‚Ô‚µ
+	pipelineDesc.RasterizerState.DepthClipEnable = true;	//[“xƒNƒŠƒbƒsƒ“ƒO‚ğ—LŒø‚É
 	/*pipelineDesc.DepthStencilState.DepthWriteMask = D3D12_DEPTH_WRITE_MASK_ALL;
 	pipelineDesc.DepthStencilState.DepthFunc = D3D12_COMPARISON_FUNC_LESS;
 	pipelineDesc.DSVFormat = DXGI_FORMAT_D32_FLOAT;*/
 
-	//ãƒ–ãƒ¬ãƒ³ãƒ‰ã‚¹ãƒ†ãƒ¼ãƒˆ
+	//ƒuƒŒƒ“ƒhƒXƒe[ƒg
 	pipelineDesc.BlendState.RenderTarget[0].RenderTargetWriteMask = D3D12_COLOR_WRITE_ENABLE_ALL;
 
-	//å…±é€šã®è¨­å®š
+	//‹¤’Ê‚Ìİ’è
 	pipelineDesc.BlendState.RenderTarget[0].BlendEnable = false;
 
-	//é ‚ç‚¹ãƒ¬ã‚¤ã‚¢ã‚¦ãƒˆã®è¨­å®š
+	//’¸“_ƒŒƒCƒAƒEƒg‚Ìİ’è
 	pipelineDesc.InputLayout.pInputElementDescs = inputLayout;
 	pipelineDesc.InputLayout.NumElements = _countof(inputLayout);
 
-	//å›³å½¢ã®å½¢çŠ¶
+	//}Œ`‚ÌŒ`ó
 	pipelineDesc.PrimitiveTopologyType = D3D12_PRIMITIVE_TOPOLOGY_TYPE_TRIANGLE;
 
-	//ãã®ä»–è¨­å®š
-	pipelineDesc.NumRenderTargets = 2;	//æç”»å¯¾è±¡ã¯1
+	//‚»‚Ì‘¼İ’è
+	pipelineDesc.NumRenderTargets = 2;	//•`‰æ‘ÎÛ‚Í1
 	pipelineDesc.RTVFormats[0] = DXGI_FORMAT_R8G8B8A8_UNORM_SRGB;	//RGBA
 	pipelineDesc.RTVFormats[1] = DXGI_FORMAT_R8_UNORM;	//RGBA
-	pipelineDesc.SampleDesc.Count = 1;	//1ãƒ”ã‚¯ã‚»ãƒ«ã«ã¤ã1å›ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
+	pipelineDesc.SampleDesc.Count = 1;	//1ƒsƒNƒZƒ‹‚É‚Â‚«1‰ñƒTƒ“ƒvƒŠƒ“ƒO
 
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ã‚µãƒ³ãƒ—ãƒ©ãƒ¼ã®è¨­å®š
+	//ƒeƒNƒXƒ`ƒƒƒTƒ“ƒvƒ‰[‚Ìİ’è
 	D3D12_STATIC_SAMPLER_DESC samplerDesc{};
 	samplerDesc.AddressU = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
 	samplerDesc.AddressV = D3D12_TEXTURE_ADDRESS_MODE_CLAMP;
@@ -522,7 +522,7 @@ void Fog::CreateGraphicsPipeLine0()
 	samplerDesc.ComparisonFunc = D3D12_COMPARISON_FUNC_NEVER;
 	samplerDesc.ShaderVisibility = D3D12_SHADER_VISIBILITY_PIXEL;
 
-	//ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ¬ãƒ³ã‚¸ã®è¨­å®š
+	//ƒfƒXƒNƒŠƒvƒ^ƒŒƒ“ƒW‚Ìİ’è
 	D3D12_DESCRIPTOR_RANGE descriptorRange0{};
 	descriptorRange0.NumDescriptors = 1;
 	descriptorRange0.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
@@ -539,30 +539,30 @@ void Fog::CreateGraphicsPipeLine0()
 	descriptorRange2.RangeType = D3D12_DESCRIPTOR_RANGE_TYPE_SRV;
 	descriptorRange2.BaseShaderRegister = 2;
 
-	//ãƒ«ãƒ¼ãƒˆãƒ‘ãƒ©ãƒ¡ãƒ¼ã‚¿ã®è¨­å®š
+	//ƒ‹[ƒgƒpƒ‰ƒ[ƒ^‚Ìİ’è
 	D3D12_ROOT_PARAMETER rootParameter[4] = {};
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡0ç•ª
+	//’è”ƒoƒbƒtƒ@0”Ô
 	rootParameter[0].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameter[0].Descriptor.ShaderRegister = 0;
 	rootParameter[0].Descriptor.RegisterSpace = 0;
 	rootParameter[0].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-	//å®šæ•°ãƒãƒƒãƒ•ã‚¡1ç•ª
+	//’è”ƒoƒbƒtƒ@1”Ô
 	rootParameter[1].ParameterType = D3D12_ROOT_PARAMETER_TYPE_CBV;
 	rootParameter[1].Descriptor.ShaderRegister = 1;
 	rootParameter[1].Descriptor.RegisterSpace = 0;
 	rootParameter[1].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿0ç•ª
+	//ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^0”Ô
 	rootParameter[2].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParameter[2].DescriptorTable.pDescriptorRanges = &descriptorRange0;
 	rootParameter[2].DescriptorTable.NumDescriptorRanges = 1;
 	rootParameter[2].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
-	//ãƒ†ã‚¯ã‚¹ãƒãƒ£ãƒ¬ã‚¸ã‚¹ã‚¿1ç•ª
+	//ƒeƒNƒXƒ`ƒƒƒŒƒWƒXƒ^1”Ô
 	rootParameter[3].ParameterType = D3D12_ROOT_PARAMETER_TYPE_DESCRIPTOR_TABLE;
 	rootParameter[3].DescriptorTable.pDescriptorRanges = &descriptorRange1;
 	rootParameter[3].DescriptorTable.NumDescriptorRanges = 1;
 	rootParameter[3].ShaderVisibility = D3D12_SHADER_VISIBILITY_ALL;
 
-	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®è¨­å®š
+	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚Ìİ’è
 	D3D12_ROOT_SIGNATURE_DESC rootSignatureDesc{};
 	rootSignatureDesc.Flags = D3D12_ROOT_SIGNATURE_FLAG_ALLOW_INPUT_ASSEMBLER_INPUT_LAYOUT;
 	rootSignatureDesc.pParameters = rootParameter;
@@ -570,7 +570,7 @@ void Fog::CreateGraphicsPipeLine0()
 	rootSignatureDesc.pStaticSamplers = &samplerDesc;
 	rootSignatureDesc.NumStaticSamplers = 1;
 
-	//ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã®ã‚·ãƒªã‚¢ãƒ©ã‚¤ã‚º
+	//ƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ÌƒVƒŠƒAƒ‰ƒCƒY
 	ID3DBlob* rootSigBlob = nullptr;
 	result = D3D12SerializeRootSignature(&rootSignatureDesc, D3D_ROOT_SIGNATURE_VERSION_1_0,
 		&rootSigBlob, &errorBlob);
@@ -579,17 +579,17 @@ void Fog::CreateGraphicsPipeLine0()
 		IID_PPV_ARGS(&rootsignature));
 	assert(SUCCEEDED(result));
 	rootSigBlob->Release();
-	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã«ãƒ«ãƒ¼ãƒˆã‚·ã‚°ãƒãƒãƒ£ã‚’ã‚»ãƒƒãƒˆ
+	//ƒpƒCƒvƒ‰ƒCƒ“‚Éƒ‹[ƒgƒVƒOƒlƒ`ƒƒ‚ğƒZƒbƒg
 	pipelineDesc.pRootSignature = rootsignature.Get();
 
-	//ãƒ‘ã‚¤ãƒ—ãƒ©ã‚¤ãƒ³ã‚¹ãƒ†ãƒ¼ãƒˆã®ç”Ÿæˆ
+	//ƒpƒCƒvƒ‰ƒCƒ“ƒXƒe[ƒg‚Ì¶¬
 	result = device->CreateGraphicsPipelineState(&pipelineDesc, IID_PPV_ARGS(pipelinestate.ReleaseAndGetAddressOf()));
 	assert(SUCCEEDED(result));
 }
 
 void Fog::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
-	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´
+	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX
 	CD3DX12_RESOURCE_BARRIER a0 = CD3DX12_RESOURCE_BARRIER::Transition(
 		textureBuff.Get(),
 		D3D12_RESOURCE_STATE_PIXEL_SHADER_RESOURCE,
@@ -597,31 +597,31 @@ void Fog::PreDrawScene(ID3D12GraphicsCommandList* cmdList)
 	);
 	cmdList->ResourceBarrier(1, &a0);
 
-	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
+	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒgƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
 	D3D12_CPU_DESCRIPTOR_HANDLE rtvHandle = descHeapRTV->GetCPUDescriptorHandleForHeapStart();
-	//éœ‡åº¦ã‚¹ãƒ†ãƒ³ã‚·ãƒ«ãƒ“ãƒ¥ãƒ¼ç”¨ãƒ‡ã‚¹ã‚¯ãƒªãƒ—ã‚¿ãƒ’ãƒ¼ãƒ—ã®ãƒãƒ³ãƒ‰ãƒ«ã‚’å–å¾—
+	//k“xƒXƒeƒ“ƒVƒ‹ƒrƒ…[—pƒfƒXƒNƒŠƒvƒ^ƒq[ƒv‚Ìƒnƒ“ƒhƒ‹‚ğæ“¾
 	D3D12_CPU_DESCRIPTOR_HANDLE dsvHandle = descHeapDSV->GetCPUDescriptorHandleForHeapStart();
 	/*dsvHandle.ptr += device->GetDescriptorHandleIncrementSize(D3D12_DESCRIPTOR_HEAP_TYPE_DSV);*/
-	//ãƒ¬ãƒ³ãƒ€ãƒ¼ã‚¿ãƒ¼ã‚²ãƒƒãƒˆã‚’ã‚»ãƒƒãƒˆ
+	//ƒŒƒ“ƒ_[ƒ^[ƒQƒbƒg‚ğƒZƒbƒg
 	cmdList->OMSetRenderTargets(1, &rtvHandle, false, &dsvHandle);
 
-	//ãƒ“ãƒ¥ãƒ¼ãƒãƒ¼ãƒˆã®è¨­å®š
+	//ƒrƒ…[ƒ|[ƒg‚Ìİ’è
 	CD3DX12_VIEWPORT a1 = CD3DX12_VIEWPORT(0.0f, 0.0f, window_width, window_height);
 	cmdList->RSSetViewports(1, &a1);
-	//ã‚·ã‚¶ãƒ¼çŸ©å½¢ã®è¨­å®š
+	//ƒVƒU[‹éŒ`‚Ìİ’è
 	CD3DX12_RECT a2 = CD3DX12_RECT(0, 0, window_width, window_height);
 	cmdList->RSSetScissorRects(1, &a2);
 
 
-	//å…¨ç”»é¢ã‚¯ãƒªã‚¢
+	//‘S‰æ–ÊƒNƒŠƒA
 	cmdList->ClearRenderTargetView(rtvHandle, clearColor, 0, nullptr);
-	//éœ‡åº¦ãƒãƒƒãƒ•ã‚¡ã®ã‚¯ãƒªã‚¢
+	//k“xƒoƒbƒtƒ@‚ÌƒNƒŠƒA
 	cmdList->ClearDepthStencilView(dsvHandle, D3D12_CLEAR_FLAG_DEPTH, 1.0f, 0, 0, nullptr);
 }
 
 void Fog::PostDrawScene(ID3D12GraphicsCommandList* cmdList)
 {
-	//ãƒªã‚½ãƒ¼ã‚¹ãƒãƒªã‚¢ã‚’å¤‰æ›´
+	//ƒŠƒ\[ƒXƒoƒŠƒA‚ğ•ÏX
 	CD3DX12_RESOURCE_BARRIER a0 = CD3DX12_RESOURCE_BARRIER::Transition(
 		textureBuff.Get(),
 		D3D12_RESOURCE_STATE_RENDER_TARGET,

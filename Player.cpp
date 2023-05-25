@@ -36,7 +36,6 @@ void Player::Update()
 
 	if (alpha == 0.0f) {
 
-
 		//梯子に当たっているときにWかSを押したら梯子に登る
 		if (colLadder) {
 			if (input->PushKey(DIK_W) || input->PushKey(DIK_S))
@@ -220,7 +219,7 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 	if (isDeath == false) {
 
 		playerObject->Draw(cmdList);
-		cubeObject_->Draw(cmdList);
+		/*cubeObject_->Draw(cmdList);*/
 	}
 
 }
@@ -299,7 +298,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 					position.x += swampSpeed;
 				}
 			}
-			else if (input->PushKey(DIK_D)) {
+			if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x = (position.x + swampSpeed);
 				cubeObject_->SetPosition(newposition);
@@ -318,7 +317,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 					position.x += speed;
 				}
 			}
-			else if (input->PushKey(DIK_D)) {
+			if (input->PushKey(DIK_D)) {
 				newposition = position;
 				newposition.x = (position.x + speed);
 				cubeObject_->SetPosition(newposition);
@@ -357,62 +356,4 @@ bool Player::OntheBlock(CubeObject3D* cubeObject)
 	}
 	return false;
 
-}
-
-bool Player::pushBlock(CubeObject3D* cubeObject)
-{
-	//落下中(ジャンプも含む)
-	if (gravity < 0.0f) {
-		newposition = position;
-		newposition.y += gravity;
-		cubeObject_->SetPosition(newposition);
-		if (cubeObject_->CheakCollision(cubeObject)) {
-			SetJump(false);
-			gravity = 0.0f;
-			return false;
-		}
-	}
-
-	//横の判定
-	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
-		//沼の中
-		if (inSwamp) {
-			if (input->PushKey(DIK_A)) {
-				newposition = position;
-				newposition.x = (position.x - swampSpeed);
-				cubeObject_->SetPosition(newposition);
-				if (cubeObject_->CheakCollision(cubeObject)) {
-					return true;
-				}
-			}
-			else if (input->PushKey(DIK_D)) {
-				newposition = position;
-				newposition.x = (position.x + swampSpeed);
-				cubeObject_->SetPosition(newposition);
-				if (cubeObject_->CheakCollision(cubeObject)) {
-					return true;
-				}
-			}
-			cubeObject_->SetPosition(newposition);
-		}
-		else {
-			if (input->PushKey(DIK_A)) {
-				newposition = position;
-				newposition.x = (position.x - speed);
-				cubeObject_->SetPosition(newposition);
-				if (cubeObject_->CheakCollision(cubeObject)) {
-					return true;
-				}
-			}
-			else if (input->PushKey(DIK_D)) {
-				newposition = position;
-				newposition.x = (position.x + speed);
-				cubeObject_->SetPosition(newposition);
-				if (cubeObject_->CheakCollision(cubeObject)) {
-					return true;
-				}
-			}
-
-		}
-	}
 }

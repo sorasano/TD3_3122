@@ -47,10 +47,8 @@ public:
 	XMFLOAT3 GetPosition() { return position; }
 	//XMFLOAT3 GetScale() { return scale; }
 	XMFLOAT3 GetRotate() { return rotate; }
-	float GetSwampSpeed() { return swampSpeed; }
 	float GetSpeed() { return speed; }
 	float GetGravity() { return gravity; }
-	bool GetinSwamp() { return inSwamp; }
 
 	CubeObject3D *GetCubeObject() {return cubeObject_; }
 	bool GetDeath() { return isDeath; }
@@ -67,11 +65,8 @@ public:
 	void Ladder();
 	//押し戻し処理
 	void pushback(CubeObject3D* cubeObject);
-	//上の判定
+
 	bool OntheBlock(CubeObject3D* cubeObject);
-	//横の判定
-	bool pushBlock(CubeObject3D* cubeObject);
-	
 private:
 	
 	XMFLOAT3 position = { 0.0f,2.0f,-1.0f};

@@ -94,7 +94,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
-	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
 	ladderModel = FbxLoader::GetInstance()->LoadModelFromFile("ladder", "Resources/color/brown1x1.png");
 
 	//デバイスをセット
@@ -244,15 +243,15 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	////--------ボタン----------
 
-	for (int i = 0; i < buttonSize; i++) {
-		buttonColBox[i] = new CubeObject3D();
-		buttonColBox[i]->Initialize();
-		buttonColBox[i]->SetModel(cubeModel);
+	//for (int i = 0; i < buttonSize; i++) {
+	//	ButtonColBox[i] = new CubeObject3D();
+	//	ButtonColBox[i]->Initialize();
+	//	ButtonColBox[i]->SetModel(cubeModel);
 
-		button[i] = new Button;
-		button[i]->Initialize(buttonModel, player, buttonColBox[i]);
+	//	button[i] = new Button;
+	//	button[i]->Initialize(buttonModel, player, ButtonColBox[i]);
 
-	}
+	//}
 
 	////stage1
 	//button[0]->SetPositionX(stage1 + 70);
@@ -421,86 +420,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	moveEnemy[0]->SetPositionX(10.0f);
 	moveEnemy[1]->SetPositionX(20.0f);
-
-	//----------動かせるブロック----------
-	PushBlock::SetInput(input_);
-	/*PushBlock::SetDXInput(dxInput);*/
-	for (int i = 0; i < pushBlockSize; i++) {
-		pushBlockColBox[i] = new CubeObject3D();
-		pushBlockColBox[i]->Initialize();
-		pushBlockColBox[i]->SetModel(cubeModel);
-
-		pushBlock[i] = new PushBlock();
-		pushBlock[i]->Initialize(pushBlockModel, player, pushBlockColBox[i]);
-	}
-
-	pushBlock[0]->SetPositionX(5.0f);
-	pushBlock[1]->SetPositionX(15.0f);
-	/*pushBlock[2]->SetPositionX(15.0f);
-	pushBlock[3]->SetPositionX(20.0f);
-	pushBlock[4]->SetPositionX(30.0f);*/
-	//----------ブロック----------
-	for (int i = 0; i < blockSize; i++) {
-		blockColBox[i]=new CubeObject3D();
-		blockColBox[i]->Initialize();
-		blockColBox[i]->SetModel(cubeModel);
-
-		block[i] = new Block();
-		block[i]->Initialize(blockModel, player, blockColBox[i]);
-	}
-	////stage1
-	//block[0]->SetPosition({ stage1 + 14,1,0 });
-	//block[1]->SetPosition({ stage1 + 20,1,0 });
-
-	//block[2]->SetPosition({ stage1 + 27,1,0 });
-	//block[3]->SetPosition({ stage1 + 37,1,0 });
-
-	////stage2
-	//block[4]->SetPosition({ stage2 + 14,1,0 });
-	//block[5]->SetPosition({ stage2 + 20,1,0 });
-
-	//block[6]->SetPosition({ stage2 + 27,1,0 });
-	//block[7]->SetPosition({ stage2 + 37,1,0 });
-
-	////stage3
-	//block[8]->SetPosition({ stage3 + 57,1,0 });
-	//block[9]->SetPosition({ stage3 + 63,1,0 });
-	//block[10]->SetPosition({ stage3 + 69,1,0 });
-	//block[11]->SetPosition({ stage3 + 75,1,0 });
-
-	//block[12]->SetPosition({ stage3 + 87,1,0 });
-	//block[13]->SetPosition({ stage3 + 93,1,0 });
-	//block[14]->SetPosition({ stage3 + 99,1,0 });
-	//block[15]->SetPosition({ stage3 + 105,1,0 });
-
-
-	block[0]->SetPositionX(17.0f);
-	block[1]->SetPositionX(33.0f);
-	block[2]->SetPositionX(40.0f);
-	block[3]->SetPositionX(50.0f);
-	block[4]->SetPositionX(60.0f);
-
-	//----------押している間のスイッチ----------
-	for (int i = 0; i < pushButtonSize; i++) {
-		pushButtonColBox[i] = new CubeObject3D();
-		pushButtonColBox[i]->Initialize();
-		pushButtonColBox[i]->SetModel(cubeModel);
-
-		pushButtonBlockColBox[i] = new CubeObject3D();
-		pushButtonBlockColBox[i]->Initialize();
-		pushButtonBlockColBox[i]->SetModel(cubeModel);
-		
-
-		pushButton[i] = new PushButton();
-		pushButton[i]->Initialize(buttonModel, player, pushButtonColBox[i], pushButtonBlockColBox[i]);
-	}
-
-	pushButton[0]->SetPositionX(20);
-	pushButton[0]->SetBlockPositionX(25);
-
-	pushButton[1]->SetPositionX(10);
-	pushButton[1]->SetBlockPositionX(30);
-
 
 	//セーブ
 	autoSave = new Autosave;
@@ -681,7 +600,6 @@ void GameScene::Update()
 			scene = CLEAR;
 		}
 
-
 		////リセット
 		//if (input_->PushKey(DIK_R)) {
 		//	Reset();
@@ -730,72 +648,11 @@ void GameScene::Update()
 			moveEnemy[i]->Update();
 		}
 
-		
+		//プレイヤー
+		player->Update();
+
 		//タイトル
 		titleSprite->Update();
-
-	
-
-	//動かせるブロック
-	for (int i = 0; i < pushBlockSize; i++) {
-		pushBlock[i]->Collision();
-		if (pushBlock[i]->GetIsPush()) {
-			//動かせるブロック同士の判定
-			for (int j = 0; j < pushBlockSize; j++) {
-				if (i != j) {
-					pushBlock[i]->pushback(pushBlockColBox[j]);
-					//押さないかどうか
-					if (pushBlock[i]->GetNoPush()) {
-						noPush = true;
-					}
-				}
-			}
-			//ギミックの判定追加場所
-			//動かないブロックとの判定
-			for (int j = 0; j < blockSize; j++) {
-				if (i != j) {
-					pushBlock[i]->pushback(blockColBox[j]);
-					//押さないかどうか
-					if (pushBlock[i]->GetNoPush()) {
-						noPush = true;
-					}
-				}
-			}
-			//押している間のスイッチ
-			for (int j = 0; j < pushButtonSize; j++) {
-				if (i != j) {
-					pushBlock[i]->pushback(pushButtonBlockColBox[j]);
-					//押さないかどうか
-					if (pushBlock[i]->GetNoPush()) {
-						noPush = true;
-					}
-				}
-			}
-
-			//ギミックの判定追加場所ここまで
-			if (noPush) {
-				pushBlock[i]->NoPush();
-			}
-			else {
-				pushBlock[i]->Push();
-			}
-		}
-
-		pushBlock[i]->Update();
-	}
-	noPush = false;
-
-	//押している間のスイッチ
-	for (int i = 0; i < pushButtonSize; i++) {
-		for (int j = 0; j < pushBlockSize; j++) {
-			pushButton[i]->ButtonCol(pushBlockColBox[j]);
-		}
-		pushButton[i]->ButtonCol(playerColBox);
-		pushButton[i]->Update();
-	}
-
-      //プレイヤー
-		player->Update();
 
 		//タイトルUI
 		if (titleSprite->isflipEase == false) {
@@ -856,7 +713,6 @@ void GameScene::Update()
 		//メニュー
 		menu->Update();
 
-
 		//シーン切り替えが起こったら
 		if (menu->GetIsSerect()) {
 
@@ -912,7 +768,7 @@ void GameScene::DrawFBXLightView()
 
 	////ブロック
 	//for (int i = 0; i < blockSize; i++) {
-	//	block[i]->DrawLightView(dxCommon_->GetCommandList());
+	//	blockObject[i]->DrawLightView(dxCommon_->GetCommandList());
 	//}
 
 	//プレイヤー
@@ -947,14 +803,6 @@ void GameScene::DrawFBXLightView()
 	for (int i = 0; i < ladderSize; i++) {
 		ladder[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
-	//動かせるブロック
-	for (int i = 0; i < pushBlockSize; i++) {
-		pushBlock[i]->DrawLightView(dxCommon_->GetCommandList());
-	}
-	//押している間のスイッチ
-	for (int i = 0; i < pushButtonSize; i++) {
-		pushButton[i]->DrawLightView(dxCommon_->GetCommandList());
-	}
 
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {
@@ -968,7 +816,7 @@ void GameScene::DrawFBX()
 
 	////ブロック
 	//for (int i = 0; i < blockSize; i++) {
-	//	block[i]->Draw(dxCommon_->GetCommandList());
+	//	blockObject[i]->Draw(dxCommon_->GetCommandList());
 	//}
 	//プレイヤー
 	player->Draw(dxCommon_->GetCommandList());
@@ -1006,14 +854,7 @@ void GameScene::DrawFBX()
 	for (int i = 0; i < moveEnemySize; i++) {
 		moveEnemy[i]->Draw(dxCommon_->GetCommandList());
 	}
-	//動かせるブロック
-	for (int i = 0; i < pushBlockSize; i++) {
-		pushBlock[i]->Draw(dxCommon_->GetCommandList());
-	}
-	//押している間のスイッチ
-	for (int i = 0; i < pushButtonSize; i++) {
-		pushButton[i]->Draw(dxCommon_->GetCommandList());
-	}
+
 }
 
 void GameScene::DrawSprite()
@@ -1089,7 +930,7 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 
 	////ブロック
 	//for (int i = 0; i < blockSize; i++) {
-	//	block[i]->SetSRV(SRV);
+	//	blockObject[i]->SetSRV(SRV);
 	//}
 
 	//プレイヤー
@@ -1128,13 +969,5 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {
 		moveEnemy[i]->SetSRV(SRV);
-	}
-	//動かせるブロック
-	for (int i = 0; i < pushBlockSize; i++) {
-		pushBlock[i]->SetSRV(SRV);
-	}
-	//押している間のスイッチ
-	for (int i = 0; i < pushButtonSize; i++) {
-		pushButton[i]->SetSRV(SRV);
 	}
 }

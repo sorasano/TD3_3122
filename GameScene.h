@@ -23,9 +23,6 @@
 #include"Goal.h"
 #include "Swamp.h"
 #include "Light.h"
-#include "PushBlock.h"
-#include"Block.h"
-#include"PushButton.h"
 #include "AudioManager.h"
 #include "Ladder.h"
 #include "MoveEnemy.h"
@@ -82,10 +79,10 @@ private:
 	FbxObject3D* groundObject = nullptr;
 	FbxModel* groundModel = nullptr;
 
-	////ブロック
-	//static const int blockSize = 16;
-	//FbxModel* blockModel = nullptr;
-	//FbxObject3D* blockObject[blockSize] = {};
+	//ブロック
+	static const int blockSize = 16;
+	FbxModel* blockModel = nullptr;
+	FbxObject3D* blockObject[blockSize] = {};
 
 	//プレイヤー
 	Player* player = nullptr;
@@ -139,11 +136,6 @@ private:
 	FbxModel* buttonModel = nullptr;
 	Button* button[buttonSize] = {};
 
-	//押している間のボタン
-	static const int pushButtonSize = 2;
-	FbxModel* pushButtonModel = nullptr;
-	PushButton* pushButton[pushButtonSize] = {};
-
 	//爆弾
 	static const int bombSize = 17;
 	FbxModel* bombModel = nullptr;
@@ -154,16 +146,6 @@ private:
 	FbxModel* swampModel = nullptr;
 	Swamp* swamp[swampSize] = {};
 
-	//押せるブロック
-	static const int pushBlockSize = 2;
-	FbxModel* pushBlockModel = nullptr;
-	PushBlock* pushBlock[pushBlockSize] = { };
-
-	//動かせないブロック
-	//21
-	static const int blockSize = 5;
-	FbxModel* blockModel = nullptr;
-	Block* block[blockSize] = { };
 	//梯子
 	static const int ladderSize = 6;
 	FbxModel* ladderModel = nullptr;
@@ -230,11 +212,7 @@ private:
 	CubeModel* cubeModel = nullptr;
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
-	CubeObject3D* buttonColBox[buttonSize] = {};
-	CubeObject3D* pushBlockColBox[pushBlockSize] = {};
-	CubeObject3D* blockColBox[blockSize] = {};
-	CubeObject3D* pushButtonColBox[pushButtonSize] = {};
-	CubeObject3D* pushButtonBlockColBox[pushButtonSize] = {};
+	CubeObject3D* ButtonColBox[buttonSize] = {};
 	//お試し用
 	CubeObject3D* cube = nullptr;
 
@@ -244,7 +222,6 @@ private:
 	//演出
 	float alpha = 0.0f;
 	bool isback = false;
-	bool noPush = false;
 
 	//音
 	AudioManager* titleBGM;
