@@ -16,10 +16,11 @@ void Player::Initialize(CubeObject3D* cubeObject)
 	playerWaitModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWait", "Resources/color/blue1x1.png");
 	playerWalkModel = FbxLoader::GetInstance()->LoadModelFromFile("humanWalk", "Resources/color/blue1x1.png");
 	playerJumpModel = FbxLoader::GetInstance()->LoadModelFromFile("humanJump", "Resources/color/blue1x1.png");
+	playerClimbModel = FbxLoader::GetInstance()->LoadModelFromFile("humanClimb", "Resources/color/blue1x1.png");
 
 	playerObject->SetModel(playerWaitModel);
 	playerObject->PlayAnimation();
-	
+
 	//ラジアン
 	rotate.y = 90 * (PI / 180);
 
@@ -34,9 +35,67 @@ void Player::Update()
 	action = WAIT;
 
 	if (alpha == 0.0f) {
-		//沼に入っているか
-		if (inSwamp) {
-			if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+
+
+		//梯子に当たっているときにWかSを押したら梯子に登る
+		if (colLadder) {
+			if (input->PushKey(DIK_W) || input->PushKey(DIK_S))
+			{
+				onLadder = true;
+			}
+		}
+
+		//梯子に乗っているか
+		if (onLadder) {
+
+			action = CLIMB;
+
+			if (input->PushKey(DIK_W))
+			{
+				if (colLadder) {
+					position.y += speed;
+					rotate.y = 180 * (PI / 180);
+
+					stopAnimation = false;
+				}
+				else {
+					stopAnimation = true;
+				}
+
+			}
+			else if (input->PushKey(DIK_S))
+			{
+				position.y -= speed;
+				rotate.y = 180 * (PI / 180);
+
+				if (position.y <= 1.0f) {
+					//下降して地面についたら梯子から離れる
+					onLadder = false;
+				}
+
+				stopAnimation = false;
+			}
+			else {
+				stopAnimation = true;
+			}
+
+			//SPACEで梯子から離れる+ジャンプ
+			if (input->TriggerKey(DIK_SPACE)) {
+				if (isJump == false) {
+					Jump();
+					isJump = true;
+					rotate.y = 360 * (PI / 180);
+				}
+				onLadder = false;
+			}
+
+			SetJump(false);
+
+		}
+		else {
+
+			//沼に入っているか
+			if (inSwamp) {
 				if (input->PushKey(DIK_A))
 				{
 					position.x -= swampSpeed;
@@ -52,9 +111,7 @@ void Player::Update()
 					action = WALK;
 				}
 			}
-		}
-		else {
-			if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+			else {
 				if (input->PushKey(DIK_A) && position.x > -5)
 				{
 					position.x -= speed;
@@ -69,25 +126,27 @@ void Player::Update()
 
 					action = WALK;
 				}
-			}
-			//ジャンプ
-			if (input->PushKey(DIK_SPACE)) {
-				if (isJump == false&&gravity==0.0f) {
-					Jump();
-					isJump = true;
 
+				//ジャンプ
+				if (input->TriggerKey(DIK_SPACE)) {
+					if (isJump == false) {
+						Jump();
+						isJump = true;
+					}
 				}
 			}
-
 		}
 	}
 
 	//リセット
 	inSwamp = false;
+	colLadder = false;
 
 	//重力
-	position.y += gravity;
-	gravity -= gravitySpeed;
+	if (!onLadder) {
+		position.y += gravity;
+		gravity -= gravitySpeed;
+	}
 
 	//1.0f以下になったら(地面に当たっていれば)
 	if (position.y <= 1.0f) {
@@ -116,9 +175,28 @@ void Player::Update()
 			playerObject->SetModel(playerJumpModel);
 			playerObject->PlayAnimation();
 		}
+		else if (action == CLIMB) {
+
+			playerObject->SetModel(playerClimbModel);
+			playerObject->PlayAnimation();
+
+		}
 	}
 
 	oldAction = action;
+
+	if (stopAnimation != oldStopAnimation) {
+
+		if (stopAnimation) {
+			playerObject->StopAnimation();
+		}
+		else {
+			playerObject->RestartAnimation();
+		}
+
+	}
+
+	oldStopAnimation = stopAnimation;
 
 	//ImGui::Begin("pPos");
 	//ImGui::Text("pPosX = %f \n",position.x);
@@ -150,6 +228,20 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 void Player::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 {
 	playerObject->DrawLightView(cmdList);
+}
+
+void Player::Reset(XMFLOAT2 savePos)
+{
+	inSwamp = false;
+	onLadder = false;
+	isClear = false;
+	colLadder = false;
+	isDeath = false;
+
+	position = { savePos.x,savePos.y,-1.0f };
+
+	playerObject->SetModel(playerWaitModel);
+	playerObject->PlayAnimation();
 }
 
 void Player::SetPosition(XMFLOAT3 position)
@@ -185,6 +277,11 @@ void Player::Jump()
 void Player::Swamp()
 {
 	inSwamp = true;
+}
+
+void Player::Ladder()
+{
+	colLadder = true;
 }
 
 void Player::pushback(CubeObject3D* cubeObject)
@@ -259,7 +356,7 @@ bool Player::OntheBlock(CubeObject3D* cubeObject)
 		}
 	}
 	return false;
-	
+
 }
 
 bool Player::pushBlock(CubeObject3D* cubeObject)

@@ -23,7 +23,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ウィンドウ生成
 	WinApp* winApp = nullptr;
 	winApp = WinApp::GetInstance();
-	winApp->CreateWindow_(L"3122");
+	winApp->CreateWindow_(L"CAGE");
 
 	//メッセージ
 	Message* message;
@@ -99,6 +99,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//✖ボタンでゲームループ終了
 		if (message->Update() == 1)break;
 
+		fps->FpsControlBegin();
+
 		//キーボード更新
 		input->Update();
 
@@ -151,9 +153,10 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		imGuiManager->Draw();
 
 		dxCommon->PostDraw();
-	}
 
 	fps->FpsControlEnd();
+
+	}
 
 	dxCommon->EndImgui();
 

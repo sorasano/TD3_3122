@@ -565,3 +565,13 @@ void FbxObject3D::PlayAnimation()
 	//Ä¶’†ó‘Ô‚É‚·‚é
 	isPlay = true;
 }
+
+void FbxObject3D::StopAnimation()
+{
+	isPlay = false;
+}
+
+void FbxObject3D::RestartAnimation()
+{
+	isPlay = true;
+}

@@ -9,7 +9,8 @@
 enum PlayerAction {
 	WAIT,
 	WALK,
-	JUMP
+	JUMP,
+	CLIMB,
 };
 
 class Player
@@ -23,6 +24,9 @@ public:
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
+
+	//リセット
+	void Reset(XMFLOAT2 savePos);
 
 	//セッター
 	void SetPosition(XMFLOAT3 position);
@@ -57,7 +61,10 @@ public:
 	void Jump();
 
 	void SetisClear(bool isClear) { this->isClear = isClear; };
+	//沼に入っているか
 	void Swamp();
+	//梯子に登っているか
+	void Ladder();
 	//押し戻し処理
 	void pushback(CubeObject3D* cubeObject);
 	//上の判定
@@ -78,12 +85,16 @@ private:
 	static Input* input;
 	//コントローラー
 	static DXInput* dxInput;
+
+	bool isInput = false;
+
 	//fbx
 	FbxObject3D* playerObject = nullptr;
 
 	FbxModel* playerWaitModel = nullptr;
 	FbxModel* playerWalkModel = nullptr;
 	FbxModel* playerJumpModel = nullptr;
+	FbxModel* playerClimbModel = nullptr;
 
 	//移動スピード
 	float speed = 0.1;
@@ -98,6 +109,12 @@ private:
 	//移動制限　沼に入っているか
 	bool inSwamp = false;
 	float swampSpeed = 0.05;
+
+	//梯子
+	//乗っているか
+	bool onLadder = false;
+	//当たっているか
+	bool colLadder = false;
 
 	//ジャンプ
 	bool isJump = false;
@@ -119,5 +136,9 @@ private:
 	int action;
 	//前フレームの動き
 	int oldAction;
+
+	//アニメーションするか
+	bool stopAnimation = false;
+	bool oldStopAnimation = false;
 };
 

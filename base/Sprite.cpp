@@ -415,41 +415,41 @@ void Sprite::FlipOut()
 
 		if (flipInFase == 0) {
 
-			position = EaseOut(startEasePos, { startEasePos.x,flipInUp }, flipInEase.timeRate);
+			position = EaseOut(startEasePos, { startEasePos.x,flipInUp }, flipOutEase.timeRate);
 
-			if (!flipInEase.GetActive()) {
+			if (!flipOutEase.GetActive()) {
 				//今の演出が終わったら次の段階へ
 				flipInFase = 1;
 				flipInDown = position.y + flipInRangeDown;
 
 				//数値のリセット
 				startEasePos = position;
-				flipInEase.Start(1.0f);
-				flipInEase.timeRate = 0.0f;
+				flipOutEase.Start(1.0f);
+				flipOutEase.timeRate = 0.0f;
 			}
 
 		}
 		else if (flipInFase == 1) {
 
-			position = EaseOut(startEasePos, { startEasePos.x,flipInDown }, flipInEase.timeRate);
+			position = EaseOut(startEasePos, { startEasePos.x,flipInDown }, flipOutEase.timeRate);
 
-			if (!flipInEase.GetActive()) {
+			if (!flipOutEase.GetActive()) {
 				//今の演出が終わったら次の段階へ
 				flipInFase = 2;
 
 				//数値のリセット
 				startEasePos = position;
-				flipInEase.Start(1.0f);
-				flipInEase.timeRate = 0.0f;
+				flipOutEase.Start(1.0f);
+				flipOutEase.timeRate = 0.0f;
 			}
 
 
 		}
 		else if (flipInFase == 2) {
 
-			position = EaseOut(startEasePos, { startEasePos.x, -100 }, flipInEase.timeRate);
+			position = EaseOut(startEasePos, { startEasePos.x, -100 }, flipOutEase.timeRate);
 
-			if (!flipInEase.GetActive()) {
+			if (!flipOutEase.GetActive()) {
 				//今の演出が終わったら次の段階へ
 				flipInFase = 3;
 
@@ -466,13 +466,13 @@ void Sprite::FlipOut()
 		initFlip = true;
 		flipInFase = 0;
 		flipInUp = position.y - flipInRangeUp;
-		flipInEase.Start(1.0f);
-		flipInEase.timeRate = 0.0f;
+		flipOutEase.Start(1.0f);
+		flipOutEase.timeRate = 0.0f;
 		startEasePos = position;
 		isSway = false;
 	}
 
-	flipInEase.Update();
+	flipOutEase.Update();
 }
 
 void Sprite::Sway()
@@ -517,4 +517,17 @@ void Sprite::Sway()
 	}
 
 	swayEase.Update();
+}
+
+void Sprite::Reset()
+{
+	position = InitPosition;
+
+	initFlip = false;
+	isflipEase = false;
+	endFlip = false;
+
+	initSway = false;
+	StartSway(position);
+
 }

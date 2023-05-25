@@ -26,6 +26,16 @@
 #include "PushBlock.h"
 #include"Block.h"
 #include"PushButton.h"
+#include "AudioManager.h"
+#include "Ladder.h"
+#include "MoveEnemy.h"
+#include "Menu.h"
+
+enum Scene {
+	PLAY,
+	MENU,
+	CLEAR
+};
 
 class GameScene
 {
@@ -41,6 +51,10 @@ public:
 	void DrawFBXLightView();
 	void DrawFBX();
 	void DrawSprite();
+
+	//リセット //isFirst = 最初からか
+	void Reset(bool isFirst);
+
 	//セッター
 	void SetSRV(ID3D12DescriptorHeap* SRV);
 	//ゲッター
@@ -60,6 +74,9 @@ private:
 	float lightDir[3] = { 0.0f,-1.0f , 1.0f };
 	float lightPos[3] = { 0.0f,10.0f,25.0f };
 	float lightTarget[3] = { 0.0f,0.0f,0.0f };
+
+	//シーン
+	int scene = PLAY;
 
 	//床
 	FbxObject3D* groundObject = nullptr;
@@ -147,6 +164,14 @@ private:
 	static const int blockSize = 5;
 	FbxModel* blockModel = nullptr;
 	Block* block[blockSize] = { };
+	//梯子
+	static const int ladderSize = 6;
+	FbxModel* ladderModel = nullptr;
+	Ladder* ladder[ladderSize] = {};
+
+	//動く敵
+	static const int moveEnemySize = 2;
+	MoveEnemy* moveEnemy[moveEnemySize] = {};
 
 	//オートセーブ
 	Autosave *autoSave;
@@ -221,4 +246,10 @@ private:
 	bool isback = false;
 	bool noPush = false;
 
+	//音
+	AudioManager* titleBGM;
+	float titleBGMVolume = 0.1f;
+
+	//メニュー
+	Menu* menu;
 };

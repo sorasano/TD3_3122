@@ -158,6 +158,7 @@
     <ClCompile Include="2d\ReversalEffect.cpp" />
     <ClCompile Include="2d\ShadowMap.cpp" />
     <ClCompile Include="2d\Vignette.cpp" />
+    <ClCompile Include="AudioManager.cpp" />
     <ClCompile Include="Autosave.cpp" />
     <ClCompile Include="base\DirectXCommon.cpp" />
     <ClCompile Include="base\DXInput.cpp" />
@@ -185,9 +186,12 @@
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="Goal.cpp" />
     <ClCompile Include="GpPipeline.cpp" />
+    <ClCompile Include="Ladder.cpp" />
     <ClCompile Include="Light.cpp" />
     <ClCompile Include="LightGroup.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="MoveEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
     <ClCompile Include="PushBlock.cpp" />
@@ -207,6 +211,7 @@
     <ClInclude Include="2d\ReversalEffect.h" />
     <ClInclude Include="2d\ShadowMap.h" />
     <ClInclude Include="2d\Vignette.h" />
+    <ClInclude Include="AudioManager.h" />
     <ClInclude Include="Autosave.h" />
     <ClInclude Include="base\DirectXCommon.h" />
     <ClInclude Include="base\DXInput.h" />
@@ -235,7 +240,10 @@
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="Goal.h" />
     <ClInclude Include="GpPipeline.h" />
+    <ClInclude Include="Ladder.h" />
     <ClInclude Include="LightGroup.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="MoveEnemy.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
     <ClInclude Include="PushBlock.h" />

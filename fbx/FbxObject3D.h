@@ -70,6 +70,10 @@ public://メンバ関数
 	static void CreateGraphicsPipeline();
 	//アニメーション開始
 	void PlayAnimation();
+	//アニメーション停止
+	void StopAnimation();
+	//アニメーション再開
+	void RestartAnimation();
 
 	//セッター
 	void SetPosition(XMFLOAT3 pos) { position = pos; }

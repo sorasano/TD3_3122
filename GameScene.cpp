@@ -95,6 +95,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
+	ladderModel = FbxLoader::GetInstance()->LoadModelFromFile("ladder", "Resources/color/brown1x1.png");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -118,20 +119,20 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	player = new Player;
 	player->Initialize(playerColBox);
 
-	//=============ギミック===============
+	////=============ギミック===============
 
-	//各ステージの開始位置
-	float stage1 = 0.0f;
-	float stage2 = 150.0f;
-	float stage3 = 290.0f;
-	float stage4 = 400.0f;
+	////各ステージの開始位置
+	//float stage1 = 0.0f;
+	//float stage2 = 150.0f;
+	//float stage3 = 290.0f;
+	//float stage4 = 400.0f;
 
-	//--------ブロック----------
-	/*for (int i = 0; i < blockSize; i++) {
-		blockObject[i] = new FbxObject3D;
-		blockObject[i]->Initialize();
-		blockObject[i]->SetModel(blockModel);
-	}*/
+	////--------ブロック----------
+	//for (int i = 0; i < blockSize; i++) {
+	//	blockObject[i] = new FbxObject3D;
+	//	blockObject[i]->Initialize();
+	//	blockObject[i]->SetModel(blockModel);
+	//}
 
 	////stage1
 	//blockObject[0]->SetPosition({ stage1 + 14,1,0 });
@@ -158,90 +159,90 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//blockObject[14]->SetPosition({ stage3 + 99,1,0 });
 	//blockObject[15]->SetPosition({ stage3 + 105,1,0 });
 
-	//---------敵---------
-	for (int i = 0; i < enemySize; i++) {
-		enemy[i] = new Enemy;
-		enemy[i]->Initialize(enemyModel, enemyModel2, enemyEyeModel, player);
-	}
+	////---------敵---------
+	//for (int i = 0; i < enemySize; i++) {
+	//	enemy[i] = new Enemy;
+	//	enemy[i]->Initialize(enemyModel, enemyModel2, enemyEyeModel, player);
+	//}
 
-	//stage1
-	enemy[0]->SetPosition({ stage1 + 17,1,1 });
-	enemy[1]->SetPosition({ stage1 + 23,1,1 });
-	enemy[2]->SetPosition({ stage1 + 30,1,1 });
-	enemy[3]->SetPosition({ stage1 + 34,1,1 });
+	////stage1
+	//enemy[0]->SetPosition({ stage1 + 17,1,1 });
+	//enemy[1]->SetPosition({ stage1 + 23,1,1 });
+	//enemy[2]->SetPosition({ stage1 + 30,1,1 });
+	//enemy[3]->SetPosition({ stage1 + 34,1,1 });
 
-	//stage2
-	enemy[4]->SetPosition({ stage2 + 17,1,1 });
-	enemy[5]->SetPosition({ stage2 + 23,1,1 });
-	enemy[6]->SetPosition({ stage2 + 30,1,1 });
-	enemy[7]->SetPosition({ stage2 + 34,1,1 });
-	enemy[8]->SetPosition({ stage2 + 66,1,1 });
+	////stage2
+	//enemy[4]->SetPosition({ stage2 + 17,1,1 });
+	//enemy[5]->SetPosition({ stage2 + 23,1,1 });
+	//enemy[6]->SetPosition({ stage2 + 30,1,1 });
+	//enemy[7]->SetPosition({ stage2 + 34,1,1 });
+	//enemy[8]->SetPosition({ stage2 + 66,1,1 });
 
-	enemy[9]->SetPosition({ stage2 + 76,1,1 });
-	enemy[10]->SetPosition({ stage2 + 90.5f,1,1 });
+	//enemy[9]->SetPosition({ stage2 + 76,1,1 });
+	//enemy[10]->SetPosition({ stage2 + 90.5f,1,1 });
 
-	enemy[11]->SetPosition({ stage2 + 100,1,1 });
+	//enemy[11]->SetPosition({ stage2 + 100,1,1 });
 
-	enemy[12]->SetPosition({ stage2 + 104.5f,1,1 });
-	enemy[13]->SetPosition({ stage2 + 109,1,1 });
+	//enemy[12]->SetPosition({ stage2 + 104.5f,1,1 });
+	//enemy[13]->SetPosition({ stage2 + 109,1,1 });
 
-	//stage3
-	enemy[14]->SetPosition({ stage3 + 60,1,1 });
-	enemy[15]->SetPosition({ stage3 + 66,1,1 });
-	enemy[16]->SetPosition({ stage3 + 72,1,1 });
+	////stage3
+	//enemy[14]->SetPosition({ stage3 + 60,1,1 });
+	//enemy[15]->SetPosition({ stage3 + 66,1,1 });
+	//enemy[16]->SetPosition({ stage3 + 72,1,1 });
 
-	enemy[17]->SetPosition({ stage3 + 90,1,1 });
-	enemy[18]->SetPosition({ stage3 + 96,1,1 });
-	enemy[19]->SetPosition({ stage3 + 102,1,1 });
+	//enemy[17]->SetPosition({ stage3 + 90,1,1 });
+	//enemy[18]->SetPosition({ stage3 + 96,1,1 });
+	//enemy[19]->SetPosition({ stage3 + 102,1,1 });
 
-	//stage4
-	enemy[20]->SetPosition({ stage4 + 5,1,1 });
-	enemy[21]->SetPosition({ stage4 + 10,1,1 });
-	enemy[22]->SetPosition({ stage4 + 15,1,1 });
-	enemy[23]->SetPosition({ stage4 + 20,1,1 });
-	enemy[24]->SetPosition({ stage4 + 25,1,1 });
-	enemy[25]->SetPosition({ stage4 + 30,1,1 });
+	////stage4
+	//enemy[20]->SetPosition({ stage4 + 5,1,1 });
+	//enemy[21]->SetPosition({ stage4 + 10,1,1 });
+	//enemy[22]->SetPosition({ stage4 + 15,1,1 });
+	//enemy[23]->SetPosition({ stage4 + 20,1,1 });
+	//enemy[24]->SetPosition({ stage4 + 25,1,1 });
+	//enemy[25]->SetPosition({ stage4 + 30,1,1 });
 
-	enemy[26]->SetPosition({ stage4 + 74,1,1 });
-	enemy[27]->SetPosition({ stage4 + 86,1,1 });
+	//enemy[26]->SetPosition({ stage4 + 74,1,1 });
+	//enemy[27]->SetPosition({ stage4 + 86,1,1 });
 
-	enemy[28]->SetPosition({ stage4 + 162,1,1 });
-	enemy[29]->SetPosition({ stage4 + 163,1,1 });
-	enemy[30]->SetPosition({ stage4 + 164,1,1 });
-	enemy[31]->SetPosition({ stage4 + 165,1,1 });
-	enemy[32]->SetPosition({ stage4 + 166,1,1 });
-	enemy[33]->SetPosition({ stage4 + 167,1,1 });
-	enemy[34]->SetPosition({ stage4 + 168,1,1 });
-	enemy[35]->SetPosition({ stage4 + 169,1,1 });
-	enemy[36]->SetPosition({ stage4 + 170,1,1 });
-	enemy[37]->SetPosition({ stage4 + 171,1,1 });
-	enemy[38]->SetPosition({ stage4 + 172,1,1 });
-	enemy[39]->SetPosition({ stage4 + 173,1,1 });
-	enemy[40]->SetPosition({ stage4 + 174,1,1 });
-	enemy[41]->SetPosition({ stage4 + 175,1,1 });
-	enemy[42]->SetPosition({ stage4 + 176,1,1 });
+	//enemy[28]->SetPosition({ stage4 + 162,1,1 });
+	//enemy[29]->SetPosition({ stage4 + 163,1,1 });
+	//enemy[30]->SetPosition({ stage4 + 164,1,1 });
+	//enemy[31]->SetPosition({ stage4 + 165,1,1 });
+	//enemy[32]->SetPosition({ stage4 + 166,1,1 });
+	//enemy[33]->SetPosition({ stage4 + 167,1,1 });
+	//enemy[34]->SetPosition({ stage4 + 168,1,1 });
+	//enemy[35]->SetPosition({ stage4 + 169,1,1 });
+	//enemy[36]->SetPosition({ stage4 + 170,1,1 });
+	//enemy[37]->SetPosition({ stage4 + 171,1,1 });
+	//enemy[38]->SetPosition({ stage4 + 172,1,1 });
+	//enemy[39]->SetPosition({ stage4 + 173,1,1 });
+	//enemy[40]->SetPosition({ stage4 + 174,1,1 });
+	//enemy[41]->SetPosition({ stage4 + 175,1,1 });
+	//enemy[42]->SetPosition({ stage4 + 176,1,1 });
 
-	//---------監視カメラ---------
-	for (int i = 0; i < cameraEnemySize; i++) {
-		cameraEnemy[i] = new CameraEnemy;
-		cameraEnemy[i]->Initialize(cameraEnemyModel, enemyEyeModel, player);
-	}
+	////---------監視カメラ---------
+	//for (int i = 0; i < cameraEnemySize; i++) {
+	//	cameraEnemy[i] = new CameraEnemy;
+	//	cameraEnemy[i]->Initialize(cameraEnemyModel, enemyEyeModel, player);
+	//}
 
-	//stage1
-	cameraEnemy[0]->SetPosition({ stage1 + 50,5,0 });
-	cameraEnemy[1]->SetPosition({ stage1 + 60,5,0 });
+	////stage1
+	//cameraEnemy[0]->SetPosition({ stage1 + 50,5,0 });
+	//cameraEnemy[1]->SetPosition({ stage1 + 60,5,0 });
 
-	//stage2
-	cameraEnemy[2]->SetPosition({ stage2 + 27,5,0 });
-	cameraEnemy[3]->SetPosition({ stage2 + 40,5,0 });
+	////stage2
+	//cameraEnemy[2]->SetPosition({ stage2 + 27,5,0 });
+	//cameraEnemy[3]->SetPosition({ stage2 + 40,5,0 });
 
-	//stage4
-	cameraEnemy[4]->SetPosition({ stage4 + 50.0f,5,0 });
-	cameraEnemy[5]->SetPosition({ stage4 + 55.5f,5,0 });
-	cameraEnemy[6]->SetPosition({ stage4 + 61.0f,5,0 });
-	cameraEnemy[7]->SetPosition({ stage4 + 66.5f,5,0 });
+	////stage4
+	//cameraEnemy[4]->SetPosition({ stage4 + 50.0f,5,0 });
+	//cameraEnemy[5]->SetPosition({ stage4 + 55.5f,5,0 });
+	//cameraEnemy[6]->SetPosition({ stage4 + 61.0f,5,0 });
+	//cameraEnemy[7]->SetPosition({ stage4 + 66.5f,5,0 });
 
-	//--------ボタン----------
+	////--------ボタン----------
 
 	for (int i = 0; i < buttonSize; i++) {
 		buttonColBox[i] = new CubeObject3D();
@@ -253,146 +254,173 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	}
 
-	//stage1
-	button[0]->SetPositionX(stage1 + 70);
-	button[0]->SetBlockPositionX(stage1 + 73);
+	////stage1
+	//button[0]->SetPositionX(stage1 + 70);
+	//button[0]->SetBlockPositionX(stage1 + 73);
 
 
-	button[1]->SetPositionX(stage1 + 79);
-	button[1]->SetBlockPositionX(stage1 + 91);
+	//button[1]->SetPositionX(stage1 + 79);
+	//button[1]->SetBlockPositionX(stage1 + 91);
 
-	button[2]->SetPositionX(stage1 + 100);
-	button[2]->SetBlockPositionX(stage1 + 109);
+	//button[2]->SetPositionX(stage1 + 100);
+	//button[2]->SetBlockPositionX(stage1 + 109);
 
-	button[3]->SetPositionX(stage1 + 100);
-	button[3]->SetBlockPositionX(stage1 + 112);
-
-
-	button[4]->SetPositionX(stage1 + 118);
-	button[4]->SetBlockPositionX(stage1 + 135);
-
-	button[5]->SetPositionX(stage1 + 122);
-	button[5]->SetBlockPositionX(stage1 + 138);
-
-	button[6]->SetPositionX(stage1 + 126);
-	button[6]->SetBlockPositionX(stage1 + 141);
-
-	//stage2
-	button[7]->SetPositionX(stage2 + 50);
-	button[7]->SetBlockPositionX(stage2 + 53);
+	//button[3]->SetPositionX(stage1 + 100);
+	//button[3]->SetBlockPositionX(stage1 + 112);
 
 
-	button[8]->SetPositionX(stage2 + 59);
-	button[8]->SetBlockPositionX(stage2 + 71);
+	//button[4]->SetPositionX(stage1 + 118);
+	//button[4]->SetBlockPositionX(stage1 + 135);
 
-	button[9]->SetPositionX(stage2 + 80);
-	button[9]->SetBlockPositionX(stage2 + 89);
+	//button[5]->SetPositionX(stage1 + 122);
+	//button[5]->SetBlockPositionX(stage1 + 138);
 
-	button[10]->SetPositionX(stage2 + 80);
-	button[10]->SetBlockPositionX(stage2 + 92);
+	//button[6]->SetPositionX(stage1 + 126);
+	//button[6]->SetBlockPositionX(stage1 + 141);
+
+	////stage2
+	//button[7]->SetPositionX(stage2 + 50);
+	//button[7]->SetBlockPositionX(stage2 + 53);
 
 
-	button[11]->SetPositionX(stage2 + 98);
-	button[11]->SetBlockPositionX(stage2 + 115);
+	//button[8]->SetPositionX(stage2 + 59);
+	//button[8]->SetBlockPositionX(stage2 + 71);
 
-	button[12]->SetPositionX(stage2 + 102);
-	button[12]->SetBlockPositionX(stage2 + 118);
+	//button[9]->SetPositionX(stage2 + 80);
+	//button[9]->SetBlockPositionX(stage2 + 89);
 
-	button[13]->SetPositionX(stage2 + 106);
-	button[13]->SetBlockPositionX(stage2 + 121);
+	//button[10]->SetPositionX(stage2 + 80);
+	//button[10]->SetBlockPositionX(stage2 + 92);
 
-	//stage4
-	button[14]->SetPositionX(stage4 + 74);
-	button[14]->SetBlockPositionX(stage4 + 86);
 
-	button[15]->SetPositionX(stage4 + 92);
-	button[15]->SetBlockPositionX(stage4 + 108);
+	//button[11]->SetPositionX(stage2 + 98);
+	//button[11]->SetBlockPositionX(stage2 + 115);
 
-	button[16]->SetPositionX(stage4 + 114);
-	button[16]->SetBlockPositionX(stage4 + 130);
+	//button[12]->SetPositionX(stage2 + 102);
+	//button[12]->SetBlockPositionX(stage2 + 118);
 
-	button[17]->SetPositionX(stage4 + 135);
-	button[17]->SetBlockPositionX(stage4 + 144);
-	button[18]->SetPositionX(stage4 + 135);
-	button[18]->SetBlockPositionX(stage4 + 147);
+	//button[13]->SetPositionX(stage2 + 106);
+	//button[13]->SetBlockPositionX(stage2 + 121);
 
-	button[19]->SetPositionX(stage4 + 153);
-	button[19]->SetBlockPositionX(stage4 + 170);
-	button[20]->SetPositionX(stage4 + 157);
-	button[20]->SetBlockPositionX(stage4 + 173);
-	button[21]->SetPositionX(stage4 + 161);
-	button[21]->SetBlockPositionX(stage4 + 176);
+	////stage4
+	//button[14]->SetPositionX(stage4 + 74);
+	//button[14]->SetBlockPositionX(stage4 + 86);
 
-	//--------爆弾--------	
-	for (int i = 0; i < buttonSize; i++) {
+	//button[15]->SetPositionX(stage4 + 92);
+	//button[15]->SetBlockPositionX(stage4 + 108);
 
-		bomb[i] = new Bomb();
-		bomb[i]->Initialize(bombModel, player);
+	//button[16]->SetPositionX(stage4 + 114);
+	//button[16]->SetBlockPositionX(stage4 + 130);
+
+	//button[17]->SetPositionX(stage4 + 135);
+	//button[17]->SetBlockPositionX(stage4 + 144);
+	//button[18]->SetPositionX(stage4 + 135);
+	//button[18]->SetBlockPositionX(stage4 + 147);
+
+	//button[19]->SetPositionX(stage4 + 153);
+	//button[19]->SetBlockPositionX(stage4 + 170);
+	//button[20]->SetPositionX(stage4 + 157);
+	//button[20]->SetBlockPositionX(stage4 + 173);
+	//button[21]->SetPositionX(stage4 + 161);
+	//button[21]->SetBlockPositionX(stage4 + 176);
+
+	////--------爆弾--------	
+	//for (int i = 0; i < buttonSize; i++) {
+
+	//	bomb[i] = new Bomb();
+	//	bomb[i]->Initialize(bombModel, player);
+	//}
+
+	////stage3
+	//bomb[0]->SetPositionX(stage3 + 15);
+	//bomb[1]->SetPositionX(stage3 + 20);
+	//bomb[2]->SetPositionX(stage3 + 25);
+
+	//bomb[3]->SetPosition(XMFLOAT3(stage3 + 35, 2, -1));
+	//bomb[4]->SetPosition(XMFLOAT3(stage3 + 40, 1, -1));
+	//bomb[5]->SetPosition(XMFLOAT3(stage3 + 45, 2, -1));
+
+	//bomb[6]->SetPosition(XMFLOAT3(stage3 + 90, 2, -1));
+	//bomb[7]->SetPosition(XMFLOAT3(stage3 + 96, 1, -1));
+	//bomb[8]->SetPosition(XMFLOAT3(stage3 + 102, 2, -1));
+
+	////stage4
+	//bomb[9]->SetPosition(XMFLOAT3(stage4 + 74, 2, -1));
+	//bomb[10]->SetPosition(XMFLOAT3(stage4 + 86, 1, -1));
+
+	//bomb[11]->SetPosition(XMFLOAT3(stage4 + 118, 1, -1));
+	//bomb[12]->SetPosition(XMFLOAT3(stage4 + 122, 1, -1));
+	//bomb[13]->SetPosition(XMFLOAT3(stage4 + 126, 1, -1));
+	//bomb[14]->SetPosition(XMFLOAT3(stage4 + 130, 1, -1));
+
+	//bomb[15]->SetPosition(XMFLOAT3(stage4 + 155, 1, -1));
+	//bomb[16]->SetPosition(XMFLOAT3(stage4 + 159, 1, -1));
+
+	////----------沼----------
+	//for (int i = 0; i < swampSize; i++) {
+	//	swamp[i] = new Swamp();
+	//	swamp[i]->Initialize(swampModel, player);
+	//}
+
+	////stage3
+	//swamp[0]->SetPositionX(stage3);
+
+	//swamp[1]->SetPositionX(stage3 + 8);
+	//swamp[1]->SetScaleX(0.04);
+
+	//swamp[2]->SetPositionX(stage3 + 66);
+	//swamp[2]->SetScaleX(0.2);
+
+	////stage4
+	//swamp[3]->SetPositionX(stage4 + 23);
+	//swamp[3]->SetScaleX(0.15);
+
+	//swamp[4]->SetPositionX(stage4 + 48);
+	//swamp[4]->SetScaleX(0.38);
+
+
+	//swamp[5]->SetPositionX(stage4 + 96);
+	//swamp[5]->SetScaleX(0.02);
+
+	//swamp[6]->SetPositionX(stage4 + 100);
+	//swamp[6]->SetScaleX(0.02);
+
+	//swamp[7]->SetPositionX(stage4 + 104);
+	//swamp[7]->SetScaleX(0.02);
+
+	//swamp[8]->SetPositionX(stage4 + 108);
+	//swamp[8]->SetScaleX(0.02);
+
+
+	//swamp[9]->SetPositionX(stage4 + 143);
+	//swamp[9]->SetScaleX(0.15);
+
+	for (int i = 0; i < ladderSize; i++) {
+
+		ladder[i] = new Ladder();
+		ladder[i]->Initialize(ladderModel, player);
+
 	}
 
-	//stage3
-	bomb[0]->SetPositionX(stage3 + 15);
-	bomb[1]->SetPositionX(stage3 + 20);
-	bomb[2]->SetPositionX(stage3 + 25);
+	ladder[0]->SetPosition({ 3, 1, -1 });
+	ladder[1]->SetPosition({ 6, 1, -1 });
+	ladder[2]->SetPosition({ 6, 2, -1 });
+	ladder[3]->SetPosition({ 6, 3, -1 });
+	ladder[4]->SetPosition({ 6, 4, -1 });
+	ladder[5]->SetPosition({ 6, 5, -1 });
 
-	bomb[3]->SetPosition(XMFLOAT3(stage3 + 35, 2, -1));
-	bomb[4]->SetPosition(XMFLOAT3(stage3 + 40, 1, -1));
-	bomb[5]->SetPosition(XMFLOAT3(stage3 + 45, 2, -1));
 
-	bomb[6]->SetPosition(XMFLOAT3(stage3 + 90, 2, -1));
-	bomb[7]->SetPosition(XMFLOAT3(stage3 + 96, 1, -1));
-	bomb[8]->SetPosition(XMFLOAT3(stage3 + 102, 2, -1));
+	//動く敵
 
-	//stage4
-	bomb[9]->SetPosition(XMFLOAT3(stage4 + 74, 2, -1));
-	bomb[10]->SetPosition(XMFLOAT3(stage4 + 86, 1, -1));
+	for (int i = 0; i < moveEnemySize; i++) {
 
-	bomb[11]->SetPosition(XMFLOAT3(stage4 + 118, 1, -1));
-	bomb[12]->SetPosition(XMFLOAT3(stage4 + 122, 1, -1));
-	bomb[13]->SetPosition(XMFLOAT3(stage4 + 126, 1, -1));
-	bomb[14]->SetPosition(XMFLOAT3(stage4 + 130, 1, -1));
+		moveEnemy[i] = new MoveEnemy();
+		moveEnemy[i]->Initialize(player);
 
-	bomb[15]->SetPosition(XMFLOAT3(stage4 + 155, 1, -1));
-	bomb[16]->SetPosition(XMFLOAT3(stage4 + 159, 1, -1));
-
-	//----------沼----------
-	for (int i = 0; i < swampSize; i++) {
-		swamp[i] = new Swamp();
-		swamp[i]->Initialize(swampModel, player);
 	}
 
-	//stage3
-	swamp[0]->SetPositionX(stage3);
-
-	swamp[1]->SetPositionX(stage3 + 8);
-	swamp[1]->SetScaleX(0.04);
-
-	swamp[2]->SetPositionX(stage3 + 66);
-	swamp[2]->SetScaleX(0.2);
-
-	//stage4
-	swamp[3]->SetPositionX(stage4 + 23);
-	swamp[3]->SetScaleX(0.15);
-
-	swamp[4]->SetPositionX(stage4 + 48);
-	swamp[4]->SetScaleX(0.38);
-
-
-	swamp[5]->SetPositionX(stage4 + 96);
-	swamp[5]->SetScaleX(0.02);
-
-	swamp[6]->SetPositionX(stage4 + 100);
-	swamp[6]->SetScaleX(0.02);
-
-	swamp[7]->SetPositionX(stage4 + 104);
-	swamp[7]->SetScaleX(0.02);
-
-	swamp[8]->SetPositionX(stage4 + 108);
-	swamp[8]->SetScaleX(0.02);
-
-
-	swamp[9]->SetPositionX(stage4 + 143);
-	swamp[9]->SetScaleX(0.15);
+	moveEnemy[0]->SetPositionX(10.0f);
+	moveEnemy[1]->SetPositionX(20.0f);
 
 	//----------動かせるブロック----------
 	PushBlock::SetInput(input_);
@@ -488,6 +516,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	spriteManager->LoadFile(5, L"Resources/color/black1x1.png");
 	spriteManager->LoadFile(6, L"Resources/playUI.png");
 
+	//メニュー用
+	spriteManager->LoadFile(7, L"Resources/Menu/menuBase.png");
+	spriteManager->LoadFile(8, L"Resources/Menu/menuRestart.png");
+	spriteManager->LoadFile(9, L"Resources/Menu/menuTitle.png");
+	spriteManager->LoadFile(10, L"Resources/Menu/menuClose.png");
+
 	//スプライト
 	Sprite::SetDevice(dxCommon->GetDevice());
 	Sprite::SetSpriteManager(spriteManager);
@@ -573,10 +607,26 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	cube->SetModel(cubeModel);*/
 
 
+	//オーディオ初期化
+	AudioManager::StaticInitialize();
+	//音
+	titleBGM = new AudioManager();
+	titleBGM->SoundLoadWave("Resources/Audio/titleBGM.wav");
+
+	//メニュー
+	menu = new Menu();
+	menu->Initialize();
+	Menu::SetInput(input_);
+	Menu::SetDXInput(dxInput);
 }
 
 void GameScene::Update()
 {
+
+	//タイトルBGM流す
+	//titleBGM->SoundPlayWave(true, titleBGMVolume);
+	//titleBGM->StopWave();
+
 	//カメラ更新
 	camera_->Update(player->GetPosition());
 	//コントローラー更新
@@ -611,44 +661,79 @@ void GameScene::Update()
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
 
-	////ブロック
+	switch (scene) {
 
-	//for (int i = 0; i < blockSize; i++) {
-	//	blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
-	//	blockObject[i]->SetRotation({ 0,0,0 });
-	//	blockObject[i]->Update();
-	//}
+	case PLAY:
+
+		//シーン切り替え
+		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+			titleSprite->StartFlipOut();
+			scene = PLAY;
+		}
+
+		//シーン切り替え
+		if (input_->PushKey(DIK_M) && !player->GetDeath()) {
+			scene = MENU;
+			menu->Reset();
+		}
+		else if (isClear) {
+			scene = CLEAR;
+		}
 
 
+		////リセット
+		//if (input_->PushKey(DIK_R)) {
+		//	Reset();
+		//}
 
-	/*for (int i = 0; i < enemySize; i++) {
-		enemy[i]->Update();
-		enemydeg = enemy[0]->GetDeg();
-	}
+		////ブロック
 
-	for (int i = 0; i < cameraEnemySize; i++) {
-		cameraEnemy[i]->Update();
-		cameraEnemydeg = cameraEnemy[i]->GetDeg();
-	}*/
+		//for (int i = 0; i < blockSize; i++) {
+		//	blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
+		//	blockObject[i]->SetRotation({ 0,0,0 });
+		//	blockObject[i]->Update();
+		//}
 
-	////ボタン
-	//for (int i = 0; i < buttonSize; i++) {
-	//	button[i]->Update();
-	//}
+		//for (int i = 0; i < enemySize; i++) {
+		//	enemy[i]->Update();
+		//	enemydeg = enemy[0]->GetDeg();
+		//}
 
-	//爆弾
-	for (int i = 0; i < bombSize; i++) {
-		bomb[i]->Update();
-	}
+		//for (int i = 0; i < cameraEnemySize; i++) {
+		//	cameraEnemy[i]->Update();
+		//	cameraEnemydeg = cameraEnemy[i]->GetDeg();
+		//}
 
-	//沼
-	for (int i = 0; i < swampSize; i++) {
-		swamp[i]->Update();
-	}
-	////ブロック
-	//for (int i = 0; i < blockSize; i++) {
-	//	block[i]->Update();
-	//}
+		////ボタン
+		//for (int i = 0; i < buttonSize; i++) {
+		//	button[i]->Update();
+		//}
+
+		////爆弾
+		//for (int i = 0; i < bombSize; i++) {
+		//	bomb[i]->Update();
+		//}
+
+		////沼
+		//for (int i = 0; i < swampSize; i++) {
+		//	swamp[i]->Update();
+		//}
+
+		//梯子
+		for (int i = 0; i < ladderSize; i++) {
+			ladder[i]->Update();
+		}
+
+		//動く敵
+		for (int i = 0; i < moveEnemySize; i++) {
+			moveEnemy[i]->Update();
+		}
+
+		
+		//タイトル
+		titleSprite->Update();
+
+	
 
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
@@ -708,83 +793,96 @@ void GameScene::Update()
 		pushButton[i]->Update();
 	}
 
+      //プレイヤー
+		player->Update();
 
-	//プレイヤー
-	player->Update();
+		//タイトルUI
+		if (titleSprite->isflipEase == false) {
+			titleUISprite->color.w = sin(clock() / 100);
+			titleTimer++;
+		}
 
-	//スプライト
+		/*clearSprite->Update();*/
+		gameoverSprite->Update();
+		blackSprite->Update();
+		titleUISprite->Update();
+		playUISprite->Update();
 
-	//	//復活
-	//if (input_->PushKey(DIK_E)) {
-	//	player->SetisDeath(false);
-	//	if (isClear) {
-	//		isClear = false;
-	//		player->SetPosition(XMFLOAT3(0, 1, -1));
-	//	}
-	//	else {
-	//		XMFLOAT2 savePos = autoSave->GetSavePos();
-	//		player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-	//	}
-	//}
+		//オートセーブ
+		autoSave->Update();
 
+		//ゴール
+		goal->Update();
 
-	//タイトル
-	if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
-		titleSprite->StartFlipOut();
-	}
-	titleSprite->Update();
-
-	//タイトルUI
-	if (titleSprite->isflipEase == false) {
-		titleUISprite->color.w = sin(clock() / 100);
-		titleTimer++;
-	}
-
-	/*clearSprite->Update();*/
-	gameoverSprite->Update();
-	blackSprite->Update();
-	titleUISprite->Update();
-	playUISprite->Update();
-
-	//オートセーブ
-	autoSave->Update();
-
-	//ゴール
-	goal->Update();
-
-	//ゲームオーバー演出
-	if (player->GetDeath()) {
-		if (isback == false) {
-			alpha += 0.1f;
-			player->SetAlpha(alpha);
-			if (alpha >= 1.0f) {
-				isback = true;
-				XMFLOAT2 savePos = autoSave->GetSavePos();
-				player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
+		//ゲームオーバー演出
+		if (player->GetDeath()) {
+			if (isback == false) {
+				alpha += 0.05f;
+				player->SetAlpha(alpha);
+				if (alpha >= 1.0f) {
+					isback = true;
+					//リセット
+					Reset(false);
+				}
 			}
 		}
-	}
-	if (isback == true) {
-		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
-			//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
-			if (alpha <= 0.8f) {
+
+		if (isback == true) {
+			if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+				//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
+				if (alpha <= 0.8f) {
+					alpha = 0.0f;
+					player->SetAlpha(alpha);
+					isback = false;
+				}
+			}
+			player->SetisDeath(false);
+			player->SetAlpha(alpha);
+			alpha -= 0.005f;
+			if (alpha <= 0.0f) {
 				alpha = 0.0f;
 				player->SetAlpha(alpha);
 				isback = false;
 			}
 		}
-		player->SetisDeath(false);
-		player->SetAlpha(alpha);
-		alpha -= 0.05f;
-		if (alpha <= 0.0f) {
-			alpha = 0.0f;
-			player->SetAlpha(alpha);
-			isback = false;
+
+		blackSprite->SetAlpha(alpha);
+
+		break;
+
+	case MENU:
+
+		//メニュー
+		menu->Update();
+
+
+		//シーン切り替えが起こったら
+		if (menu->GetIsSerect()) {
+
+			scene = PLAY;
+
+			if (menu->GetSerect() == MENURESET) {
+				Reset(false);
+			}
+			else if (menu->GetSerect() == MENUTITLE) {
+				Reset(true);
+			}
+			else if (menu->GetSerect() == MENUCLOSE) {
+			}
+
+
 		}
+
+		break;
+
+	case CLEAR:
+
+		//シーン切り替え
+		if (input_->PushKey(DIK_SPACE)) {
+			Reset(true);
+		}
+
 	}
-	blackSprite->SetAlpha(alpha);
-
-
 }
 
 void GameScene::Draw()
@@ -802,21 +900,7 @@ void GameScene::Draw()
 
 	////-------前景スプライト描画処理-------//
 
-	//if (titleSprite->endFlip == false) {
-	//	titleSprite->Draw(dxCommon_->GetCommandList());
-	//}
-
-	//if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-	//	titleUISprite->Draw(dxCommon_->GetCommandList());
-	//}
-
-	///*blackSprite->Draw(dxCommon_->GetCommandList());*/
-
-	//goal->Draw(dxCommon_->GetCommandList());
-
-	//if (player->GetDeath() == false) {
-	//	playUISprite->Draw(dxCommon_->GetCommandList());
-	//}
+	//DrawSprite();
 
 }
 
@@ -848,14 +932,19 @@ void GameScene::DrawFBXLightView()
 	//	button[i]->DrawLightView(dxCommon_->GetCommandList());
 	//}
 
-	//爆弾
-	for (int i = 0; i < bombSize; i++) {
-		bomb[i]->DrawLightView(dxCommon_->GetCommandList());
-	}
+	////爆弾
+	//for (int i = 0; i < bombSize; i++) {
+	//	bomb[i]->DrawLightView(dxCommon_->GetCommandList());
+	//}
 
-	//沼
-	for (int i = 0; i < swampSize; i++) {
-		swamp[i]->DrawLightView(dxCommon_->GetCommandList());
+	////沼
+	//for (int i = 0; i < swampSize; i++) {
+	//	swamp[i]->DrawLightView(dxCommon_->GetCommandList());
+	//}
+
+	//梯子
+	for (int i = 0; i < ladderSize; i++) {
+		ladder[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
@@ -866,6 +955,10 @@ void GameScene::DrawFBXLightView()
 		pushButton[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->DrawLightView(dxCommon_->GetCommandList());
+	}
 }
 
 void GameScene::DrawFBX()
@@ -893,14 +986,24 @@ void GameScene::DrawFBX()
 	//	button[i]->Draw(dxCommon_->GetCommandList());
 	//}
 
-	//爆弾
-	for (int i = 0; i < bombSize; i++) {
-		bomb[i]->Draw(dxCommon_->GetCommandList());
+	////爆弾
+	//for (int i = 0; i < bombSize; i++) {
+	//	bomb[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+	////沼
+	//for (int i = 0; i < swampSize; i++) {
+	//	swamp[i]->Draw(dxCommon_->GetCommandList());
+	//}
+
+	//梯子
+	for (int i = 0; i < ladderSize; i++) {
+		ladder[i]->Draw(dxCommon_->GetCommandList());
 	}
 
-	//沼
-	for (int i = 0; i < swampSize; i++) {
-		swamp[i]->Draw(dxCommon_->GetCommandList());
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->Draw(dxCommon_->GetCommandList());
 	}
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
@@ -916,22 +1019,56 @@ void GameScene::DrawSprite()
 {
 	//-------前景スプライト描画処理-------//
 
-	if (titleSprite->endFlip == false) {
-		titleSprite->Draw(dxCommon_->GetCommandList());
+	if (scene == PLAY) {
+
+		if (titleSprite->endFlip == false) {
+			titleSprite->Draw(dxCommon_->GetCommandList());
+		}
+
+		if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+			titleUISprite->Draw(dxCommon_->GetCommandList());
+		}
+
+		//blackSprite->Draw(dxCommon_->GetCommandList());
+
+		goal->Draw(dxCommon_->GetCommandList());
+
+		if (player->GetDeath() == false) {
+			playUISprite->Draw(dxCommon_->GetCommandList());
+		}
 	}
 
-	if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-		titleUISprite->Draw(dxCommon_->GetCommandList());
+	if (scene == MENU) {
+		menu->Draw(dxCommon_->GetCommandList());
 	}
 
-	blackSprite->Draw(dxCommon_->GetCommandList());
-
-	goal->Draw(dxCommon_->GetCommandList());
-
-	if (player->GetDeath() == false) {
-		playUISprite->Draw(dxCommon_->GetCommandList());
-	}
 }
+
+void GameScene::Reset(bool isFirst)
+{
+	//プレイヤー
+	XMFLOAT2 savePos = autoSave->GetSavePos();
+	player->Reset(savePos);
+
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->Reset();
+	}
+
+	//最初からなら
+	if (isFirst) {
+		isClear = false;
+		titleSprite->Reset();
+		titleTimer = 0;
+
+		//初期地点
+		XMFLOAT2 startPos = autoSave->GetStartPos();
+		player->Reset(startPos);
+
+	}
+
+}
+
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()
 {
@@ -972,14 +1109,24 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	//	button[i]->SetSRV(SRV);
 	//}
 
-	//爆弾
-	for (int i = 0; i < bombSize; i++) {
-		bomb[i]->SetSRV(SRV);
+	////爆弾
+	//for (int i = 0; i < bombSize; i++) {
+	//	bomb[i]->SetSRV(SRV);
+	//}
+
+	////沼
+	//for (int i = 0; i < swampSize; i++) {
+	//	swamp[i]->SetSRV(SRV);
+	//}
+
+	//梯子
+	for (int i = 0; i < ladderSize; i++) {
+		ladder[i]->SetSRV(SRV);
 	}
 
-	//沼
-	for (int i = 0; i < swampSize; i++) {
-		swamp[i]->SetSRV(SRV);
+	//動く敵
+	for (int i = 0; i < moveEnemySize; i++) {
+		moveEnemy[i]->SetSRV(SRV);
 	}
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {

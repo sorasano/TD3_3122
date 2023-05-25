@@ -159,6 +159,16 @@
       <Filter>ソースファイル</Filter>
     </ClCompile>
     <ClCompile Include="PushButton.cpp">
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Ladder.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MoveEnemy.cpp">
+      <Filter>ソースファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Menu.cpp">
       <Filter>ソースファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -242,6 +252,16 @@
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
     <ClInclude Include="PushButton.h">
+    <ClInclude Include="Ladder.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MoveEnemy.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>ヘッダーファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Menu.h">
       <Filter>ヘッダーファイル</Filter>
     </ClInclude>
   </ItemGroup>
