@@ -79,7 +79,7 @@ void Player::Update()
 			}
 
 			//SPACEで梯子から離れる+ジャンプ
-			if (input->PushKey(DIK_SPACE)) {
+			if (input->TriggerKey(DIK_SPACE)) {
 				if (isJump == false) {
 					Jump();
 					isJump = true;
@@ -127,7 +127,7 @@ void Player::Update()
 				}
 
 				//ジャンプ
-				if (input->PushKey(DIK_SPACE)) {
+				if (input->TriggerKey(DIK_SPACE)) {
 					if (isJump == false) {
 						Jump();
 						isJump = true;

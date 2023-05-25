@@ -26,6 +26,13 @@
 #include "AudioManager.h"
 #include "Ladder.h"
 #include "MoveEnemy.h"
+#include "Menu.h"
+
+enum Scene {
+	PLAY,
+	MENU,
+	CLEAR
+};
 
 class GameScene
 {
@@ -42,8 +49,8 @@ public:
 	void DrawFBX();
 	void DrawSprite();
 
-	//リセット
-	void Reset();
+	//リセット //isFirst = 最初からか
+	void Reset(bool isFirst);
 
 	//セッター
 	void SetSRV(ID3D12DescriptorHeap* SRV);
@@ -64,6 +71,9 @@ private:
 	float lightDir[3] = { 0.0f,-1.0f , 1.0f };
 	float lightPos[3] = { 0.0f,10.0f,25.0f };
 	float lightTarget[3] = { 0.0f,0.0f,0.0f };
+
+	//シーン
+	int scene = PLAY;
 
 	//床
 	FbxObject3D* groundObject = nullptr;
@@ -145,7 +155,6 @@ private:
 	static const int moveEnemySize = 2;
 	MoveEnemy* moveEnemy[moveEnemySize] = {};
 
-
 	//オートセーブ
 	Autosave *autoSave;
 
@@ -217,4 +226,7 @@ private:
 	//音
 	AudioManager* titleBGM;
 	float titleBGMVolume = 0.1f;
+
+	//メニュー
+	Menu* menu;
 };

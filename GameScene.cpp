@@ -435,6 +435,12 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	spriteManager->LoadFile(5, L"Resources/color/black1x1.png");
 	spriteManager->LoadFile(6, L"Resources/playUI.png");
 
+	//メニュー用
+	spriteManager->LoadFile(7, L"Resources/Menu/menuBase.png");
+	spriteManager->LoadFile(8, L"Resources/Menu/menuRestart.png");
+	spriteManager->LoadFile(9, L"Resources/Menu/menuTitle.png");
+	spriteManager->LoadFile(10, L"Resources/Menu/menuClose.png");
+
 	//スプライト
 	Sprite::SetDevice(dxCommon->GetDevice());
 	Sprite::SetSpriteManager(spriteManager);
@@ -526,6 +532,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	titleBGM = new AudioManager();
 	titleBGM->SoundLoadWave("Resources/Audio/titleBGM.wav");
 
+	//メニュー
+	menu = new Menu();
+	menu->Initialize();
+	Menu::SetInput(input_);
+	Menu::SetDXInput(dxInput);
 }
 
 void GameScene::Update()
@@ -569,119 +580,165 @@ void GameScene::Update()
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
 
-	////ブロック
+	switch (scene) {
 
-	//for (int i = 0; i < blockSize; i++) {
-	//	blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
-	//	blockObject[i]->SetRotation({ 0,0,0 });
-	//	blockObject[i]->Update();
-	//}
+	case PLAY:
 
+		//シーン切り替え
+		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+			titleSprite->StartFlipOut();
+			scene = PLAY;
+		}
 
+		//シーン切り替え
+		if (input_->PushKey(DIK_M) && !player->GetDeath()) {
+			scene = MENU;
+			menu->Reset();
+		}
+		else if (isClear) {
+			scene = CLEAR;
+		}
 
-	//for (int i = 0; i < enemySize; i++) {
-	//	enemy[i]->Update();
-	//	enemydeg = enemy[0]->GetDeg();
-	//}
+		////リセット
+		//if (input_->PushKey(DIK_R)) {
+		//	Reset();
+		//}
 
-	//for (int i = 0; i < cameraEnemySize; i++) {
-	//	cameraEnemy[i]->Update();
-	//	cameraEnemydeg = cameraEnemy[i]->GetDeg();
-	//}
+		////ブロック
 
-	////ボタン
-	//for (int i = 0; i < buttonSize; i++) {
-	//	button[i]->Update();
-	//}
+		//for (int i = 0; i < blockSize; i++) {
+		//	blockObject[i]->SetScale({ 0.01f,0.01f,0.01f });
+		//	blockObject[i]->SetRotation({ 0,0,0 });
+		//	blockObject[i]->Update();
+		//}
 
-	////爆弾
-	//for (int i = 0; i < bombSize; i++) {
-	//	bomb[i]->Update();
-	//}
+		//for (int i = 0; i < enemySize; i++) {
+		//	enemy[i]->Update();
+		//	enemydeg = enemy[0]->GetDeg();
+		//}
 
-	////沼
-	//for (int i = 0; i < swampSize; i++) {
-	//	swamp[i]->Update();
-	//}
+		//for (int i = 0; i < cameraEnemySize; i++) {
+		//	cameraEnemy[i]->Update();
+		//	cameraEnemydeg = cameraEnemy[i]->GetDeg();
+		//}
 
-	//梯子
-	for (int i = 0; i < ladderSize; i++) {
-		ladder[i]->Update();
-	}
+		////ボタン
+		//for (int i = 0; i < buttonSize; i++) {
+		//	button[i]->Update();
+		//}
 
-	//動く敵
-	for (int i = 0; i < moveEnemySize; i++) {
-		//moveEnemy[i]->Update();
-	}
+		////爆弾
+		//for (int i = 0; i < bombSize; i++) {
+		//	bomb[i]->Update();
+		//}
 
-	//プレイヤー
-	player->Update();
+		////沼
+		//for (int i = 0; i < swampSize; i++) {
+		//	swamp[i]->Update();
+		//}
 
+		//梯子
+		for (int i = 0; i < ladderSize; i++) {
+			ladder[i]->Update();
+		}
 
-	//リセット
-	if (input_->PushKey(DIK_R)) {
-		Reset();
-	}
+		//動く敵
+		for (int i = 0; i < moveEnemySize; i++) {
+			moveEnemy[i]->Update();
+		}
 
+		//プレイヤー
+		player->Update();
 
-	//タイトル
-	if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
-		titleSprite->StartFlipOut();
-	}
-	titleSprite->Update();
+		//タイトル
+		titleSprite->Update();
 
-	//タイトルUI
-	if (titleSprite->isflipEase == false) {
-		titleUISprite->color.w = sin(clock() / 100);
-		titleTimer++;
-	}
+		//タイトルUI
+		if (titleSprite->isflipEase == false) {
+			titleUISprite->color.w = sin(clock() / 100);
+			titleTimer++;
+		}
 
-	/*clearSprite->Update();*/
-	gameoverSprite->Update();
-	blackSprite->Update();
-	titleUISprite->Update();
-	playUISprite->Update();
+		/*clearSprite->Update();*/
+		gameoverSprite->Update();
+		blackSprite->Update();
+		titleUISprite->Update();
+		playUISprite->Update();
 
-	//オートセーブ
-	autoSave->Update();
+		//オートセーブ
+		autoSave->Update();
 
-	//ゴール
-	goal->Update();
+		//ゴール
+		goal->Update();
 
-	//ゲームオーバー演出
-	if (player->GetDeath()) {
-		if (isback == false) {
-			alpha += 0.05f;
-			player->SetAlpha(alpha);
-			if (alpha >= 1.0f) {
-				isback = true;
-				//リセット
-				Reset();
+		//ゲームオーバー演出
+		if (player->GetDeath()) {
+			if (isback == false) {
+				alpha += 0.05f;
+				player->SetAlpha(alpha);
+				if (alpha >= 1.0f) {
+					isback = true;
+					//リセット
+					Reset(false);
+				}
 			}
 		}
-	}
 
-	if (isback == true) {
-		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
-			//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
-			if (alpha <= 0.8f) {
+		if (isback == true) {
+			if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+				//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
+				if (alpha <= 0.8f) {
+					alpha = 0.0f;
+					player->SetAlpha(alpha);
+					isback = false;
+				}
+			}
+			player->SetisDeath(false);
+			player->SetAlpha(alpha);
+			alpha -= 0.005f;
+			if (alpha <= 0.0f) {
 				alpha = 0.0f;
 				player->SetAlpha(alpha);
 				isback = false;
 			}
 		}
-		player->SetisDeath(false);
-		player->SetAlpha(alpha);
-		alpha -= 0.005f;
-		if (alpha <= 0.0f) {
-			alpha = 0.0f;
-			player->SetAlpha(alpha);
-			isback = false;
+
+		blackSprite->SetAlpha(alpha);
+
+		break;
+
+	case MENU:
+
+		//メニュー
+		menu->Update();
+
+		//シーン切り替えが起こったら
+		if (menu->GetIsSerect()) {
+
+			scene = PLAY;
+
+			if (menu->GetSerect() == MENURESET) {
+				Reset(false);
+			}
+			else if (menu->GetSerect() == MENUTITLE) {
+				Reset(true);
+			}
+			else if (menu->GetSerect() == MENUCLOSE) {
+			}
+
+
 		}
+
+		break;
+
+	case CLEAR:
+
+		//シーン切り替え
+		if (input_->PushKey(DIK_SPACE)) {
+			Reset(true);
+		}
+
 	}
-	blackSprite->SetAlpha(alpha);
-
-
 }
 
 void GameScene::Draw()
@@ -699,21 +756,7 @@ void GameScene::Draw()
 
 	////-------前景スプライト描画処理-------//
 
-	//if (titleSprite->endFlip == false) {
-	//	titleSprite->Draw(dxCommon_->GetCommandList());
-	//}
-
-	//if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-	//	titleUISprite->Draw(dxCommon_->GetCommandList());
-	//}
-
-	///*blackSprite->Draw(dxCommon_->GetCommandList());*/
-
-	//goal->Draw(dxCommon_->GetCommandList());
-
-	//if (player->GetDeath() == false) {
-	//	playUISprite->Draw(dxCommon_->GetCommandList());
-	//}
+	//DrawSprite();
 
 }
 
@@ -810,37 +853,42 @@ void GameScene::DrawFBX()
 	for (int i = 0; i < moveEnemySize; i++) {
 		moveEnemy[i]->Draw(dxCommon_->GetCommandList());
 	}
-	
+
 }
 
 void GameScene::DrawSprite()
 {
 	//-------前景スプライト描画処理-------//
 
-	//if (titleSprite->endFlip == false) {
-	//	titleSprite->Draw(dxCommon_->GetCommandList());
-	//}
+	if (scene == PLAY) {
 
-	//if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-	//	titleUISprite->Draw(dxCommon_->GetCommandList());
-	//}
+		if (titleSprite->endFlip == false) {
+			titleSprite->Draw(dxCommon_->GetCommandList());
+		}
 
-	blackSprite->Draw(dxCommon_->GetCommandList());
+		if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
+			titleUISprite->Draw(dxCommon_->GetCommandList());
+		}
 
-	goal->Draw(dxCommon_->GetCommandList());
+		//blackSprite->Draw(dxCommon_->GetCommandList());
 
-	if (player->GetDeath() == false) {
-		playUISprite->Draw(dxCommon_->GetCommandList());
+		goal->Draw(dxCommon_->GetCommandList());
+
+		if (player->GetDeath() == false) {
+			playUISprite->Draw(dxCommon_->GetCommandList());
+		}
 	}
+
+	if (scene == MENU) {
+		menu->Draw(dxCommon_->GetCommandList());
+	}
+
 }
 
-void GameScene::Reset()
+void GameScene::Reset(bool isFirst)
 {
 	//プレイヤー
 	XMFLOAT2 savePos = autoSave->GetSavePos();
-	//player->SetPosition(XMFLOAT3(savePos.x, savePos.y, -1));
-	//player->SetisDeath(false);
-	
 	player->Reset(savePos);
 
 	//動く敵
@@ -848,9 +896,20 @@ void GameScene::Reset()
 		moveEnemy[i]->Reset();
 	}
 
-	//クリア
-	isClear = false;
+	//最初からなら
+	if (isFirst) {
+		isClear = false;
+		titleSprite->Reset();
+		titleTimer = 0;
+
+		//初期地点
+		XMFLOAT2 startPos = autoSave->GetStartPos();
+		player->Reset(startPos);
+
+	}
+
 }
+
 
 DirectX::XMMATRIX GameScene::GetLightViewProjection()
 {
