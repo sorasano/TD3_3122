@@ -602,6 +602,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	goal->SetClearPos(590);
 
 
+
 	/*cube = new CubeObject3D();
 	cube->Initialize();
 	cube->SetModel(cubeModel);*/
