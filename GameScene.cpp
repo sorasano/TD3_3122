@@ -876,11 +876,13 @@ void GameScene::Draw()
 
 void GameScene::DrawFBXLightView()
 {
+	/*if(camera_->GetEye().x )*/
 
 	groundObject->DrawLightView(dxCommon_->GetCommandList());
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
+		if(camera_->GetEye().x - block[i]->GetPosition().x >= -20 && camera_->GetEye().x - block[i]->GetPosition().x <= 20)
 		block[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
@@ -889,44 +891,53 @@ void GameScene::DrawFBXLightView()
 
 	//敵
 	for (int i = 0; i < enemySize; i++) {
+		if (camera_->GetEye().x - enemy[i]->GetPosition().x >= -20 && camera_->GetEye().x - enemy[i]->GetPosition().x <= 20)
 		enemy[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
 	//監視カメラ
 	for (int i = 0; i < cameraEnemySize; i++) {
+		if (camera_->GetEye().x - cameraEnemy[i]->GetPosition().x >= -20 && camera_->GetEye().x - cameraEnemy[i]->GetPosition().x <= 20)
 		cameraEnemy[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
 	//ボタン
 	for (int i = 0; i < buttonSize; i++) {
+		if (camera_->GetEye().x - button[i]->GetPosition().x >= -40 && camera_->GetEye().x - button[i]->GetPosition().x <= 40)
 		button[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
 	//爆弾
 	for (int i = 0; i < bombSize; i++) {
+		if (camera_->GetEye().x - bomb[i]->GetPosition().x >= -20 && camera_->GetEye().x - bomb[i]->GetPosition().x <= 20)
 		bomb[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
 	//沼
 	for (int i = 0; i < swampSize; i++) {
+		if (camera_->GetEye().x - swamp[i]->GetPosition().x >= -20 && camera_->GetEye().x - swamp[i]->GetPosition().x <= 20)
 		swamp[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
 	//梯子
 	for (int i = 0; i < ladderSize; i++) {
+		if (camera_->GetEye().x - ladder[i]->GetPosition().x >= -20 && camera_->GetEye().x - ladder[i]->GetPosition().x <= 20)
 		ladder[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
+		if (camera_->GetEye().x - pushBlock[i]->GetPosition().x >= -20 && camera_->GetEye().x - pushBlock[i]->GetPosition().x <= 20)
 		pushBlock[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 	//押している間のスイッチ
 	for (int i = 0; i < pushButtonSize; i++) {
+		if (camera_->GetEye().x - pushButton[i]->GetPosition().x >= -40 && camera_->GetEye().x - pushButton[i]->GetPosition().x <= 40)
 		pushButton[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {
+		if (camera_->GetEye().x - moveEnemy[i]->GetPosition().x >= -20 && camera_->GetEye().x - moveEnemy[i]->GetPosition().x <= 20)
 		moveEnemy[i]->DrawLightView(dxCommon_->GetCommandList());
 	}
 }
@@ -937,50 +948,60 @@ void GameScene::DrawFBX()
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
+		if (camera_->GetEye().x - block[i]->GetPosition().x >= -20 && camera_->GetEye().x - block[i]->GetPosition().x <= 20)
 		block[i]->Draw(dxCommon_->GetCommandList());
 	}
 	//プレイヤー
 	player->Draw(dxCommon_->GetCommandList());
 	//敵
 	for (int i = 0; i < enemySize; i++) {
+		if (camera_->GetEye().x - enemy[i]->GetPosition().x >= -20 && camera_->GetEye().x - enemy[i]->GetPosition().x <= 20)
 		enemy[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	//監視カメラ
 	for (int i = 0; i < cameraEnemySize; i++) {
+		if (camera_->GetEye().x - cameraEnemy[i]->GetPosition().x >= -20 && camera_->GetEye().x - cameraEnemy[i]->GetPosition().x <= 20)
 		cameraEnemy[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	//ボタン
 	for (int i = 0; i < buttonSize; i++) {
+		if (camera_->GetEye().x - button[i]->GetPosition().x >= -40 && camera_->GetEye().x - button[i]->GetPosition().x <= 40)
 		button[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	//爆弾
 	for (int i = 0; i < bombSize; i++) {
+		if (camera_->GetEye().x - bomb[i]->GetPosition().x >= -20 && camera_->GetEye().x - bomb[i]->GetPosition().x <= 20)
 		bomb[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	//沼
 	for (int i = 0; i < swampSize; i++) {
+		if (camera_->GetEye().x - swamp[i]->GetPosition().x >= -20 && camera_->GetEye().x - swamp[i]->GetPosition().x <= 20)
 		swamp[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	//梯子
 	for (int i = 0; i < ladderSize; i++) {
+		if (camera_->GetEye().x - ladder[i]->GetPosition().x >= -20 && camera_->GetEye().x - ladder[i]->GetPosition().x <= 20)
 		ladder[i]->Draw(dxCommon_->GetCommandList());
 	}
 
 	//動く敵
 	for (int i = 0; i < moveEnemySize; i++) {
+		if (camera_->GetEye().x - moveEnemy[i]->GetPosition().x >= -20 && camera_->GetEye().x - moveEnemy[i]->GetPosition().x <= 20)
 		moveEnemy[i]->Draw(dxCommon_->GetCommandList());
 	}
 	//動かせるブロック
 	for (int i = 0; i < pushBlockSize; i++) {
+		if (camera_->GetEye().x - pushBlock[i]->GetPosition().x >= -20 && camera_->GetEye().x - pushBlock[i]->GetPosition().x <= 20)
 		pushBlock[i]->Draw(dxCommon_->GetCommandList());
 	}
 	//押している間のスイッチ
 	for (int i = 0; i < pushButtonSize; i++) {
+		if (camera_->GetEye().x - pushButton[i]->GetPosition().x >= -40 && camera_->GetEye().x - pushButton[i]->GetPosition().x <= 40)
 		pushButton[i]->Draw(dxCommon_->GetCommandList());
 	}
 }

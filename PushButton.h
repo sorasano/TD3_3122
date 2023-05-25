@@ -53,6 +53,7 @@ public:
 
 	void SetUpHeight(float upHight) { this->upHight = upHight; }
 
+	XMFLOAT3 GetPosition() { return position; }
 
 	static void SetInput(Input* input) { PushButton::input = input; }
 	static void SetDXInput(DXInput* dxInput) { PushButton::dxInput = dxInput; }

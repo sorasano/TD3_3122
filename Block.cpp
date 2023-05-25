@@ -36,7 +36,7 @@ void Block::Update()
 void Block::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	blockObject->Draw(cmdList);
-	cubeObject->Draw(cmdList);
+	/*cubeObject->Draw(cmdList);*/
 }
 
 void Block::DrawLightView(ID3D12GraphicsCommandList* cmdList)

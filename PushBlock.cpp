@@ -40,7 +40,7 @@ void PushBlock::Update()
 void PushBlock::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	blockObject->Draw(cmdList);
-	cubeObject->Draw(cmdList);
+	/*cubeObject->Draw(cmdList);*/
 }
 
 void PushBlock::DrawLightView(ID3D12GraphicsCommandList* cmdList)

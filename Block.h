@@ -35,6 +35,7 @@ public://メンバ関数
 	//ゲッター
 	bool GetIsPush() { return isPush; }
 	bool GetNoPush() { return noPush; }
+	XMFLOAT3 GetPosition() { return position; }
 public://静的メンバ関数
 	static void SetInput(Input* input) { Block::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Block::dxInput = dxInput; }
