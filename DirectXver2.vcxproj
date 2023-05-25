@@ -169,6 +169,7 @@
     <ClCompile Include="base\Sprite.cpp" />
     <ClCompile Include="base\SpriteManager.cpp" />
     <ClCompile Include="base\WinApp.cpp" />
+    <ClCompile Include="Block.cpp" />
     <ClCompile Include="Bomb.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
@@ -193,6 +194,8 @@
     <ClCompile Include="MoveEnemy.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PointLight.cpp" />
+    <ClCompile Include="PushBlock.cpp" />
+    <ClCompile Include="PushButton.cpp" />
     <ClCompile Include="Random.cpp" />
     <ClCompile Include="SpotLight.cpp" />
     <ClCompile Include="Swamp.cpp" />
@@ -219,6 +222,7 @@
     <ClInclude Include="base\Sprite.h" />
     <ClInclude Include="base\SpriteManager.h" />
     <ClInclude Include="base\WinApp.h" />
+    <ClInclude Include="Block.h" />
     <ClInclude Include="Bomb.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
@@ -242,6 +246,8 @@
     <ClInclude Include="MoveEnemy.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="PointLight.h" />
+    <ClInclude Include="PushBlock.h" />
+    <ClInclude Include="PushButton.h" />
     <ClInclude Include="Random.h" />
     <ClInclude Include="SpotLight.h" />
     <ClInclude Include="Swamp.h" />
