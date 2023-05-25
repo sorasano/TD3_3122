@@ -6,8 +6,9 @@
 #include "Sprite.h"
 
 enum MenuSerect {
-	RESTART,
-	TITLE,
+	MENURESET,
+	MENUTITLE,
+	MENUCLOSE
 };
 
 class Menu
@@ -25,6 +26,11 @@ public:
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	void SetPosition(XMFLOAT2 position);
+	static void SetInput(Input* input) { Menu::input = input; }
+	static void SetDXInput(DXInput* dxInput) { Menu::dxInput = dxInput; }
+	int GetSerect() { return serect; }
+	int GetIsSerect() { return isSerect; }
+	void Reset();
 
 private:
 	//キーボード
@@ -40,12 +46,13 @@ private:
 	Sprite* restartSprite;
 	//"タイトルに戻る"
 	Sprite* titleSprite;
-
-	//メニューを開いているか
-	bool isMenu;
+	//"メニューを閉じる"
+	Sprite* closeSprite;
 
 	//何を選択しているか
 	int serect;
 
-};
+	//シーン切り替えをしたか
+	bool isSerect;
 
+};
