@@ -130,67 +130,22 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	float stage5 = 600.0f;
 
 	//---------敵---------
-	for (int i = 0; i < enemySize; i++) {
-		enemy[i] = new Enemy;
-		enemy[i]->Initialize(enemyModel, enemyModel2, enemyEyeModel, player);
+
+	enemyCsv = new CSVLoader;
+	enemyCsv->LoadCSV("Resources/csv/enemy.csv");
+
+	for (int i = 0; i < enemySize; i++)
+	{
+		std::unique_ptr<Enemy>newObject = std::make_unique<Enemy>();
+		newObject->Initialize(enemyModel, enemyModel2, enemyEyeModel, player);
+		newObject->SetModel(enemyModel);
+
+		newObject->SetPosition(enemyCsv->GetPosition(i));
+		newObject->SetScale(enemyCsv->GetScale(i));
+		newObject->Setrotate(enemyCsv->GetRotation(i));
+
+		enemys.push_back(std::move(newObject));
 	}
-
-	//stage1
-	enemy[0]->SetPosition({ stage1 + 17,1,1 });
-	enemy[1]->SetPosition({ stage1 + 23,1,1 });
-	enemy[2]->SetPosition({ stage1 + 30,1,1 });
-	enemy[3]->SetPosition({ stage1 + 34,1,1 });
-
-	//stage2
-	enemy[4]->SetPosition({ stage2 + 17,1,1 });
-	enemy[5]->SetPosition({ stage2 + 23,1,1 });
-	enemy[6]->SetPosition({ stage2 + 30,1,1 });
-	enemy[7]->SetPosition({ stage2 + 34,1,1 });
-	enemy[8]->SetPosition({ stage2 + 66,1,1 });
-
-	enemy[9]->SetPosition({ stage2 + 76,1,1 });
-	enemy[10]->SetPosition({ stage2 + 90.5f,1,1 });
-
-	enemy[11]->SetPosition({ stage2 + 100,1,1 });
-
-	enemy[12]->SetPosition({ stage2 + 104.5f,1,1 });
-	enemy[13]->SetPosition({ stage2 + 109,1,1 });
-
-	//stage3
-	enemy[14]->SetPosition({ stage3 + 60,1,1 });
-	enemy[15]->SetPosition({ stage3 + 66,1,1 });
-	enemy[16]->SetPosition({ stage3 + 72,1,1 });
-
-	enemy[17]->SetPosition({ stage3 + 90,1,1 });
-	enemy[18]->SetPosition({ stage3 + 96,1,1 });
-	enemy[19]->SetPosition({ stage3 + 102,1,1 });
-
-	//stage4
-	enemy[20]->SetPosition({ stage4 + 5,1,1 });
-	enemy[21]->SetPosition({ stage4 + 10,1,1 });
-	enemy[22]->SetPosition({ stage4 + 15,1,1 });
-	enemy[23]->SetPosition({ stage4 + 20,1,1 });
-	enemy[24]->SetPosition({ stage4 + 25,1,1 });
-	enemy[25]->SetPosition({ stage4 + 30,1,1 });
-
-	enemy[26]->SetPosition({ stage4 + 74,1,1 });
-	enemy[27]->SetPosition({ stage4 + 86,1,1 });
-
-	enemy[28]->SetPosition({ stage4 + 162,1,1 });
-	enemy[29]->SetPosition({ stage4 + 163,1,1 });
-	enemy[30]->SetPosition({ stage4 + 164,1,1 });
-	enemy[31]->SetPosition({ stage4 + 165,1,1 });
-	enemy[32]->SetPosition({ stage4 + 166,1,1 });
-	enemy[33]->SetPosition({ stage4 + 167,1,1 });
-	enemy[34]->SetPosition({ stage4 + 168,1,1 });
-	enemy[35]->SetPosition({ stage4 + 169,1,1 });
-	enemy[36]->SetPosition({ stage4 + 170,1,1 });
-	enemy[37]->SetPosition({ stage4 + 171,1,1 });
-	enemy[38]->SetPosition({ stage4 + 172,1,1 });
-	enemy[39]->SetPosition({ stage4 + 173,1,1 });
-	enemy[40]->SetPosition({ stage4 + 174,1,1 });
-	enemy[41]->SetPosition({ stage4 + 175,1,1 });
-	enemy[42]->SetPosition({ stage4 + 176,1,1 });
 
 	//---------監視カメラ---------
 	for (int i = 0; i < cameraEnemySize; i++) {
@@ -593,7 +548,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//ツリー
 	treeCsv = new CSVLoader;
-	treeCsv->LoadCSV("Resources/Tree1.csv");
+	treeCsv->LoadCSV("Resources/csv/Tree1.csv");
 
 	for (int i = 0; i < treeNum; i++)
 	{
