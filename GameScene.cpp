@@ -96,6 +96,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
 	ladderModel = FbxLoader::GetInstance()->LoadModelFromFile("ladder", "Resources/color/brown1x1.png");
+	modelTree = FbxLoader::GetInstance()->LoadModelFromFile("Tree3", "Resources/black.png");
 
 	//デバイスをセット
 	FbxObject3D::SetDevice(dxCommon_->GetDevice());
@@ -589,6 +590,23 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	menu->Initialize();
 	Menu::SetInput(input_);
 	Menu::SetDXInput(dxInput);
+
+	//ツリー
+	treeCsv = new CSVLoader;
+	treeCsv->LoadCSV("Resources/Tree1.csv");
+
+	for (int i = 0; i < treeNum; i++)
+	{
+		std::unique_ptr<FbxObject3D>newObject = std::make_unique<FbxObject3D>();
+		newObject->Initialize();
+		newObject->SetModel(modelTree);
+
+		newObject->SetPosition(treeCsv->GetPosition(i));
+		newObject->SetScale(treeCsv->GetScale(i));
+		newObject->SetRotation(treeCsv->GetRotation(i));
+
+		objectTree.push_back(std::move(newObject));
+	}
 }
 
 void GameScene::Update()
@@ -853,6 +871,25 @@ void GameScene::Update()
 		}
 
 	}
+
+	//Tree1
+	//スペースキーでファイル読み込み更新
+	if (input_->TriggerKey(DIK_SPACE))
+	{
+		treeCsv->LoadCSV("Resources/Tree1.csv");
+		int i = 0;
+		for (std::unique_ptr<FbxObject3D>& object : objectTree)
+		{
+			object->SetPosition(treeCsv->GetPosition(i));
+			object->SetScale(treeCsv->GetScale(i));
+			object->SetRotation(treeCsv->GetRotation(i));
+			i++;
+		}
+	}
+	for (std::unique_ptr<FbxObject3D>& object : objectTree)
+	{
+		object->Update();
+	}
 }
 
 void GameScene::Draw()
@@ -879,6 +916,12 @@ void GameScene::DrawFBXLightView()
 	/*if(camera_->GetEye().x )*/
 
 	groundObject->DrawLightView(dxCommon_->GetCommandList());
+
+	//Tree1
+	for (std::unique_ptr<FbxObject3D>& object : objectTree)
+	{
+		object->DrawLightView(dxCommon_->GetCommandList());
+	}
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
@@ -945,6 +988,11 @@ void GameScene::DrawFBXLightView()
 void GameScene::DrawFBX()
 {
 	groundObject->Draw(dxCommon_->GetCommandList());
+
+	for (std::unique_ptr<FbxObject3D>& object : objectTree)
+	{
+		object->Draw(dxCommon_->GetCommandList());
+	}
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {
@@ -1076,6 +1124,11 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 	object1->SetSRV(SRV);*/
 
 	groundObject->SetSRV(SRV);
+
+	for (std::unique_ptr<FbxObject3D>& object : objectTree)
+	{
+		object->SetSRV(SRV);
+	}
 
 	//ブロック
 	for (int i = 0; i < blockSize; i++) {

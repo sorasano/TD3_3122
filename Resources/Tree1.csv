@@ -1,7 +1,7 @@
 オブジェクトが横向きなのでrotに-1.59を入れてます
 
 (1)
-position -12 0 0 
+position -12 0 3 
 rotation -1.59 -1.59 0 
 scale 5 1 1
 (2)
@@ -9,7 +9,7 @@ position -6 0 3
 rotation -1.59 -1.59 0 
 scale 5 1 1
 (3)
-position 0 0 6 
+position 4 0 6 
 rotation -1.59 -1.59 0 
 scale 5 1 1
 (4)
@@ -33,6 +33,50 @@ position 0 0 6
 rotation -1.59 -1.59 0 
 scale 5 1 1
 (9)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(10)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(11)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(12)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(13)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(14)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(15)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(16)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(17)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(18)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(19)
+position 0 0 6
+rotation -1.59 -1.59 0 
+scale 5 1 1
+(20)
 position 0 0 6
 rotation -1.59 -1.59 0 
 scale 5 1 1

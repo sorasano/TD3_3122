@@ -30,6 +30,7 @@
 #include "Ladder.h"
 #include "MoveEnemy.h"
 #include "Menu.h"
+#include "CSVLoader.h"
 
 enum Scene {
 	PLAY,
@@ -252,4 +253,13 @@ private:
 
 	//メニュー
 	Menu* menu;
+
+	//csvの変数
+	CSVLoader* treeCsv = nullptr;
+	//木のモデル
+	FbxModel* modelTree = nullptr;
+	//木のオブジェクト
+	std::list<std::unique_ptr<FbxObject3D>> objectTree;
+	//木の数
+	size_t treeNum = 20;
 };
