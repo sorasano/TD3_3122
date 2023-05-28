@@ -368,18 +368,23 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//------テクスチャ------
 
 	spriteManager->LoadFile(0, L"Resources/clear.png");
-	spriteManager->LoadFile(1, L"Resources/gameover2.png");
+	//spriteManager->LoadFile(1, L"Resources/gameover2.png");
 	spriteManager->LoadFile(2, L"Resources/title.png");
-	spriteManager->LoadFile(3, L"Resources/titleUI.png");
+	//spriteManager->LoadFile(3, L"Resources/titleUI.png");
 	spriteManager->LoadFile(4, L"Resources/color/white1x1.png");
 	spriteManager->LoadFile(5, L"Resources/color/black1x1.png");
-	spriteManager->LoadFile(6, L"Resources/playUI.png");
+	//spriteManager->LoadFile(6, L"Resources/playUI.png");
 
 	//メニュー用
 	spriteManager->LoadFile(7, L"Resources/Menu/menuBase.png");
 	spriteManager->LoadFile(8, L"Resources/Menu/menuRestart.png");
 	spriteManager->LoadFile(9, L"Resources/Menu/menuTitle.png");
 	spriteManager->LoadFile(10, L"Resources/Menu/menuClose.png");
+
+	//操作説明UI
+	spriteManager->LoadFile(11, L"Resources/operationUI/play.png");
+	spriteManager->LoadFile(12, L"Resources/operationUI/clear.png");
+	spriteManager->LoadFile(13, L"Resources/operationUI/menu.png");
 
 	//スプライト
 	Sprite::SetDevice(dxCommon->GetDevice());
@@ -436,29 +441,35 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	titleSprite->StartSway({ window_width / 2, window_height / 2 - 200 });
 	titleSprite->Update();
 
-	titleUISprite = new Sprite();
-	titleUISprite->SetTextureNum(3);
-	titleUISprite->Initialize();
-	titleUISprite->SetAnchorPoint(XMFLOAT2(0.5f, 0.5f));
-	titleUISprite->SetScale(XMFLOAT2(500, 100));
-	titleUISprite->SetPosition(XMFLOAT2(window_width / 2, window_height / 2 + 200));
-	titleUISprite->Update();
+	//操作説明UI
 
-	//playUI
-	playUISprite = new Sprite();
-	playUISprite->SetTextureNum(6);
-	playUISprite->Initialize();
-	//playUISprite->SetAnchorPoint(XMFLOAT2(0.0f, 0.5f));
-	playUISprite->SetScale(XMFLOAT2(250, 100));
-	playUISprite->SetPosition(XMFLOAT2(0, window_height - 100));
-	playUISprite->Update();
+	playOpSprite = new Sprite();
+	playOpSprite->SetTextureNum(11);
+	playOpSprite->Initialize();
+	playOpSprite->SetScale(XMFLOAT2(300, 150));
+	playOpSprite->SetPosition(XMFLOAT2(0, window_height - 150));
+	playOpSprite->Update();
+
+	clearOpSprite = new Sprite();
+	clearOpSprite->SetTextureNum(12);
+	clearOpSprite->Initialize();
+	clearOpSprite->SetScale(XMFLOAT2(300, 150));
+	clearOpSprite->SetPosition(XMFLOAT2(0, window_height - 150));
+	clearOpSprite->Update();
+
+	menuOpSprite = new Sprite();
+	menuOpSprite->SetTextureNum(13);
+	menuOpSprite->Initialize();
+	menuOpSprite->SetScale(XMFLOAT2(300, 150));
+	menuOpSprite->SetPosition(XMFLOAT2(0, window_height - 150));
+	menuOpSprite->Update();
 
 	//ゴール
 	goal = new Goal();
 	Goal::SetInput(input);
 	Goal::SetDXInput(dxInput);
 	goal->Initialize(whiteSprite, clearSprite, player);
-	goal->SetClearPos(700);
+	goal->SetClearPos(3);
 
 
 
@@ -475,9 +486,9 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//メニュー
 	menu = new Menu();
-	menu->Initialize();
-	Menu::SetInput(input_);
-	Menu::SetDXInput(dxInput);
+	menu->Initialize(input_);
+	//Menu::SetInput(input_);
+	//Menu::SetDXInput(dxInput);
 
 }
 
@@ -526,18 +537,18 @@ void GameScene::Update()
 
 	case PLAY:
 
-		//シーン切り替え
+		//タイトルスプライト動かす
 		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
 			titleSprite->StartFlipOut();
 			scene = PLAY;
 		}
 
 		//シーン切り替え
-		if (input_->PushKey(DIK_M) && !player->GetDeath()) {
+		if (input_->TriggerKey(DIK_M) && !player->GetDeath()) {
 			scene = MENU;
 			menu->Reset();
 		}
-		else if (isClear) {
+		else if (goal->GetIsClear()) {
 			scene = CLEAR;
 		}
 
@@ -675,18 +686,12 @@ void GameScene::Update()
 
 		//プレイヤー
 		player->Update();
-
-		//タイトルUI
-		if (titleSprite->isflipEase == false) {
-			titleUISprite->color.w = sin(clock() / 100);
-			titleTimer++;
-		}
-
-		/*clearSprite->Update();*/
 		gameoverSprite->Update();
 		blackSprite->Update();
-		titleUISprite->Update();
-		playUISprite->Update();
+		//操作UI
+		playOpSprite->Update();
+		menuOpSprite->Update();
+		clearOpSprite->Update();
 
 		//オートセーブ
 		autoSave->Update();
@@ -757,8 +762,11 @@ void GameScene::Update()
 
 	case CLEAR:
 
+		goal->Update();
+
 		//シーン切り替え
-		if (input_->PushKey(DIK_SPACE)) {
+		if (goal->GetIsEnd() && input_->PushKey(DIK_SPACE)) {
+			scene = PLAY;
 			Reset(true);
 		}
 
@@ -938,21 +946,23 @@ void GameScene::DrawSprite()
 			titleSprite->Draw(dxCommon_->GetCommandList());
 		}
 
-		if (titleSprite->isflipEase == false && titleTimer >= titleAssistTime) {
-			titleUISprite->Draw(dxCommon_->GetCommandList());
-		}
-
-		//blackSprite->Draw(dxCommon_->GetCommandList());
-
-		goal->Draw(dxCommon_->GetCommandList());
+		blackSprite->Draw(dxCommon_->GetCommandList());
 
 		if (player->GetDeath() == false) {
-			playUISprite->Draw(dxCommon_->GetCommandList());
+			playOpSprite->Draw(dxCommon_->GetCommandList());
 		}
 	}
 
-	if (scene == MENU) {
+	else if (scene == MENU) {
 		menu->Draw(dxCommon_->GetCommandList());
+		menuOpSprite->Draw(dxCommon_->GetCommandList());
+	}
+
+	else if (scene == CLEAR) {
+		goal->Draw(dxCommon_->GetCommandList());
+		if (goal->GetIsEnd()) {
+			clearOpSprite->Draw(dxCommon_->GetCommandList());
+		}
 	}
 
 }
@@ -978,6 +988,7 @@ void GameScene::Reset(bool isFirst)
 		XMFLOAT2 startPos = autoSave->GetStartPos();
 		player->Reset(startPos);
 
+		goal->Reset();
 	}
 
 }

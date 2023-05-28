@@ -208,9 +208,11 @@ private:
 	Sprite* blackSprite = nullptr;
 
 	Sprite* titleSprite = nullptr;
-	Sprite* titleUISprite = nullptr;
 
-	Sprite* playUISprite = nullptr;
+	//操作説明
+	Sprite* playOpSprite = nullptr;
+	Sprite* clearOpSprite = nullptr;
+	Sprite* menuOpSprite = nullptr;
 
 	//タイトルUI用タイマー
 	int titleTimer;
