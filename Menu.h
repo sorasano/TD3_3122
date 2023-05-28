@@ -19,24 +19,24 @@ private: // エイリアス
 
 public:
 
-	void Initialize();
+	void Initialize(Input* input);
 
 	void Update();
 
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 
 	void SetPosition(XMFLOAT2 position);
-	static void SetInput(Input* input) { Menu::input = input; }
-	static void SetDXInput(DXInput* dxInput) { Menu::dxInput = dxInput; }
+	void SetInput(Input* input) { this->input = input; }
+	void SetDXInput(DXInput* dxInput) { this->dxInput = dxInput; }
 	int GetSerect() { return serect; }
 	int GetIsSerect() { return isSerect; }
 	void Reset();
 
 private:
 	//キーボード
-	static Input* input;
+	Input* input;
 	//コントローラー
-	static DXInput* dxInput;
+	DXInput* dxInput;
 
 	XMFLOAT2 position = {};
 

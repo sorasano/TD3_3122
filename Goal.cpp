@@ -4,7 +4,7 @@ Input* Goal::input = nullptr;
 DXInput* Goal::dxInput = nullptr;
 
 
-void Goal::Initialize(Sprite* whiteSprite,Sprite* clearSprite, Player* player)
+void Goal::Initialize(Sprite* whiteSprite, Sprite* clearSprite, Player* player)
 {
 	this->whiteSprite = whiteSprite;
 	this->clearSprite = clearSprite;
@@ -28,14 +28,7 @@ void Goal::Update()
 			player->SetAlpha(alpha);
 		}
 		else {
-			//クリア演出後スペースで戻る
-			if (input->TriggerKey(DIK_SPACE)) {
-				isClear = false;
-				alpha = 0.0f;
-				player->SetisClear(isClear);
-				player->SetAlpha(alpha);
-				player->SetPosition(XMFLOAT3(0, 1, -1));
-			}
+			isEnd = true;
 		}
 	}
 
@@ -49,4 +42,14 @@ void Goal::Draw(ID3D12GraphicsCommandList* cmdList)
 		whiteSprite->Draw(cmdList);
 		clearSprite->Draw(cmdList);
 	}
+}
+
+void Goal::Reset()
+{
+	isEnd = false;
+	isClear = false;
+	alpha = 0.0f;
+	player->SetisClear(isClear);
+	player->SetAlpha(alpha);
+
 }
