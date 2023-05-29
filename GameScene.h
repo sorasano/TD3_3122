@@ -126,7 +126,8 @@ private:
 
 	//ボタン
 	size_t buttonSize = 3;
-	FbxModel* buttonModel = nullptr;
+	FbxModel* buttonUpModel = nullptr;
+	FbxModel* buttonDownModel = nullptr;
 	std::list<std::unique_ptr<Button>> buttons;
 
 	//押している間のボタン
@@ -242,8 +243,13 @@ private:
 	bool noPush = false;
 
 	//音
-	AudioManager* titleBGM;
-	float titleBGMVolume = 0.1f;
+	//BGM
+	AudioManager* playBGM;
+	float playBGMVolume = 0.1f;
+
+	//決定音
+	AudioManager* pickSE;
+	float pickSEVolume = 0.05f;
 
 	//メニュー
 	Menu* menu;

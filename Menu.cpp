@@ -1,8 +1,6 @@
 #include "Menu.h"
-//Input* Menu::input = nullptr;
-//DXInput* Menu::dxInput = nullptr;
 
-void Menu::Initialize(Input* input)
+void Menu::Initialize(Input* input, DXInput* dxInput)
 {
 
 	baseSprite = new Sprite();
@@ -40,6 +38,13 @@ void Menu::Initialize(Input* input)
 	this->position = baseSprite->GetPosition();
 
 	this->input = input;
+	this->dxInput = dxInput;
+
+	//音
+	selectSE = new AudioManager();
+	selectSE->SoundLoadWave("Resources/Audio/selectSE.wav");
+	pickSE = new AudioManager();
+	pickSE->SoundLoadWave("Resources/Audio/pickSE.wav");
 }
 
 void Menu::Update()
@@ -52,12 +57,18 @@ void Menu::Update()
 		if (serect != MENURESET) {
 			serect--;
 		}
+		//音
+		selectSE->StopWave();
+		selectSE->SoundPlayWave(false,selectSEVolume);
 	}
 	else if (input->TriggerKey(DIK_S))
 	{
 		if (serect != MENUCLOSE) {
 			serect++;
 		}
+		//音
+		selectSE->StopWave();
+		selectSE->SoundPlayWave(false,selectSEVolume);
 	}
 
 
@@ -84,11 +95,17 @@ void Menu::Update()
 	//スペースを押したらシーン変更
 	if (input->PushKey(DIK_SPACE)) {
 		isSerect = true;
+
+		pickSE->StopWave();
+		pickSE->SoundPlayWave(false,pickSEVolume);
 	}
 	else if (input->TriggerKey(DIK_M)) {
 		//メニューを閉じる
 		serect = MENUCLOSE;
 		isSerect = true;
+
+		pickSE->StopWave();
+		pickSE->SoundPlayWave(false,pickSEVolume);
 	}
 
 
