@@ -11,8 +11,6 @@ ComPtr<ID3D12PipelineState>CubeObject3D::pipelinestate;
 
 ID3D12Device* CubeObject3D::device = nullptr;
 Camera* CubeObject3D::camera = nullptr;
-Input* CubeObject3D::input = nullptr;
-
 
 void CubeObject3D::Initialize()
 {

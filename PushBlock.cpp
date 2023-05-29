@@ -1,7 +1,6 @@
 #include "PushBlock.h"
 
 Input* PushBlock::input = nullptr;
-DXInput* PushBlock::dxInput = nullptr;
 
 void PushBlock::Initialize(FbxModel* blockModel, Player* player, CubeObject3D* cubeObject)
 {
@@ -65,20 +64,20 @@ void PushBlock::Collision()
 
 void PushBlock::Push()
 {
-	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+	if (input->IsKeyPress(DIK_A) || input->IsKeyPress(DIK_D) || input->IsDownLStickLeft() || input->IsDownLStickRight()) {
 		if (player->GetinSwamp()) {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				position.x -= player->GetSwampSpeed();
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				position.x += player->GetSwampSpeed();
 			}
 		}
 		else {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				position.x -= player->GetSpeed();
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				position.x += player->GetSpeed();
 			}
 		}
@@ -87,20 +86,20 @@ void PushBlock::Push()
 
 void PushBlock::NoPush()
 {
-	/*if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+	/*if (input->IsKeyPress(DIK_A) || input->IsKeyPress(DIK_D)) {
 		if (player->GetinSwamp()) {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A)) {
 				position.x += player->GetSwampSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			if (input->IsKeyPress(DIK_D)) {
 				position.x -= player->GetSwampSpeed();
 			}
 		}
 		else {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A)) {
 				position.x += player->GetSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			if (input->IsKeyPress(DIK_D)) {
 				position.x -= player->GetSpeed();
 			}
 		}
@@ -111,23 +110,23 @@ void PushBlock::NoPush()
 void PushBlock::pushback(CubeObject3D* cubeObject)
 {
 
-	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+	if (input->IsKeyPress(DIK_A) || input->IsKeyPress(DIK_D) || input->IsDownLStickLeft() || input->IsDownLStickRight()) {
 		if (player->GetinSwamp()) {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x -= player->GetSwampSpeed();
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x += player->GetSwampSpeed();
 			}
 		}
 		else {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x -= player->GetSpeed();
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x += player->GetSpeed();
 			}

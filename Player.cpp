@@ -3,7 +3,6 @@
 #include "FbxLoader.h"
 
 Input* Player::input = nullptr;
-DXInput* Player::dxInput = nullptr;
 
 #define PI 3.1415
 
@@ -43,7 +42,7 @@ void Player::Update()
 
 		//梯子に当たっているときにWかSを押したら梯子に登る
 		if (colLadder) {
-			if (input->PushKey(DIK_W) || input->PushKey(DIK_S))
+			if (input->IsKeyPress(DIK_W) || input->IsKeyPress(DIK_S) || input->IsDownLStickUp() || input->IsDownLStickDown())
 			{
 				onLadder = true;
 			}
@@ -54,7 +53,7 @@ void Player::Update()
 
 			action = CLIMB;
 
-			if (input->PushKey(DIK_W))
+			if (input->IsKeyPress(DIK_W) || input->IsDownLStickUp())
 			{
 				if (colLadder) {
 					position.y += speed;
@@ -67,7 +66,7 @@ void Player::Update()
 				}
 
 			}
-			else if (input->PushKey(DIK_S))
+			else if (input->IsKeyPress(DIK_S) || input->IsDownLStickDown())
 			{
 				position.y -= speed;
 				rotate.y = 180 * (PI / 180);
@@ -84,7 +83,7 @@ void Player::Update()
 			}
 
 			//SPACEで梯子から離れる+ジャンプ
-			if (input->TriggerKey(DIK_SPACE)) {
+			if (input->IsKeyTrigger(DIK_SPACE) || input->IsPadTrigger(XINPUT_GAMEPAD_A)) {
 				if (isJump == false) {
 					Jump();
 					isJump = true;
@@ -100,14 +99,14 @@ void Player::Update()
 
 			//沼に入っているか
 			if (inSwamp) {
-				if (input->PushKey(DIK_A))
+				if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft())
 				{
 					position.x -= swampSpeed;
 					rotate.y = 270 * (PI / 180);
 
 					action = WALK;
 				}
-				else if (input->PushKey(DIK_D))
+				else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight())
 				{
 					position.x += swampSpeed;
 					rotate.y = 90 * (PI / 180);
@@ -116,14 +115,16 @@ void Player::Update()
 				}
 			}
 			else {
-				if (input->PushKey(DIK_A) && position.x > -5)
+				if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft())
 				{
-					position.x -= speed;
-					rotate.y = 270 * (PI / 180);
+					if (position.x > -5) {
+						position.x -= speed;
+						rotate.y = 270 * (PI / 180);
 
-					action = WALK;
+						action = WALK;
+					}
 				}
-				else if (input->PushKey(DIK_D))
+				else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight())
 				{
 					position.x += speed;
 					rotate.y = 90 * (PI / 180);
@@ -132,7 +133,7 @@ void Player::Update()
 				}
 
 				//ジャンプ
-				if (input->TriggerKey(DIK_SPACE)) {
+				if (input->IsKeyTrigger(DIK_SPACE) || input->IsPadTrigger(XINPUT_GAMEPAD_A)) {
 					if (isJump == false) {
 						Jump();
 						isJump = true;
@@ -297,10 +298,10 @@ void Player::pushback(CubeObject3D* cubeObject)
 {
 
 	//横の判定
-	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+	if (input->IsKeyPress(DIK_A) || input->IsKeyPress(DIK_D)|| input->IsDownLStickLeft() || input->IsDownLStickRight()) {
 		//沼の中
 		if (inSwamp) {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x = (position.x - swampSpeed);
 				cubeObject_->SetPosition(newposition);
@@ -308,7 +309,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 					position.x += swampSpeed;
 				}
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x = (position.x + swampSpeed);
 				cubeObject_->SetPosition(newposition);
@@ -319,7 +320,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 			cubeObject_->SetPosition(newposition);
 		}
 		else {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x = (position.x - speed);
 				cubeObject_->SetPosition(newposition);
@@ -327,7 +328,7 @@ void Player::pushback(CubeObject3D* cubeObject)
 					position.x += speed;
 				}
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x = (position.x + speed);
 				cubeObject_->SetPosition(newposition);
@@ -383,10 +384,10 @@ bool Player::pushBlock(CubeObject3D* cubeObject)
 	}
 
 	//横の判定
-	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+	if (input->IsKeyPress(DIK_A) || input->IsKeyPress(DIK_D) || input->IsDownLStickLeft() || input->IsDownLStickRight()) {
 		//沼の中
 		if (inSwamp) {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x = (position.x - swampSpeed);
 				cubeObject_->SetPosition(newposition);
@@ -394,7 +395,7 @@ bool Player::pushBlock(CubeObject3D* cubeObject)
 					return true;
 				}
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x = (position.x + swampSpeed);
 				cubeObject_->SetPosition(newposition);
@@ -405,7 +406,7 @@ bool Player::pushBlock(CubeObject3D* cubeObject)
 			cubeObject_->SetPosition(newposition);
 		}
 		else {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x = (position.x - speed);
 				cubeObject_->SetPosition(newposition);
@@ -413,7 +414,7 @@ bool Player::pushBlock(CubeObject3D* cubeObject)
 					return true;
 				}
 			}
-			else if (input->PushKey(DIK_D)) {
+			else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x = (position.x + speed);
 				cubeObject_->SetPosition(newposition);

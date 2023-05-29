@@ -32,7 +32,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//カメラ初期化
 	Camera::SetInput(input_);
-	Camera::SetDXInput(dxInput);
 	Camera* newCamera = new Camera();
 	newCamera->Initialize();
 	camera_.reset(newCamera);
@@ -42,7 +41,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//当たり判定キューブオブジェクト
 	CubeObject3D::SetCamera(camera_.get());
 	CubeObject3D::SetDevice(dxCommon_->GetDevice());
-	CubeObject3D::SetInput(input_);
 	CubeObject3D::CreateGraphicsPipeline();
 	//スプライトマネージャー
 	SpriteManager::SetDevice(dxCommon->GetDevice());
@@ -123,7 +121,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	playerColBox->Initialize();
 	playerColBox->SetModel(cubeModel);
 	Player::SetInput(input_);
-	Player::SetDXInput(dxInput);
 	player = new Player;
 	player->Initialize(playerColBox);
 
@@ -289,7 +286,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//----------動かせるブロック----------
 	PushBlock::SetInput(input_);
-	PushBlock::SetDXInput(dxInput);
 
 	pushBlockCsv = new CSVLoader;
 	pushBlockCsv->LoadCSV("Resources/csv/pushBlock.csv");
@@ -473,8 +469,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//ゴール
 	goal = new Goal();
-	Goal::SetInput(input);
-	Goal::SetDXInput(dxInput);
 	goal->Initialize(whiteSprite, clearSprite, player);
 	goal->SetClearPos(1000);
 
@@ -494,7 +488,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	//メニュー
 	menu = new Menu();
-	menu->Initialize(input_,dxInput);
+	menu->Initialize(input_);
 
 }
 
@@ -543,21 +537,23 @@ void GameScene::Update()
 		playBGM->SoundPlayWave(true, playBGMVolume);
 
 		//タイトルスプライト動かす
-		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+		if (input_->IsKeyPress(DIK_A) || input_->IsKeyPress(DIK_D) || input_->IsDownLStickLeft() || input_->IsDownLStickRight()) {
 			titleSprite->StartFlipOut();
 			scene = PLAY;
 		}
 
 		//シーン切り替え
-		if (input_->TriggerKey(DIK_M) && !player->GetDeath()) {
-			scene = MENU;
-			menu->Reset();
+		if (!player->GetDeath()) {
+			if (input_->IsKeyTrigger(DIK_M) || input_->IsPadTrigger(XINPUT_GAMEPAD_START)) {
+				scene = MENU;
+				menu->Reset();
 
 
-			pickSE->StopWave();
-			pickSE->SoundPlayWave(false, pickSEVolume);
-			//BGM停止
-			playBGM->StopWave();
+				pickSE->StopWave();
+				pickSE->SoundPlayWave(false, pickSEVolume);
+				//BGM停止
+				playBGM->StopWave();
+			}
 		}
 		else if (goal->GetIsClear()) {
 			scene = CLEAR;
@@ -678,7 +674,7 @@ void GameScene::Update()
 
 		//Tree1
 		//スペースキーでファイル読み込み更新
-		if (input_->TriggerKey(DIK_RETURN))
+		if (input_->IsKeyTrigger(DIK_RETURN))
 		{
 			treeCsv->LoadCSV("Resources/Tree1.csv");
 			int i = 0;
@@ -724,7 +720,7 @@ void GameScene::Update()
 		}
 
 		if (isback == true) {
-			if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
+			if (input_->IsKeyPress(DIK_A) || input_->IsKeyPress(DIK_D) || input_->IsDownLStickLeft() || input_->IsDownLStickRight()) {
 				//アルファ値がこの値を超えたら演出スキップできる(alphaは1から低くなっていく)
 				if (alpha <= 0.8f) {
 					alpha = 0.0f;
@@ -776,14 +772,15 @@ void GameScene::Update()
 		goal->Update();
 
 		//シーン切り替え
-		if (goal->GetIsEnd() && input_->PushKey(DIK_SPACE)) {
-			scene = PLAY;
-			Reset(true);
+		if (goal->GetIsEnd()) {
+			if (input_->IsKeyPress(DIK_SPACE) || input_->IsPadTrigger(XINPUT_GAMEPAD_A)) {
+				scene = PLAY;
+				Reset(true);
 
-			pickSE->StopWave();
-			pickSE->SoundPlayWave(false, pickSEVolume);
+				pickSE->StopWave();
+				pickSE->SoundPlayWave(false, pickSEVolume);
+			}
 		}
-
 	}
 
 }

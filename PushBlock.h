@@ -45,8 +45,6 @@ public://メンバ関数
 
 public://静的メンバ関数
 	static void SetInput(Input* input) { PushBlock::input = input; }
-	static void SetDXInput(DXInput* dxInput) { PushBlock::dxInput = dxInput; }
-
 
 private://メンバ変数
 	XMFLOAT3 position = { 0.0f,1.0f,-1.0f };
@@ -58,8 +56,6 @@ private://メンバ変数
 	//入力
 	////キーボード
 	static Input* input;
-	//コントローラー
-	static DXInput* dxInput;
 	//ブロック
 	FbxObject3D* blockObject = nullptr;
 	//プレイヤー

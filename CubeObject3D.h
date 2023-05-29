@@ -32,12 +32,10 @@ public:	//静的メンバ関数
 	//セッター
 	static void SetDevice(ID3D12Device* device) { CubeObject3D::device = device; }
 	static void SetCamera(Camera* camera) { CubeObject3D::camera = camera; }
-	static void SetInput(Input* input) { CubeObject3D::input = input; }
 
 private://静的メンバ変数
 	static ID3D12Device* device;
 	static Camera* camera;
-	static Input* input;
 
 public://メンバ関数
 	//初期化
