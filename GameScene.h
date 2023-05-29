@@ -132,7 +132,8 @@ private:
 
 	//押している間のボタン
 	size_t pushButtonSize = 3;
-	FbxModel* pushButtonModel = nullptr;
+	FbxModel* pushButtonUpModel = nullptr;
+	FbxModel* pushButtonDownModel = nullptr;
 	std::list<std::unique_ptr<PushButton>> pushButtons;
 
 	//爆弾

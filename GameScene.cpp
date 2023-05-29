@@ -87,19 +87,20 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/grassFiled.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 
-	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
-	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/green1x1.png");
+	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/red1x1.png");
+	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
 	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
   
-	buttonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
-	buttonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
+	buttonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonUp", "Resources/color/yellow1x1.png");
+	buttonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonDown", "Resources/color/yellow1x1.png");
   
-	pushButtonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
-  bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
+	pushButtonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonUp", "Resources/color/blue1x1.png");
+	pushButtonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonDown", "Resources/color/blue1x1.png");
+
+	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
-	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	ladderModel = FbxLoader::GetInstance()->LoadModelFromFile("ladder", "Resources/color/brown1x1.png");
 	modelTree = FbxLoader::GetInstance()->LoadModelFromFile("Tree3", "Resources/black.png");
 
@@ -353,7 +354,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		pushButtonBlockColBoxs.push_back(std::move(newColObject2));
 
 		std::unique_ptr<PushButton>newObject = std::make_unique<PushButton>();
-		newObject->Initialize(pushButtonModel, player, pushButtonColBoxs.back().get(), pushButtonBlockColBoxs.back().get());
+		newObject->Initialize(pushButtonUpModel, pushButtonDownModel, player, pushButtonColBoxs.back().get(), pushButtonBlockColBoxs.back().get());
 
 		newObject->SetPosition(pushButtonCsv->GetPosition(i));
 		newObject->SetScale(pushButtonCsv->GetScale(i));
@@ -475,7 +476,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Goal::SetInput(input);
 	Goal::SetDXInput(dxInput);
 	goal->Initialize(whiteSprite, clearSprite, player);
-	goal->SetClearPos(100);
+	goal->SetClearPos(1000);
 
 
 	/*cube = new CubeObject3D();

@@ -88,7 +88,7 @@ void Button::ButtonCol()
 			pushTimer = 0;
 		}
 	}
-	
+
 	player->pushback(cubeObject);*/
 
 	float scale = 0.5;
@@ -130,6 +130,8 @@ void Button::ButtonCol()
 					blockUpSE->StopWave();
 					blockUpSE->SoundPlayWave(true, blockUpSEVolume);
 
+					this->scale = { 0.3,0.3,0.3};
+					this->position.y = 1.2;
 					buttonObject->SetModel(buttonDownModel);
 				}
 
@@ -192,6 +194,9 @@ void Button::PushButton()
 		push = false;
 
 		blockUpSE->StopWave();
+
+		this->scale = { 0.5,0.5,0.1 };
+		this->position.y = 1.0;
 		buttonObject->SetModel(buttonUpModel);
 	}
 
