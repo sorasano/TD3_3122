@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "FbxLoader.h"
 
-void PushButton::Initialize(FbxModel* ButtonModel, FbxModel* buttonDwonModel, Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject)
+void PushButton::Initialize(FbxModel* buttonUpModel, FbxModel* buttonDwonModel, Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject)
 {
 	//プレイヤー
 	this->player = player;
@@ -10,9 +10,9 @@ void PushButton::Initialize(FbxModel* ButtonModel, FbxModel* buttonDwonModel, Pl
 	//ボタン
 	this->buttonObject = new FbxObject3D;
 	this->buttonObject->Initialize();
-	this->buttonObject->SetModel(ButtonModel);
+	this->buttonObject->SetModel(buttonUpModel);
 	this->buttonUpModel = buttonUpModel;
-	this->buttonDownModel = buttonDownModel;
+	this->buttonDownModel = buttonDwonModel;
 
 	//ブロック
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
@@ -73,12 +73,16 @@ void PushButton::Update()
 			blockUpSE->StopWave();
 			blockUpSE->SoundPlayWave(true, blockUpSEVolume);
 
-			//buttonObject->SetModel(buttonDownModel);
+			this->scale = { 0.3,0.3,0.3 };
+			this->position.y = 1.2;
+			buttonObject->SetModel(buttonDownModel);
 		}
 		else {
 			blockUpSE->StopWave();
 
-			//buttonObject->SetModel(buttonUpModel);
+			this->scale = { 0.5,0.5,0.1 };
+			this->position.y = 1.0;
+			buttonObject->SetModel(buttonUpModel);
 		}
 
 	}
@@ -209,7 +213,7 @@ void PushButton::BlockCol()
 
 void PushButton::Push()
 {
-	position.y = 0.2;
+	//position.y = 0.2;
 	MoveBlock();
 }
 
@@ -220,11 +224,16 @@ void PushButton::MoveBlock()
 	//1フレーム当たりの移動幅
 	float flameMove = (upHight / pushCollTime) * 2;
 
+	isMove = false;
+
 	if (push) {
 		//上の制限
 		if (blockPosition.y < upHight) {
 			//経過時間が全体の半分以下だったら上がる
 			blockPosition.y += flameMove;
+
+			isMove = true;
+
 		}
 	}
 	else {
@@ -232,11 +241,12 @@ void PushButton::MoveBlock()
 		if (blockPosition.y > 1.0f) {
 			//経過時間が全体の半分以上だったら下がる
 			blockPosition.y -= flameMove;
+
+			isMove = true;
+
 		}
 
 	}
-
-	isMove = true;
 
 }
 

@@ -16,6 +16,7 @@ void Ladder::Initialize(FbxModel* LadderModel, Player* player)
 
 void Ladder::Update()
 {
+	rotate.y = 90 * (PI / 180);
 
 	Colision();
 
