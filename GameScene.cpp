@@ -600,22 +600,13 @@ void GameScene::Update()
 
 
 		//動かせるブロック
-
-		//	std::cout << *itr << "\n";
-		//}
 		i = 0;
 		for (auto itrBlocks = pushBlocks.begin(); itrBlocks != pushBlocks.end(); ++itrBlocks) {
-			/*for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks) {*/
-				/*for (int i = 0; i < pushBlockSize; i++) {*/
 			itrBlocks->get()->Collision();
-			/*pushBlock->Collision();*/
 			if (itrBlocks->get()->GetIsPush()) {
 				//動かせるブロック同士の判定
-				/*std::list<PushBlock> lst;*/
 				j = 0;
 				for (auto itr = pushBlockColBoxs.begin(); itr != pushBlockColBoxs.end(); ++itr) {
-					/*for (std::unique_ptr<PushBlock>& pushBlockColBox : pushBlocks) {*/
-						/*for (int j = 0; j < pushBlockSize; j++) {*/
 					if (i != j) {
 						itrBlocks->get()->pushback(itr->get());
 						//押さないかどうか
@@ -628,8 +619,6 @@ void GameScene::Update()
 				//ギミックの判定追加場所
 				//動かないブロックとの判定
 				for (auto itr = blockColBoxs.begin(); itr != blockColBoxs.end(); ++itr) {
-					/*for (std::unique_ptr<Block>& blockColBox : blocks) {*/
-						/*for (int j = 0; j < blockSize; j++) {*/
 					itrBlocks->get()->pushback(itr->get());
 					//押さないかどうか
 					if (itrBlocks->get()->GetNoPush()) {
@@ -638,8 +627,6 @@ void GameScene::Update()
 				}
 				//押している間のスイッチ
 				for (auto itr = pushButtonBlockColBoxs.begin(); itr != pushButtonBlockColBoxs.end(); ++itr) {
-					/*for (std::unique_ptr<PushButton>& pushButtonBlockColBox : pushButtons) {*/
-						/*for (int j = 0; j < pushButtonSize; j++) {*/
 					itrBlocks->get()->pushback(itr->get());
 					//押さないかどうか
 					if (itrBlocks->get()->GetNoPush()) {
@@ -664,10 +651,8 @@ void GameScene::Update()
 		//押している間のスイッチ
 		for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
 			for (auto itr = pushBlockColBoxs.begin(); itr != pushBlockColBoxs.end(); ++itr) {
-				/*for (std::unique_ptr<PushBlock>& pushBlockColBox : pushBlocks) {*/
 				pushButton->ButtonCol(itr->get());
 			}
-			/*pushButton->ButtonCol(playerColBox);*/
 			pushButton->Update();
 		}
 
@@ -983,6 +968,13 @@ void GameScene::Reset(bool isFirst)
 	//動く敵
 	for (std::unique_ptr<MoveEnemy>& moveEnemy : moveEnemys) {
 		moveEnemy->Reset();
+	}
+	//押せるブロック
+	for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks) {
+		pushBlock->Reset();
+	}//押している間のスイッチ
+	for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
+		pushButton->Reset();
 	}
 
 	//最初からなら

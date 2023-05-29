@@ -17,6 +17,7 @@ public://メンバ関数
 	void Draw(ID3D12GraphicsCommandList* cmdList);
 	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
 
+	void Reset();
 	//当たり判定
 	void Collision();
 	//ブロックを押す
@@ -27,7 +28,7 @@ public://メンバ関数
 	void pushback(CubeObject3D* cubeObject);
 
 	//セッター
-	void SetPosition(XMFLOAT3 position) { this->position = position; }
+	void SetPosition(XMFLOAT3 position) { this->position = position; savepos = position; }
 
 	void SetPositionX(float positionX) { this->position.x = positionX; }
 
@@ -64,8 +65,10 @@ private://メンバ変数
 	//プレイヤー
 	Player* player;
 	//判定
-
 	CubeObject3D* cubeObject = nullptr;
 	bool isPush = false;
 	bool noPush = false;
+	//リセット用
+	XMFLOAT3 savepos = { 0.0f,0.0f,0.0f };
+
 };

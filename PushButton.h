@@ -29,6 +29,7 @@ public:
 
 	void MoveBlock();
 
+	void Reset();
 	//セッター
 	//ボタン
 	void SetPosition(XMFLOAT3 position) { this->position = position; savepos = position; }
@@ -42,7 +43,7 @@ public:
 	void SetPush(bool push) { this->push = push; }
 
 	//ブロック
-	void SetBlockPosition(XMFLOAT3 blockPosition) { this->blockPosition = blockPosition; }
+	void SetBlockPosition(XMFLOAT3 blockPosition) {	this->blockPosition = blockPosition; saveblockpos= position;}
 
 	void SetBlockPositionX(float blockPositionX) { this->blockPosition.x = blockPositionX; }
 
@@ -71,6 +72,8 @@ private:
 
 	XMFLOAT3 buttonColPosition = { 0.0f,1.0f,-1.0f };
 	XMFLOAT3 blockColPosition = { 0.0f,1.0f,-1.0f };
+
+	XMFLOAT3 saveblockpos = { 0.0f,0.0f,0.0f };
 	XMFLOAT3 savepos = { 0.0f,0.0f,0.0f };
 
 private:
@@ -92,6 +95,7 @@ private:
 	//判定
 	CubeObject3D* buttonColBox = nullptr;
 	CubeObject3D* blockColBox = nullptr;
+
 
 	//ボタンが押されたとき
 	bool push = false;

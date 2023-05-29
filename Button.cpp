@@ -64,7 +64,7 @@ void Button::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	buttonObject->Draw(cmdList);
 	blockObject->Draw(cmdList);
-	cubeObject->Draw(cmdList);
+	/*cubeObject->Draw(cmdList);*/
 }
 
 void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)
