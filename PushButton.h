@@ -11,7 +11,7 @@ class PushButton
 
 public:
 
-	void Initialize(FbxModel* buttonUpModel,Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject);
+	void Initialize(FbxModel* buttonUpModel, FbxModel* buttonDwonModel,Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject);
 
 	void Update();
 
@@ -85,7 +85,8 @@ private:
 	static DXInput* dxInput;
 	//fbx
 	FbxObject3D* buttonObject = nullptr;
-
+	FbxModel* buttonUpModel;
+	FbxModel* buttonDownModel;
 	//ÉuÉçÉbÉN
 	FbxObject3D* blockObject = nullptr;
 	FbxModel* blockModel = nullptr;
@@ -106,5 +107,11 @@ private:
 	//Ç«ÇÃÇ≠ÇÁÇ¢Ç†Ç∞ÇÈÇ©
 	float upHight = 5;
 
+	bool isMove = false;
+	bool oldIsMove = false;
+
+	//âπ
+	AudioManager* blockUpSE;
+	float blockUpSEVolume = 0.1f;
 };
 

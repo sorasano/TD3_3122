@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "FbxLoader.h"
 
-void PushButton::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject)
+void PushButton::Initialize(FbxModel* ButtonModel, FbxModel* buttonDwonModel, Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject)
 {
 	//プレイヤー
 	this->player = player;
@@ -11,6 +11,8 @@ void PushButton::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D*
 	this->buttonObject = new FbxObject3D;
 	this->buttonObject->Initialize();
 	this->buttonObject->SetModel(ButtonModel);
+	this->buttonUpModel = buttonUpModel;
+	this->buttonDownModel = buttonDownModel;
 
 	//ブロック
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
@@ -29,10 +31,15 @@ void PushButton::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D*
 
 	blockColBox = blockObject;
 	blockColBox->SetScale(XMFLOAT3(blockScale.x * 100.0f, blockScale.y * 100.0f, blockScale.z * 100.0f));
+
+	//音
+	blockUpSE = new AudioManager();
+	blockUpSE->SoundLoadWave("Resources/Audio/blockupSE.wav");
 }
 
 void PushButton::Update()
 {
+
 
 	buttonColPosition = savepos;
 	buttonColPosition.y += 0.5f;
@@ -56,10 +63,27 @@ void PushButton::Update()
 		Push();
 	}
 	else {
-		MoveBlock();
-		position.y = 0.5f;
+		MoveBlock();		
 	}
 	push = false;
+
+	if (isMove != oldIsMove){
+
+		if (isMove) {
+			blockUpSE->StopWave();
+			blockUpSE->SoundPlayWave(true, blockUpSEVolume);
+
+			//buttonObject->SetModel(buttonDownModel);
+		}
+		else {
+			blockUpSE->StopWave();
+
+			//buttonObject->SetModel(buttonUpModel);
+		}
+
+	}
+
+	oldIsMove = isMove;
 
 	//ボタン
 	buttonObject->SetPosition(position);
@@ -209,7 +233,10 @@ void PushButton::MoveBlock()
 			//経過時間が全体の半分以上だったら下がる
 			blockPosition.y -= flameMove;
 		}
+
 	}
+
+	isMove = true;
 
 }
 
