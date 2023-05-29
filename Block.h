@@ -36,6 +36,7 @@ public://ƒƒ“ƒoŠÖ”
 	bool GetIsPush() { return isPush; }
 	bool GetNoPush() { return noPush; }
 	XMFLOAT3 GetPosition() { return position; }
+	CubeObject3D *GetCubeObject() { return cubeObject; }
 public://Ã“Iƒƒ“ƒoŠÖ”
 	static void SetInput(Input* input) { Block::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Block::dxInput = dxInput; }

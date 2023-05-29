@@ -38,7 +38,7 @@ void Button::Update()
 {
 
 	colPosition = position;
-	/*colPosition.y -= 0.2f;*/
+	/*colPosition.y += 1.2f;*/
 
 	//”»’è
 	cubeObject->SetPosition(colPosition);
@@ -70,7 +70,7 @@ void Button::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	buttonObject->Draw(cmdList);
 	blockObject->Draw(cmdList);
-	cubeObject->Draw(cmdList);
+	/*cubeObject->Draw(cmdList);*/
 }
 
 void Button::DrawLightView(ID3D12GraphicsCommandList* cmdList)

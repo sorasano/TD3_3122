@@ -29,14 +29,13 @@ void PushButton::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D*
 
 	blockColBox = blockObject;
 	blockColBox->SetScale(XMFLOAT3(blockScale.x * 100.0f, blockScale.y * 100.0f, blockScale.z * 100.0f));
-
-	savepos = position;
 }
 
 void PushButton::Update()
 {
 
 	buttonColPosition = savepos;
+	buttonColPosition.y += 0.5f;
 	blockColPosition = blockPosition;
 	blockColPosition.y += 1.5f;
 	/*colPosition.y -= 0.2f;*/
@@ -49,13 +48,17 @@ void PushButton::Update()
 
 	BlockCol();
 
-	/*if (push) {
+	if (buttonColBox->CheakCollision(player->GetCubeObject())) {
+		push = true;
+	}
+
+	if (push) {
 		Push();
 	}
 	else {
 		MoveBlock();
-	}*/
-	MoveBlock();
+		position.y = 0.5f;
+	}
 	push = false;
 
 	//ƒ{ƒ^ƒ“
@@ -76,8 +79,8 @@ void PushButton::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	buttonObject->Draw(cmdList);
 	blockObject->Draw(cmdList);
-	buttonColBox->Draw(cmdList);
-	blockColBox->Draw(cmdList);
+	/*buttonColBox->Draw(cmdList);
+	blockColBox->Draw(cmdList);*/
 }
 
 void PushButton::DrawLightView(ID3D12GraphicsCommandList* cmdList)
@@ -208,6 +211,12 @@ void PushButton::MoveBlock()
 		}
 	}
 
+}
+
+void PushButton::Reset()
+{
+	position = savepos;
+	blockPosition = saveblockpos;
 }
 
 void PushButton::SetSRV(ID3D12DescriptorHeap* SRV)
