@@ -31,7 +31,7 @@ public:
 
 	//セッター
 	//ボタン
-	void SetPosition(XMFLOAT3 position) { this->position = position; }
+	void SetPosition(XMFLOAT3 position) { this->position = position; savepos = position; }
 
 	void SetPositionX(float positionX) { this->position.x = positionX; savepos.x = positionX; }
 
@@ -54,6 +54,7 @@ public:
 	void SetUpHeight(float upHight) { this->upHight = upHight; }
 
 	XMFLOAT3 GetPosition() { return position; }
+	CubeObject3D* GetCubeObject() { return blockColBox; }
 
 	static void SetInput(Input* input) { PushButton::input = input; }
 	static void SetDXInput(DXInput* dxInput) { PushButton::dxInput = dxInput; }

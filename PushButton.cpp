@@ -37,6 +37,7 @@ void PushButton::Update()
 {
 
 	buttonColPosition = savepos;
+	buttonColPosition.y += 0.5f;
 	blockColPosition = blockPosition;
 	blockColPosition.y += 1.5f;
 	/*colPosition.y -= 0.2f;*/
@@ -49,13 +50,17 @@ void PushButton::Update()
 
 	BlockCol();
 
-	/*if (push) {
+	if (buttonColBox->CheakCollision(player->GetCubeObject())) {
+		push = true;
+	}
+
+	if (push) {
 		Push();
 	}
 	else {
 		MoveBlock();
-	}*/
-	MoveBlock();
+		position.y = 0.5f;
+	}
 	push = false;
 
 	//ƒ{ƒ^ƒ“

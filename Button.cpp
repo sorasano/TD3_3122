@@ -32,7 +32,7 @@ void Button::Update()
 {
 
 	colPosition = position;
-	/*colPosition.y -= 0.2f;*/
+	/*colPosition.y += 1.2f;*/
 
 	//”»’è
 	cubeObject->SetPosition(colPosition);

@@ -48,6 +48,11 @@ void PushBlock::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 	blockObject->DrawLightView(cmdList);
 }
 
+void PushBlock::Reset()
+{
+	position = savepos;
+}
+
 void PushBlock::Collision()
 {
 	if (player->pushBlock(cubeObject)) {

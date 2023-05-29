@@ -92,6 +92,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
 	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
+	pushButtonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
@@ -112,6 +113,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	groundObject->SetModel(groundModel);
 
 	//----------プレイヤー--------
+
 	playerColBox = new CubeObject3D();
 	playerColBox->Initialize();
 	playerColBox->SetModel(cubeModel);
@@ -596,63 +598,78 @@ void GameScene::Update()
 		titleSprite->Update();
 
 
-		////動かせるブロック
-		//for (int i = 0; i < pushBlockSize; i++) {
-		//	pushBlock->Collision();
-		//	if (pushBlock->GetIsPush()) {
-		//		//動かせるブロック同士の判定
-		//		for (int j = 0; j < pushBlockSize; j++) {
-		//			if (i != j) {
-		//				pushBlock->pushback(pushBlockColBox[j]);
-		//				//押さないかどうか
-		//				if (pushBlock->GetNoPush()) {
-		//					noPush = true;
-		//				}
-		//			}
-		//		}
-		//		//ギミックの判定追加場所
-		//		//動かないブロックとの判定
-		//		for (int j = 0; j < blockSize; j++) {
-		//			if (i != j) {
-		//				pushBlock->pushback(blockColBox[j]);
-		//				//押さないかどうか
-		//				if (pushBlock->GetNoPush()) {
-		//					noPush = true;
-		//				}
-		//			}
-		//		}
-		//		//押している間のスイッチ
-		//		for (int j = 0; j < pushButtonSize; j++) {
-		//			if (i != j) {
-		//				pushBlock->pushback(pushButtonBlockColBox[j]);
-		//				//押さないかどうか
-		//				if (pushBlock->GetNoPush()) {
-		//					noPush = true;
-		//				}
-		//			}
-		//		}
 
-		//		//ギミックの判定追加場所ここまで
-		//		if (noPush) {
-		//			pushBlock->NoPush();
-		//		}
-		//		else {
-		//			pushBlock->Push();
-		//		}
-		//	}
+		//動かせるブロック
 
-		//	pushBlock->Update();
+		//	std::cout << *itr << "\n";
 		//}
-		//noPush = false;
+		i = 0;
+		for (auto itrBlocks = pushBlocks.begin(); itrBlocks != pushBlocks.end(); ++itrBlocks) {
+			/*for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks) {*/
+				/*for (int i = 0; i < pushBlockSize; i++) {*/
+			itrBlocks->get()->Collision();
+			/*pushBlock->Collision();*/
+			if (itrBlocks->get()->GetIsPush()) {
+				//動かせるブロック同士の判定
+				/*std::list<PushBlock> lst;*/
+				j = 0;
+				for (auto itr = pushBlockColBoxs.begin(); itr != pushBlockColBoxs.end(); ++itr) {
+					/*for (std::unique_ptr<PushBlock>& pushBlockColBox : pushBlocks) {*/
+						/*for (int j = 0; j < pushBlockSize; j++) {*/
+					if (i != j) {
+						itrBlocks->get()->pushback(itr->get());
+						//押さないかどうか
+						if (itrBlocks->get()->GetNoPush()) {
+							noPush = true;
+						}
+					}
+					j++;
+				}
+				//ギミックの判定追加場所
+				//動かないブロックとの判定
+				for (auto itr = blockColBoxs.begin(); itr != blockColBoxs.end(); ++itr) {
+					/*for (std::unique_ptr<Block>& blockColBox : blocks) {*/
+						/*for (int j = 0; j < blockSize; j++) {*/
+					itrBlocks->get()->pushback(itr->get());
+					//押さないかどうか
+					if (itrBlocks->get()->GetNoPush()) {
+						noPush = true;
+					}
+				}
+				//押している間のスイッチ
+				for (auto itr = pushButtonBlockColBoxs.begin(); itr != pushButtonBlockColBoxs.end(); ++itr) {
+					/*for (std::unique_ptr<PushButton>& pushButtonBlockColBox : pushButtons) {*/
+						/*for (int j = 0; j < pushButtonSize; j++) {*/
+					itrBlocks->get()->pushback(itr->get());
+					//押さないかどうか
+					if (itrBlocks->get()->GetNoPush()) {
+						noPush = true;
+					}
+				}
 
-		////押している間のスイッチ
-		//for (int i = 0; i < pushButtonSize; i++) {
-		//	for (int j = 0; j < pushBlockSize; j++) {
-		//		pushButton->ButtonCol(pushBlockColBox[j]);
-		//	}
-		//	pushButton->ButtonCol(playerColBox);
-		//	pushButton->Update();
-		//}
+				//ギミックの判定追加場所ここまで
+				if (noPush) {
+					itrBlocks->get()->NoPush();
+				}
+				else {
+					itrBlocks->get()->Push();
+				}
+			}
+
+			itrBlocks->get()->Update();
+			i++;
+		}
+		noPush = false;
+
+		//押している間のスイッチ
+		for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
+			for (auto itr = pushBlockColBoxs.begin(); itr != pushBlockColBoxs.end(); ++itr) {
+				/*for (std::unique_ptr<PushBlock>& pushBlockColBox : pushBlocks) {*/
+				pushButton->ButtonCol(itr->get());
+			}
+			/*pushButton->ButtonCol(playerColBox);*/
+			pushButton->Update();
+		}
 
 		//Tree1
 		//スペースキーでファイル読み込み更新
@@ -798,7 +815,7 @@ void GameScene::DrawFBXLightView()
 	}
 
 	//ブロック
-	for (std::unique_ptr<Block>& block : blocks){
+	for (std::unique_ptr<Block>& block : blocks) {
 		if (camera_->GetEye().x - block->GetPosition().x >= -20 && camera_->GetEye().x - block->GetPosition().x <= 20)
 			block->DrawLightView(dxCommon_->GetCommandList());
 	}
@@ -990,7 +1007,7 @@ DirectX::XMMATRIX GameScene::GetLightViewProjection()
 
 void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 {
-	
+
 	groundObject->SetSRV(SRV);
 
 	for (std::unique_ptr<FbxObject3D>& object : objectTree)

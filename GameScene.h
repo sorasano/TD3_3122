@@ -221,6 +221,7 @@ private:
 	//当たり判定キューブオブジェクト
 	CubeObject3D* playerColBox = nullptr;
 
+	/*std::list<std::unique_ptr<CubeObject3D>> playerColBox;*/
 	std::list<std::unique_ptr<CubeObject3D>> buttonColBoxs;
 	std::list<std::unique_ptr<CubeObject3D>> pushBlockColBoxs;
 	std::list<std::unique_ptr<CubeObject3D>> blockColBoxs;
@@ -244,4 +245,8 @@ private:
 
 	//メニュー
 	Menu* menu;
+	
+	//判定用 
+	int i = 0;
+	int j = 0;
 };
