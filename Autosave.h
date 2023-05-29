@@ -1,5 +1,6 @@
 #pragma once
 #include "Player.h"
+#include "CSVLoader.h"
 
 class Autosave
 {
@@ -10,15 +11,16 @@ public:
 
 	void Update();
 
-	XMFLOAT2 GetSavePos() { return savePos[nowSavePos]; }
-	XMFLOAT2 GetStartPos() { return savePos[0]; }
+	XMFLOAT2 GetSavePos() { return XMFLOAT2{ savePos[nowSavePos].x, savePos[nowSavePos].y }; }
+	XMFLOAT2 GetStartPos() { return XMFLOAT2{ savePos[0].x, savePos[0].y }; }
 
 private:
 	
-	//セーブ地点個数
-	static const int saveSize = 22;
+	CSVLoader* autoSaveCsv = nullptr;
 
-	XMFLOAT2 savePos[saveSize];
+	//セーブ地点個数
+	static const int saveSize = 3;
+	XMFLOAT3 savePos[100];
 
 	//今どのセーブ地点か
 	int nowSavePos = 0;

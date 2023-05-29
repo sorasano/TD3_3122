@@ -2,7 +2,7 @@
 #include "imgui.h"
 #include "FbxLoader.h"
 
-void Button::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D* cubeObject)
+void Button::Initialize(FbxModel* buttonUpModel, FbxModel* buttonDownModel, Player* player, CubeObject3D* cubeObject)
 {
 	//プレイヤー
 	this->player = player;
@@ -10,7 +10,9 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D* cub
 	//ボタン
 	buttonObject = new FbxObject3D;
 	buttonObject->Initialize();
-	buttonObject->SetModel(ButtonModel);
+	buttonObject->SetModel(buttonUpModel);
+	this->buttonUpModel = buttonUpModel;
+	this->buttonDownModel = buttonDownModel;
 
 	//ブロック
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
@@ -26,6 +28,10 @@ void Button::Initialize(FbxModel* ButtonModel, Player* player, CubeObject3D* cub
 	//判定
 	this->cubeObject = cubeObject;
 	this->cubeObject->SetScale(XMFLOAT3(scale.x * 100.0f, scale.y * 100.0f, scale.z * 100.0f));
+
+	//音
+	blockUpSE = new AudioManager();
+	blockUpSE->SoundLoadWave("Resources/Audio/blockupSE.wav");
 }
 
 void Button::Update()
@@ -107,7 +113,7 @@ void Button::ButtonCol()
 
 
 
-	//当たってスペースを押したら
+	//当たったら
 	if (pPosX1 < bPosX2 && bPosX1 < pPosX2) {
 
 		if (pPosY1 < bPosY2 && bPosY1 < pPosY2) {
@@ -116,9 +122,15 @@ void Button::ButtonCol()
 
 				if (push == false)
 				{
+
+					//押された
 					push = true;
 					pushTimer = 0;
 
+					blockUpSE->StopWave();
+					blockUpSE->SoundPlayWave(true, blockUpSEVolume);
+
+					buttonObject->SetModel(buttonDownModel);
 				}
 
 			}
@@ -172,13 +184,15 @@ void Button::PushButton()
 {
 
 	pushTimer++;
-	position.y = 0.2;
 
 	MoveBlock();
 
 	if (pushTimer >= pushCollTime) {
+		//動き終わった
 		push = false;
-		position.y = 0.5;
+
+		blockUpSE->StopWave();
+		buttonObject->SetModel(buttonUpModel);
 	}
 
 }

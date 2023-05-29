@@ -27,6 +27,10 @@ void Player::Initialize(CubeObject3D* cubeObject)
 	//判定
 	this->cubeObject_ = cubeObject;
 	this->cubeObject_->SetScale(XMFLOAT3(0.5, 1.5, 1));
+
+	//音
+	walkingSE = new AudioManager();
+	walkingSE->SoundLoadWave("Resources/Audio/walking.wav");
 }
 
 void Player::Update()
@@ -159,9 +163,11 @@ void Player::Update()
 		action = JUMP;
 	}
 
-	//モデルの変更
+	//モデルの変更+音の変更
 
 	if (action != oldAction) {
+
+		walkingSE->StopWave();
 
 		if (action == WAIT) {
 			playerObject->SetModel(playerWaitModel);
@@ -170,6 +176,8 @@ void Player::Update()
 		else if (action == WALK) {
 			playerObject->SetModel(playerWalkModel);
 			playerObject->PlayAnimation();
+
+			walkingSE->SoundPlayWave(walkingSEVolume);
 		}
 		else if (action == JUMP) {
 			playerObject->SetModel(playerJumpModel);
@@ -181,6 +189,7 @@ void Player::Update()
 			playerObject->PlayAnimation();
 
 		}
+
 	}
 
 	oldAction = action;

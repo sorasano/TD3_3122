@@ -11,7 +11,7 @@ class Button
 
 public:
 
-	void Initialize(FbxModel* buttonModel,Player *player,CubeObject3D* cubeObject);
+	void Initialize(FbxModel* buttonUpModel, FbxModel* buttonDownModel,Player *player,CubeObject3D* cubeObject);
 
 	void Update();
 
@@ -79,7 +79,8 @@ private:
 	static DXInput* dxInput;
 	//fbx
 	FbxObject3D* buttonObject = nullptr;
-
+	FbxModel* buttonUpModel;
+	FbxModel* buttonDownModel;
 	//ÉuÉçÉbÉN
 	FbxObject3D* blockObject = nullptr;
 	FbxModel* blockModel = nullptr;
@@ -97,5 +98,9 @@ private:
 
 	//Ç«ÇÃÇ≠ÇÁÇ¢Ç†Ç∞ÇÈÇ©
 	float upHight = 5;
+
+	//âπ
+	AudioManager* blockUpSE;
+	float blockUpSEVolume = 0.1f;
 };
 

@@ -4,6 +4,7 @@
 #include "DXInput.h"
 
 #include "Sprite.h"
+#include "AudioManager.h"
 
 enum MenuSerect {
 	MENURESET,
@@ -19,7 +20,7 @@ private: // エイリアス
 
 public:
 
-	void Initialize(Input* input);
+	void Initialize(Input* input,DXInput* dxInput);
 
 	void Update();
 
@@ -55,4 +56,12 @@ private:
 	//シーン切り替えをしたか
 	bool isSerect;
 
+	//音
+	//選択音
+	AudioManager* selectSE;
+	float selectSEVolume = 0.1f;
+
+	//決定音
+	AudioManager* pickSE;
+	float pickSEVolume = 0.05f;
 };

@@ -5,6 +5,7 @@
 #include"CubeModel.h"
 #include"CubeObject3D.h"
 #include "Camera.h"
+#include "AudioManager.h"
 
 enum PlayerAction {
 	WAIT,
@@ -74,7 +75,7 @@ public:
 	
 private:
 	
-	XMFLOAT3 position = { 0.0f,2.0f,-1.0f};
+	XMFLOAT3 position = { 65.0f,2.0f,-1.0f};
 	XMFLOAT3 scale = { 0.002f,0.001f,0.002f };
 	XMFLOAT3 rotate = { 0.0f,0.0f,0.0f };
 
@@ -140,5 +141,9 @@ private:
 	//アニメーションするか
 	bool stopAnimation = false;
 	bool oldStopAnimation = false;
+
+	//音
+	AudioManager* walkingSE;
+	float walkingSEVolume = 1.0f;
 };
 

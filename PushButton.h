@@ -11,7 +11,7 @@ class PushButton
 
 public:
 
-	void Initialize(FbxModel* buttonModel, Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject);
+	void Initialize(FbxModel* buttonUpModel,Player* player, CubeObject3D* buttonObject, CubeObject3D* blockObject);
 
 	void Update();
 

@@ -91,10 +91,14 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
 	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
-	buttonModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
+
+	buttonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
+	buttonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
+
 	bombModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	swampModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/brown1x1.png");
 	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/blue1x1.png");
+	pushBlockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/red1x1.png");
 	ladderModel = FbxLoader::GetInstance()->LoadModelFromFile("ladder", "Resources/color/brown1x1.png");
 	modelTree = FbxLoader::GetInstance()->LoadModelFromFile("Tree3", "Resources/black.png");
 
@@ -198,7 +202,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 		buttonColBoxs.push_back(std::move(newColObject));
 
 		std::unique_ptr<Button>newObject = std::make_unique<Button>();
-		newObject->Initialize(buttonModel, player, buttonColBoxs.back().get());
+		newObject->Initialize(buttonUpModel, buttonDownModel, player, buttonColBoxs.back().get());
 
 		newObject->SetPosition(buttonCsv->GetPosition(i));
 		newObject->SetScale(buttonCsv->GetScale(i));
@@ -469,8 +473,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	Goal::SetInput(input);
 	Goal::SetDXInput(dxInput);
 	goal->Initialize(whiteSprite, clearSprite, player);
-	goal->SetClearPos(3);
-
+	goal->SetClearPos(100);
 
 
 	/*cube = new CubeObject3D();
@@ -481,23 +484,19 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//オーディオ初期化
 	AudioManager::StaticInitialize();
 	//音
-	titleBGM = new AudioManager();
-	titleBGM->SoundLoadWave("Resources/Audio/titleBGM.wav");
+	playBGM = new AudioManager();
+	playBGM->SoundLoadWave("Resources/Audio/playBGM.wav");
+	pickSE = new AudioManager();
+	pickSE->SoundLoadWave("Resources/Audio/pickSE.wav");
 
 	//メニュー
 	menu = new Menu();
-	menu->Initialize(input_);
-	//Menu::SetInput(input_);
-	//Menu::SetDXInput(dxInput);
+	menu->Initialize(input_,dxInput);
 
 }
 
 void GameScene::Update()
 {
-
-	//タイトルBGM流す
-	//titleBGM->SoundPlayWave(true, titleBGMVolume);
-	//titleBGM->StopWave();
 
 	//カメラ更新
 	camera_->Update(player->GetPosition());
@@ -537,6 +536,9 @@ void GameScene::Update()
 
 	case PLAY:
 
+		//BGM流す
+		playBGM->SoundPlayWave(true, playBGMVolume);
+
 		//タイトルスプライト動かす
 		if (input_->PushKey(DIK_A) || input_->PushKey(DIK_D)) {
 			titleSprite->StartFlipOut();
@@ -547,6 +549,12 @@ void GameScene::Update()
 		if (input_->TriggerKey(DIK_M) && !player->GetDeath()) {
 			scene = MENU;
 			menu->Reset();
+
+
+			pickSE->StopWave();
+			pickSE->SoundPlayWave(false, pickSEVolume);
+			//BGM停止
+			playBGM->StopWave();
 		}
 		else if (goal->GetIsClear()) {
 			scene = CLEAR;
@@ -768,6 +776,9 @@ void GameScene::Update()
 		if (goal->GetIsEnd() && input_->PushKey(DIK_SPACE)) {
 			scene = PLAY;
 			Reset(true);
+
+			pickSE->StopWave();
+			pickSE->SoundPlayWave(false, pickSEVolume);
 		}
 
 	}
