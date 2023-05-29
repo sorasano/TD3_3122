@@ -1,8 +1,8 @@
 #include "Menu.h"
-Input* Menu::input = nullptr;
-DXInput* Menu::dxInput = nullptr;
+//Input* Menu::input = nullptr;
+//DXInput* Menu::dxInput = nullptr;
 
-void Menu::Initialize()
+void Menu::Initialize(Input* input)
 {
 
 	baseSprite = new Sprite();
@@ -38,6 +38,8 @@ void Menu::Initialize()
 	closeSprite->Update();
 
 	this->position = baseSprite->GetPosition();
+
+	this->input = input;
 }
 
 void Menu::Update()
@@ -81,6 +83,11 @@ void Menu::Update()
 
 	//スペースを押したらシーン変更
 	if (input->PushKey(DIK_SPACE)) {
+		isSerect = true;
+	}
+	else if (input->TriggerKey(DIK_M)) {
+		//メニューを閉じる
+		serect = MENUCLOSE;
 		isSerect = true;
 	}
 
