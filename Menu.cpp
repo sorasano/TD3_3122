@@ -1,6 +1,6 @@
 #include "Menu.h"
 
-void Menu::Initialize(Input* input, DXInput* dxInput)
+void Menu::Initialize(Input* input)
 {
 
 	baseSprite = new Sprite();
@@ -38,7 +38,6 @@ void Menu::Initialize(Input* input, DXInput* dxInput)
 	this->position = baseSprite->GetPosition();
 
 	this->input = input;
-	this->dxInput = dxInput;
 
 	//音
 	selectSE = new AudioManager();
@@ -52,7 +51,7 @@ void Menu::Update()
 
 	//メニュー操作
 
-	if (input->TriggerKey(DIK_W))
+	if (input->IsKeyTrigger(DIK_W) || input->IsTriggerLStickDown())
 	{
 		if (serect != MENURESET) {
 			serect--;
@@ -61,7 +60,7 @@ void Menu::Update()
 		selectSE->StopWave();
 		selectSE->SoundPlayWave(false,selectSEVolume);
 	}
-	else if (input->TriggerKey(DIK_S))
+	else if (input->IsKeyTrigger(DIK_S) || input->IsTriggerLStickUp())
 	{
 		if (serect != MENUCLOSE) {
 			serect++;
@@ -93,13 +92,13 @@ void Menu::Update()
 	}
 
 	//スペースを押したらシーン変更
-	if (input->PushKey(DIK_SPACE)) {
+	if (input->IsKeyPress(DIK_SPACE) || input->IsPadTrigger(XINPUT_GAMEPAD_A)) {
 		isSerect = true;
 
 		pickSE->StopWave();
 		pickSE->SoundPlayWave(false,pickSEVolume);
 	}
-	else if (input->TriggerKey(DIK_M)) {
+	else if (input->IsKeyTrigger(DIK_M) || input->IsPadTrigger(XINPUT_GAMEPAD_START)) {
 		//メニューを閉じる
 		serect = MENUCLOSE;
 		isSerect = true;

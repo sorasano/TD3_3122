@@ -1,7 +1,6 @@
 #pragma once
 #include "DirectXMath.h"
 #include "Input.h"
-#include "DXInput.h"
 #include "WinApp.h"
 //#include "Player.h"
 #define PI 3.14159265359
@@ -28,7 +27,7 @@ public:
 	//シングルトンインスタンス
 	static Camera* GetInstance();
 	static void SetInput(Input* input) { Camera::input = input; }
-	static void SetDXInput(DXInput* dxInput) { Camera::dxInput = dxInput; }
+
 	//インストラクタ デストラクタ
 	Camera();
 	~Camera();
@@ -53,8 +52,7 @@ private:
 	//入力
 	//キーボード
 	static Input* input;
-	//コントローラー
-	static DXInput* dxInput;
+
 	//射影変換
 	XMMATRIX matProjection_;
 	//ビュー変換行列

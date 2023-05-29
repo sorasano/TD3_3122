@@ -3,7 +3,6 @@
 #define PI 3.14159265359
 
 Input* Camera::input = nullptr;
-DXInput* Camera::dxInput = nullptr;
 
 Camera* Camera::GetInstance()
 {
@@ -36,37 +35,37 @@ void Camera::Initialize()
 void Camera::Update(XMFLOAT3 playerPos)
 {
 	//デバッグ用
-	/*if (input->PushKey(DIK_D))
+	/*if (input->IsKeyPress(DIK_D))
 	{
 		position.x += 0.55;
 	}
-	if (input->PushKey(DIK_A))
+	if (input->IsKeyPress(DIK_A))
 	{
 		position.x -= 0.55;
 	}
-	if (input->PushKey(DIK_W))
+	if (input->IsKeyPress(DIK_W))
 	{
 		eye_.y += 0.55;
 	}
-	if (input->PushKey(DIK_S))
+	if (input->IsKeyPress(DIK_S))
 	{
 		eye_.y -= 0.55;
 	}
-	if (input->PushKey(DIK_W))
+	if (input->IsKeyPress(DIK_W))
 	{
 		position.z += 0.55;
 	}
-	if (input->PushKey(DIK_S))
+	if (input->IsKeyPress(DIK_S))
 	{
 		position.z -= 0.55;
 	}*/
 
 	//追従カメラ
-	//if (input->PushKey(DIK_A))
+	//if (input->IsKeyPress(DIK_A))
 	//{
 	//	target_.x -= 0.1;
 	//}
-	//if (input->PushKey(DIK_D))
+	//if (input->IsKeyPress(DIK_D))
 	//{
 	//	target_.x += 0.1;
 	//}
@@ -89,29 +88,29 @@ void Camera::DebugUpdate()
 	float rot = (float)PI / 120.0f;
 
 	//視点座標を変更
-	if (input->PushKey(DIK_LEFT))
+	if (input->IsKeyPress(DIK_LEFT))
 	{
 		DebugChangeRot -= rot;
 	}
-	if (input->PushKey(DIK_RIGHT))
+	if (input->IsKeyPress(DIK_RIGHT))
 	{
 		DebugChangeRot += rot;
 	}
-	if (input->PushKey(DIK_UP))
+	if (input->IsKeyPress(DIK_UP))
 	{
 		DebugChangeRot2 -= rot;
 	}
-	if (input->PushKey(DIK_DOWN))
+	if (input->IsKeyPress(DIK_DOWN))
 	{
 		DebugChangeRot2 += rot;
 	}
 
 	//ターゲットまでの距離を変更
-	if (input->PushKey(DIK_O))
+	if (input->IsKeyPress(DIK_O))
 	{
 		DebugTargetDistance -= 0.2;
 	}
-	if (input->PushKey(DIK_P))
+	if (input->IsKeyPress(DIK_P))
 	{
 		DebugTargetDistance += 0.2;
 	}

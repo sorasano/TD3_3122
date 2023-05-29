@@ -1,7 +1,6 @@
 #include "Block.h"
 
 Input* Block::input = nullptr;
-DXInput* Block::dxInput = nullptr;
 
 void Block::Initialize(FbxModel* blockModel, Player* player, CubeObject3D* cubeObject)
 {
@@ -54,23 +53,23 @@ void Block::Collision()
 void Block::pushback(CubeObject3D* cubeObject)
 {
 
-	if (input->PushKey(DIK_A) || input->PushKey(DIK_D)) {
+	if (input->IsKeyPress(DIK_A) || input->IsKeyPress(DIK_D) || input->IsDownLStickLeft() || input->IsDownLStickRight()) {
 		if (player->GetinSwamp()) {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x -= player->GetSwampSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x += player->GetSwampSpeed();
 			}
 		}
 		else {
-			if (input->PushKey(DIK_A)) {
+			if (input->IsKeyPress(DIK_A) || input->IsDownLStickLeft()) {
 				newposition = position;
 				newposition.x -= player->GetSpeed();
 			}
-			if (input->PushKey(DIK_D)) {
+			if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight()) {
 				newposition = position;
 				newposition.x += player->GetSpeed();
 			}

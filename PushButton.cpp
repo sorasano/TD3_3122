@@ -61,9 +61,17 @@ void PushButton::Update()
 
 	if (push) {
 		Push();
+
+		this->scale = { 0.3,0.3,0.3 };
+		this->position.y = 1.2;
+		buttonObject->SetModel(buttonDownModel);
 	}
 	else {
 		MoveBlock();		
+
+		this->scale = { 0.5,0.5,0.1 };
+		this->position.y = 1.0;
+		buttonObject->SetModel(buttonUpModel);
 	}
 	push = false;
 
@@ -72,19 +80,10 @@ void PushButton::Update()
 		if (isMove) {
 			blockUpSE->StopWave();
 			blockUpSE->SoundPlayWave(true, blockUpSEVolume);
-
-			this->scale = { 0.3,0.3,0.3 };
-			this->position.y = 1.2;
-			buttonObject->SetModel(buttonDownModel);
 		}
 		else {
 			blockUpSE->StopWave();
-
-			this->scale = { 0.5,0.5,0.1 };
-			this->position.y = 1.0;
-			buttonObject->SetModel(buttonUpModel);
 		}
-
 	}
 
 	oldIsMove = isMove;

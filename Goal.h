@@ -19,14 +19,8 @@ public:
 	//セッター
 	void SetClearPos(float clearPos) {this->clearPos=clearPos; };
 
-	static void SetInput(Input* input) { Goal::input = input; }
-	static void SetDXInput(DXInput* dxInput) { Goal::dxInput = dxInput; }
 private:
-	//キーボード
-	static Input* input;
-	//コントローラー
-	static DXInput* dxInput;
-	
+
 	bool isClear = false;
 	float clearPos = 10;
 	float alpha = 0.0f;

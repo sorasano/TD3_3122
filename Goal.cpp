@@ -1,9 +1,5 @@
 #include "Goal.h"
 
-Input* Goal::input = nullptr;
-DXInput* Goal::dxInput = nullptr;
-
-
 void Goal::Initialize(Sprite* whiteSprite, Sprite* clearSprite, Player* player)
 {
 	this->whiteSprite = whiteSprite;

@@ -1,7 +1,6 @@
 #pragma once
 #include "DirectXMath.h"
 #include "Input.h"
-#include "DXInput.h"
 
 #include "Sprite.h"
 #include "AudioManager.h"
@@ -20,7 +19,7 @@ private: // エイリアス
 
 public:
 
-	void Initialize(Input* input,DXInput* dxInput);
+	void Initialize(Input* input);
 
 	void Update();
 
@@ -28,7 +27,6 @@ public:
 
 	void SetPosition(XMFLOAT2 position);
 	void SetInput(Input* input) { this->input = input; }
-	void SetDXInput(DXInput* dxInput) { this->dxInput = dxInput; }
 	int GetSerect() { return serect; }
 	int GetIsSerect() { return isSerect; }
 	void Reset();
@@ -36,8 +34,6 @@ public:
 private:
 	//キーボード
 	Input* input;
-	//コントローラー
-	DXInput* dxInput;
 
 	XMFLOAT2 position = {};
 

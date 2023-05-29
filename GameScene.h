@@ -147,7 +147,7 @@ private:
 	std::list<std::unique_ptr<Swamp>> swamps;
 
 	//押せるブロック
-	size_t pushBlockSize = 3;
+	size_t pushBlockSize = 4;
 	FbxModel* pushBlockModel = nullptr;
 	std::list<std::unique_ptr<PushBlock>> pushBlocks;
 

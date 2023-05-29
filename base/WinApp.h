@@ -19,6 +19,8 @@ public:
 	void deleteWindow();
 	//ゲッター
 	HWND GetHwnd() { return hwnd; };
+	HINSTANCE GetHInstance()const { return w.hInstance; }
+
 public:
 	//メンバ変数
 	WNDCLASSEX w{};
