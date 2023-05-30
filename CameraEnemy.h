@@ -10,7 +10,7 @@ class CameraEnemy
 
 public:
 
-	void Initialize(FbxModel* enemyModel, FbxModel* enemyEyeModel, Player* player);
+	void Initialize(FbxModel* enemyModel, FbxModel* enemyEyeModel, FbxModel* enemyRotModel, Player* player);
 
 	void Update();
 
@@ -41,14 +41,23 @@ private:
 	XMFLOAT3 position = { 0.0f,1.0f,-1.0f };
 	XMFLOAT3 scale = { 0.01f,0.01f,0.01f };
 	XMFLOAT3 rotate = { 0.0f,0.0f,0.0f };
+	
+	XMFLOAT3 objrotate = { 0.0f,0.0f,0.0f };
+	
+	XMFLOAT3 rotPosition = { 0.0f,0.0f,0.0f };
+	XMFLOAT3 rotScale = { 0.001f,0.10f,0.001f };
+	XMFLOAT3 rotRotate = { 0.0f,0.0f,0.0f };
+	
 	Vector3 target = { 0.0f,0.0f,0.0f };
 	Vector3 vec = { 0.0f,0.0f,0.0f };
+	
 	//îªíËóp
 	Vector3 enemytargetvec = { 0.0f,0.0f,0.0f };
 	float enemydot = 0.0f;
 	float enemydeg = 0.0f;
 	//äpìx
 	float enemyangle = 0.0f;
+
 	//ãììÆéûä‘
 	int time = 0;
 	int maxTime = 170;
@@ -61,7 +70,8 @@ private:
 	FbxObject3D* enemyObject = nullptr;
 	//éãê¸
 	FbxObject3D* enemyEyeObject = nullptr;
-
+	//ñ_
+	FbxObject3D* enemyRotObject = nullptr;
 	Player* player;
 
 

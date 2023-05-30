@@ -86,6 +86,10 @@ private:
 	FbxObject3D* groundObject = nullptr;
 	FbxModel* groundModel = nullptr;
 
+	//背景
+	FbxObject3D* backGroundObject = nullptr;
+	FbxModel* backGroundModel = nullptr;
+
 	//csvの変数
 	CSVLoader* treeCsv = nullptr;
 	CSVLoader* enemyCsv = nullptr;

@@ -83,13 +83,13 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
 	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/grassFiled.png");
+	backGroundModel= FbxLoader::GetInstance()->LoadModelFromFile("background", "Resources/color/black1x1.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
-	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
-
+	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cameraenemy", "Resources/color/red1x1.png");
 	buttonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonUp", "Resources/color/yellow1x1.png");
 	buttonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonDown", "Resources/color/yellow1x1.png");
 
@@ -114,6 +114,11 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	groundObject = new FbxObject3D;
 	groundObject->Initialize();
 	groundObject->SetModel(groundModel);
+
+	//背景
+	backGroundObject = new FbxObject3D;
+	backGroundObject->Initialize();
+	backGroundObject->SetModel(backGroundModel);
 
 	//----------プレイヤー--------
 
@@ -169,7 +174,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	for (int i = 0; i < cameraEnemySize; i++)
 	{
 		std::unique_ptr<CameraEnemy>newObject = std::make_unique<CameraEnemy>();
-		newObject->Initialize(cameraEnemyModel, enemyEyeModel, player);
+		newObject->Initialize(cameraEnemyModel, enemyEyeModel, blockModel,player);
 		newObject->SetModel(cameraEnemyModel);
 
 		newObject->SetPosition(cameraEnemyCsv->GetPosition(i));
@@ -521,6 +526,11 @@ void GameScene::Update()
 	groundObject->SetScale({ 10.0f,0.01f,0.5f });
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
+
+	backGroundObject->SetPosition({ 0,0,20.0f });
+	backGroundObject->SetScale({ 100.0f,10.0f,1.0f });
+	backGroundObject->SetRotation({ 0.0f,XMConvertToRadians(180.0f),0.0f });
+	backGroundObject->Update();
 
 	switch (scene) {
 
@@ -962,6 +972,15 @@ void GameScene::DrawFBXLightView()
 
 	groundObject->DrawLightView(dxCommon_->GetCommandList());
 
+	//背景
+	backGroundObject->DrawLightView(dxCommon_->GetCommandList());
+
+	//Tree1
+	for (std::unique_ptr<FbxObject3D>& object : objectTree)
+	{
+		object->DrawLightView(dxCommon_->GetCommandList());
+	}
+
 	//ブロック
 	for (std::unique_ptr<Block>& block : blocks) {
 		if (camera_->GetEye().x - block->GetPosition().x >= -20 && camera_->GetEye().x - block->GetPosition().x <= 20)
@@ -1028,10 +1047,13 @@ void GameScene::DrawFBX()
 {
 	groundObject->Draw(dxCommon_->GetCommandList());
 
-	//for (std::unique_ptr<FbxObject3D>& object : objectTree)
-	//{
-	//	object->Draw(dxCommon_->GetCommandList());
-	//}
+	//背景
+	backGroundObject->Draw(dxCommon_->GetCommandList());
+
+	for (std::unique_ptr<FbxObject3D>& object : objectTree)
+	{
+		object->Draw(dxCommon_->GetCommandList());
+	}
 
 	//ブロック
 	for (std::unique_ptr<Block>& block : blocks) {
@@ -1167,6 +1189,9 @@ void GameScene::SetSRV(ID3D12DescriptorHeap* SRV)
 {
 
 	groundObject->SetSRV(SRV);
+
+	//背景
+	backGroundObject->SetSRV(SRV);
 
 	for (std::unique_ptr<FbxObject3D>& object : objectTree)
 	{
