@@ -118,8 +118,8 @@ void CameraEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 
 void CameraEnemy::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 {
-	enemyObject->DrawLightView(cmdList);
-	enemyRotObject->DrawLightView(cmdList);
+	/*enemyObject->DrawLightView(cmdList);
+	enemyRotObject->DrawLightView(cmdList);*/
 }
 
 void CameraEnemy::SetPosition(XMFLOAT3 position)

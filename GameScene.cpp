@@ -108,7 +108,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	FbxObject3D::SetLight(light);
 	FbxObject3D::SetLightGroup(lightGroup0);
 	FbxObject3D::CreateGraphicsPipelineLightView();
-	FbxObject3D::CreateGraphicsPipeline();
+	FbxObject3D::CreateGraphicsPipeline0();
+	FbxObject3D::CreateGraphicsPipeline1();
 
 	//地面
 	groundObject = new FbxObject3D;

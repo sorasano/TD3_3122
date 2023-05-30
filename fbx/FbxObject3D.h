@@ -63,11 +63,13 @@ public://メンバ関数
 	//描画
 	void DrawLightView(ID3D12GraphicsCommandList* cmdList);
 	void Draw(ID3D12GraphicsCommandList* cmdList);
+	void DrawStandard(ID3D12GraphicsCommandList* cmdList);	//影なし描画をする場合
 	//モデルのセット
 	void SetModel(FbxModel* model) { this->model = model; }
 	//グラフィックスパイプラインの生成
 	static void CreateGraphicsPipelineLightView();
-	static void CreateGraphicsPipeline();
+	static void CreateGraphicsPipeline0();
+	static void CreateGraphicsPipeline1();
 	//アニメーション開始
 	void PlayAnimation();
 	//アニメーション停止
@@ -87,9 +89,11 @@ private://メンバ変数
 	ComPtr<ID3D12Resource>constBuffTransform;
 	//ルートシグネチャ
 	static ComPtr<ID3D12RootSignature>rootsignature0;
+	static ComPtr<ID3D12RootSignature>rootsignature1;
 	static ComPtr<ID3D12RootSignature>rootsignature2;
 	//パイプラインステートオブジェクト
 	static ComPtr<ID3D12PipelineState>pipelinestate0;
+	static ComPtr<ID3D12PipelineState>pipelinestate1;
 	static ComPtr<ID3D12PipelineState>pipelinestate2;
 
 private:

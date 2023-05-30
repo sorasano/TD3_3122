@@ -75,6 +75,12 @@
     <FxCompile Include="Resources\Shaders\Vignette\VignetteVertexShader.hlsl">
       <Filter>シェーダーファイル\Vignette</Filter>
     </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fbx\FbxPixelShader1.hlsl">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </FxCompile>
+    <FxCompile Include="Resources\Shaders\Fbx\FbxVertexShader1.hlsl">
+      <Filter>シェーダーファイル\Fbx</Filter>
+    </FxCompile>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="2d\BlurEffect.cpp" />
@@ -312,6 +318,9 @@
     </None>
     <None Include="Resources\Shaders\Vignette\VignetteHeader.hlsli">
       <Filter>シェーダーファイル\Vignette</Filter>
+    </None>
+    <None Include="Resources\Shaders\Fbx\FbxHeader1.hlsli">
+      <Filter>シェーダーファイル\Fbx</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
