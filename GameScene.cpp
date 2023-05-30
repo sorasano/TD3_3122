@@ -88,7 +88,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
-	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/yellow1x1.png");
+	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cameraenemy", "Resources/color/red1x1.png");
   
 	buttonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonUp", "Resources/color/yellow1x1.png");
 	buttonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonDown", "Resources/color/yellow1x1.png");
@@ -176,7 +176,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	for (int i = 0; i < cameraEnemySize; i++)
 	{
 		std::unique_ptr<CameraEnemy>newObject = std::make_unique<CameraEnemy>();
-		newObject->Initialize(cameraEnemyModel, enemyEyeModel, player);
+		newObject->Initialize(cameraEnemyModel, enemyEyeModel, blockModel,player);
 		newObject->SetModel(cameraEnemyModel);
 
 		newObject->SetPosition(cameraEnemyCsv->GetPosition(i));

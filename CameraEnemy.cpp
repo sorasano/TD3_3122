@@ -1,6 +1,6 @@
 #include "CameraEnemy.h"
 
-void CameraEnemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel, Player* player)
+void CameraEnemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel, FbxModel* enemyRotModel, Player* player)
 {
 	//プレイヤー
 	this->player = player;
@@ -13,6 +13,10 @@ void CameraEnemy::Initialize(FbxModel* EnemyModel, FbxModel* enemyEyeModel, Play
 	enemyEyeObject = new FbxObject3D;
 	enemyEyeObject->Initialize();
 	enemyEyeObject->SetModel(enemyEyeModel);
+
+	enemyRotObject = new FbxObject3D;
+	enemyRotObject->Initialize();
+	enemyRotObject->SetModel(enemyRotModel);
 }
 
 void CameraEnemy::Update()
@@ -22,6 +26,8 @@ void CameraEnemy::Update()
 	enemyObject->SetScale(scale);
 	enemyObject->SetRotation(rotate);
 
+
+	
 
 	//判定用
 	vec.x = position.x;
@@ -78,30 +84,42 @@ void CameraEnemy::Update()
 	target.x = position.x - (distance * cosf(enemyangle));
 	target.y = position.y + (distance * sinf(enemyangle));
 
+	objrotate = { 0,0,-enemyangle };
 	Setrotate(XMFLOAT3{ enemyangle,XMConvertToRadians(90.0f),0 });
-
+	/*objrotate = rotate;
+	objrotate.x += XMConvertToRadians(-90.0f);*/
 	enemyObject->SetPosition(position);
 	enemyObject->SetScale(scale);
-	enemyObject->SetRotation(rotate);
+	enemyObject->SetRotation(objrotate);
 
 	enemyObject->Update();
 
-	enemyEyeObject->SetPosition(XMFLOAT3(position.x, position.y + 0.5f, position.z));
+	enemyEyeObject->SetPosition(XMFLOAT3(position.x, position.y, position.z));
 	enemyEyeObject->SetScale(XMFLOAT3(1, 1, 1));
 	enemyEyeObject->SetRotation(rotate);
 	enemyEyeObject->Update();
 
+
+	rotPosition = position;
+	rotPosition.y += 0.3f;
+	rotPosition.x += 0.5;
+	enemyRotObject->SetPosition(rotPosition);
+	enemyRotObject->SetScale(rotScale);
+	enemyRotObject->SetRotation(rotRotate);
+	enemyRotObject->Update();
 }
 
 void CameraEnemy::Draw(ID3D12GraphicsCommandList* cmdList)
 {
 	enemyObject->Draw(cmdList);
 	enemyEyeObject->Draw(cmdList);
+	enemyRotObject->Draw(cmdList);
 }
 
 void CameraEnemy::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 {
 	enemyObject->DrawLightView(cmdList);
+	enemyRotObject->DrawLightView(cmdList);
 }
 
 void CameraEnemy::SetPosition(XMFLOAT3 position)
@@ -128,4 +146,5 @@ void CameraEnemy::SetSRV(ID3D12DescriptorHeap* SRV)
 {
 	enemyObject->SetSRV(SRV);
 	enemyEyeObject->SetSRV(SRV);
+	enemyRotObject->SetSRV(SRV);
 }
