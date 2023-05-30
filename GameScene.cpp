@@ -469,7 +469,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//ゴール
 	goal = new Goal();
 	goal->Initialize(whiteSprite, clearSprite, player);
-	goal->SetClearPos(270);
+	goal->SetClearPos(950);
 
 
 	/*cube = new CubeObject3D();
@@ -524,7 +524,7 @@ void GameScene::Update()
 	//オブジェクト更新
 
 	groundObject->SetPosition({ 90,0,0 });
-	groundObject->SetScale({ 10.0f,0.01f,0.5f });
+	groundObject->SetScale({ 100.0f,0.01f,0.5f });
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
 
@@ -1006,7 +1006,7 @@ void GameScene::DrawFBXLightView()
 
 	//ボタン
 	for (std::unique_ptr<Button>& button : buttons) {
-		if (camera_->GetEye().x - button->GetPosition().x >= -40 && camera_->GetEye().x - button->GetPosition().x <= 40)
+		if (camera_->GetEye().x - button->GetPosition().x >= -60 && camera_->GetEye().x - button->GetPosition().x <= 60)
 			button->DrawLightView(dxCommon_->GetCommandList());
 	}
 
@@ -1034,7 +1034,7 @@ void GameScene::DrawFBXLightView()
 	}
 	//押している間のスイッチ
 	for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
-		if (camera_->GetEye().x - pushButton->GetPosition().x >= -40 && camera_->GetEye().x - pushButton->GetPosition().x <= 40)
+		if (camera_->GetEye().x - pushButton->GetPosition().x >= -60 && camera_->GetEye().x - pushButton->GetPosition().x <= 60)
 			pushButton->DrawLightView(dxCommon_->GetCommandList());
 	}
 
@@ -1078,7 +1078,7 @@ void GameScene::DrawFBX()
 
 	//ボタン
 	for (std::unique_ptr<Button>& button : buttons) {
-		if (camera_->GetEye().x - button->GetPosition().x >= -40 && camera_->GetEye().x - button->GetPosition().x <= 40)
+		if (camera_->GetEye().x - button->GetPosition().x >= -60 && camera_->GetEye().x - button->GetPosition().x <= 60)
 			button->Draw(dxCommon_->GetCommandList());
 	}
 
@@ -1112,7 +1112,7 @@ void GameScene::DrawFBX()
 	}
 	//押している間のスイッチ
 	for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
-		if (camera_->GetEye().x - pushButton->GetPosition().x >= -40 && camera_->GetEye().x - pushButton->GetPosition().x <= 40)
+		if (camera_->GetEye().x - pushButton->GetPosition().x >= -60 && camera_->GetEye().x - pushButton->GetPosition().x <= 60)
 			pushButton->Draw(dxCommon_->GetCommandList());
 	}
 }
