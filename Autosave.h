@@ -10,6 +10,7 @@ public:
 	void Initialize(Player* player);
 
 	void Update();
+	void UpdateCSV();
 
 	XMFLOAT2 GetSavePos() { return XMFLOAT2{ savePos[nowSavePos].x, savePos[nowSavePos].y }; }
 	XMFLOAT2 GetStartPos() { return XMFLOAT2{ savePos[0].x, savePos[0].y }; }
@@ -19,7 +20,7 @@ private:
 	CSVLoader* autoSaveCsv = nullptr;
 
 	//セーブ地点個数
-	static const int saveSize = 3;
+	static const int saveSize = 100;
 	XMFLOAT3 savePos[100];
 
 	//今どのセーブ地点か
