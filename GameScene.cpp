@@ -143,13 +143,6 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 
 	////=============ギミック===============
 
-	//各ステージの開始位置
-	float stage1 = 0.0f;
-	float stage2 = 150.0f;
-	float stage3 = 290.0f;
-	float stage4 = 400.0f;
-	float stage5 = 600.0f;
-
 	//---------敵---------
 
 	enemyCsv = new CSVLoader;

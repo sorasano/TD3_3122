@@ -51,7 +51,7 @@ void Menu::Update()
 
 	//ƒƒjƒ…[‘€ì
 
-	if (input->IsKeyTrigger(DIK_W) || input->IsTriggerLStickDown())
+	if (input->IsKeyTrigger(DIK_W) || input->IsTriggerLStickUp())
 	{
 		if (serect != MENURESET) {
 			serect--;
@@ -60,7 +60,7 @@ void Menu::Update()
 		selectSE->StopWave();
 		selectSE->SoundPlayWave(false,selectSEVolume);
 	}
-	else if (input->IsKeyTrigger(DIK_S) || input->IsTriggerLStickUp())
+	else if (input->IsKeyTrigger(DIK_S) || input->IsTriggerLStickDown())
 	{
 		if (serect != MENUCLOSE) {
 			serect++;
