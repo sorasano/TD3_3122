@@ -11,7 +11,7 @@ class Button
 
 public:
 
-	void Initialize(FbxModel* buttonUpModel, FbxModel* buttonDownModel,Player *player,CubeObject3D* cubeObject);
+	void Initialize(FbxModel* buttonUpModel, FbxModel* buttonDownModel, Player* player, CubeObject3D* cubeObject);
 
 	void Update();
 
@@ -31,19 +31,19 @@ public:
 
 	//セッター
 	//ボタン
-	void SetPosition(XMFLOAT3 position) { this->position = position; }
+	void SetPosition(XMFLOAT3 position) { this->position = position, this->savePosition = position; }
 
-	void SetPositionX(float positionX) { this->position.x = positionX; }
+	void SetPositionX(float positionX) { this->position.x = positionX, this->savePosition.x = positionX; }
 
-	void SetScale(XMFLOAT3 scale) { this->scale = scale; } 
+	void SetScale(XMFLOAT3 scale) { this->scale = scale; }
 
 	void Setrotate(XMFLOAT3 rotate) { this->rotate = rotate; }
 	void SetSRV(ID3D12DescriptorHeap* SRV);
 
 	//ブロック
-	void SetBlockPosition(XMFLOAT3 blockPosition) { this->blockPosition = blockPosition ; }
+	void SetBlockPosition(XMFLOAT3 blockPosition) { this->blockPosition = blockPosition, this->saveBlockPosition = blockPosition; }
 
-	void SetBlockPositionX(float blockPositionX) { this->blockPosition.x = blockPositionX; }
+	void SetBlockPositionX(float blockPositionX) { this->blockPosition.x = blockPositionX, this->saveBlockPosition.x = blockPositionX;}
 
 	void SetBlockScale(XMFLOAT3 blockScale) { this->blockScale = blockScale; }
 	void SetBlockScaleY(float blockScaleY) { this->blockScale.y = blockScaleY; }
@@ -58,6 +58,8 @@ public:
 	static void SetInput(Input* input) { Button::input = input; }
 	static void SetDXInput(DXInput* dxInput) { Button::dxInput = dxInput; }
 
+	void Reset();
+
 private:
 
 	XMFLOAT3 position = { 0.0f,0.5f,-1.0f };
@@ -69,6 +71,9 @@ private:
 	XMFLOAT3 blockRotate = { 0.0f,0.0f,0.0f };
 
 	XMFLOAT3 colPosition = { 0.0f,1.0f,-1.0f };
+
+	XMFLOAT3 savePosition = { 0.0f,0.5f,-1.0f };
+	XMFLOAT3 saveBlockPosition = { 0.0f,1.0f,-1.0f };
 
 private:
 

@@ -83,7 +83,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
 	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/grassFiled.png");
-	backGroundModel= FbxLoader::GetInstance()->LoadModelFromFile("background", "Resources/color/black1x1.png");
+	backGroundModel = FbxLoader::GetInstance()->LoadModelFromFile("background", "Resources/color/black1x1.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/red1x1.png");
@@ -175,7 +175,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	for (int i = 0; i < cameraEnemySize; i++)
 	{
 		std::unique_ptr<CameraEnemy>newObject = std::make_unique<CameraEnemy>();
-		newObject->Initialize(cameraEnemyModel, enemyEyeModel, blockModel,player);
+		newObject->Initialize(cameraEnemyModel, enemyEyeModel, blockModel, player);
 		newObject->SetModel(cameraEnemyModel);
 
 		newObject->SetPosition(cameraEnemyCsv->GetPosition(i));
@@ -1158,6 +1158,11 @@ void GameScene::Reset(bool isFirst)
 	for (std::unique_ptr<MoveEnemy>& moveEnemy : moveEnemys) {
 		moveEnemy->Reset();
 	}
+	//ボタン
+	for (std::unique_ptr<Button>& button : buttons) {
+		button->Reset();
+	}
+
 	//押せるブロック
 	for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks) {
 		pushBlock->Reset();
