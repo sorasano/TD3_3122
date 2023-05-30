@@ -5,6 +5,7 @@
 #include "Player.h"
 #include"CubeModel.h"
 #include"CubeObject3D.h"
+#include "AudioManager.h"
 
 class PushBlock
 {
@@ -67,4 +68,7 @@ private://メンバ変数
 	//リセット用
 	XMFLOAT3 savepos = { 0.0f,0.0f,0.0f };
 
+	//音
+	AudioManager* pushSE;
+	float pushSEVolume = 0.01f;
 };

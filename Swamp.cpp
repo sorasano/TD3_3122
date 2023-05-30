@@ -9,6 +9,7 @@ void Swamp::Initialize(FbxModel* SwampModel, Player* player)
 	swampObject->Initialize();
 	swampObject->SetModel(SwampModel);
 
+
 }
 
 void Swamp::Update()
