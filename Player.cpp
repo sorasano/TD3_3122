@@ -292,7 +292,7 @@ void Player::Draw(ID3D12GraphicsCommandList* cmdList)
 	if (isDeath == false) {
 
 		playerObject->Draw(cmdList);
-		cubeObject_->Draw(cmdList);
+		/*cubeObject_->Draw(cmdList);*/
 	}
 
 }
