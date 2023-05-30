@@ -29,6 +29,7 @@ void Block::Update()
 
 	//”»’è
 	cubeObject->SetPosition(position);
+	cubeObject->SetScale(XMFLOAT3(scale.x * 100.0f, scale.y * 100.0f, scale.z * 100.0f));
 	cubeObject->Update();
 }
 

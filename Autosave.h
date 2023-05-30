@@ -20,7 +20,7 @@ private:
 	CSVLoader* autoSaveCsv = nullptr;
 
 	//セーブ地点個数
-	static const int saveSize = 100;
+	static const int saveSize = 40;
 	XMFLOAT3 savePos[100];
 
 	//今どのセーブ地点か
