@@ -102,7 +102,7 @@ private:
 	CSVLoader* moveEnemyCsv = nullptr;
 
 	//木の数
-	size_t treeNum = 20;
+	size_t treeNum = 50;
 	//木のモデル
 	FbxModel* modelTree = nullptr;
 	//木のオブジェクト

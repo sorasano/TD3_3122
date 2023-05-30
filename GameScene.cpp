@@ -669,7 +669,7 @@ void GameScene::Update()
 		//スペースキーでファイル読み込み更新
 		if (input_->IsKeyTrigger(DIK_RETURN))
 		{
-			treeCsv->LoadCSV("Resources/Tree1.csv");
+			treeCsv->LoadCSV("Resources/csv/Tree1.csv");
 			int i = 0;
 			for (std::unique_ptr<FbxObject3D>& object : objectTree)
 			{
@@ -806,6 +806,7 @@ void GameScene::DrawFBXLightView()
 	//Tree1
 	for (std::unique_ptr<FbxObject3D>& object : objectTree)
 	{
+		if (camera_->GetEye().x - object->GetPosition().x >= -20 && camera_->GetEye().x - object->GetPosition().x <= 20)
 		object->DrawLightView(dxCommon_->GetCommandList());
 	}
 

@@ -42,7 +42,7 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	//ImGuiManager
 	ImGuiManager* imGuiManager = nullptr;
 	imGuiManager = new ImGuiManager();
-	imGuiManager->Initialize(winApp,dxCommon);
+	imGuiManager->Initialize(winApp, dxCommon);
 
 	//ShadowMap
 	ShadowMap* shadowMap = nullptr;
@@ -64,6 +64,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 	fog = new Fog;
 	fog->Initialize();
 	fog->CreateGraphicsPipeLine0();
+	float strength[1] = { 1.0f };
+	float depth[1] = {0.25f};
 
 	//Vignette
 	Vignette* vignette = nullptr;
@@ -113,8 +115,8 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 		//Fog
 		fog->SetAlpha(1.0f);
-		fog->SetStrength(3.0f);
-		fog->SetStartDepth(0.2f);
+		fog->SetStrength(*strength);
+		fog->SetStartDepth(*depth);
 		fog->Update();
 
 		//vignette
@@ -148,6 +150,13 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 		//vignette
 		vignette->Draw(dxCommon->GetCommandList());
 		gameScene->DrawSprite();
+
+		ImGui::Begin("Fog Setting");
+		ImGui::SetWindowPos(ImVec2(0, 0));
+		ImGui::SetWindowSize(ImVec2(500, 100));
+		ImGui::InputFloat("Strength", strength);
+		ImGui::InputFloat("Depth", depth);
+		ImGui::End();
 
 		imGuiManager->End();
 		imGuiManager->Draw();
