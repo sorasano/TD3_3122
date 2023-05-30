@@ -468,7 +468,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//ゴール
 	goal = new Goal();
 	goal->Initialize(whiteSprite, clearSprite, player);
-	goal->SetClearPos(1000);
+	goal->SetClearPos(270);
 
 
 	/*cube = new CubeObject3D();
@@ -558,7 +558,8 @@ void GameScene::Update()
 				playBGM->StopWave();
 			}
 		}
-		else if (goal->GetIsClear()) {
+
+		if (goal->GetIsClear()) {
 			scene = CLEAR;
 		}
 
