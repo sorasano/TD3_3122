@@ -10,8 +10,6 @@ void Autosave::Initialize(Player* player)
 	autoSaveCsv = new CSVLoader;
 	autoSaveCsv->LoadCSV("Resources/csv/autoSave.csv");
 
-	//初期座地点
-	savePos[0] = XMFLOAT3(0, 1, -1);
 	//セーブ地点
 	for (int i = 0; i < saveSize; i++)
 	{
@@ -57,3 +55,14 @@ void Autosave::Update()
 	}
 
 }
+
+void Autosave::UpdateCSV()
+{
+	autoSaveCsv->LoadCSV("Resources/csv/autoSave.csv");
+	for (int i = 0; i < saveSize; i++)
+	{
+		savePos[i] = autoSaveCsv->GetPosition(i);
+	}
+
+}
+

@@ -212,6 +212,13 @@ void Player::Update()
 	//ImGui::Text("pPosX = %f \n",position.x);
 	//ImGui::End();
 
+
+	//自機座標をimguiでいじる
+	ImGui::Begin("player");
+	ImGui::SliderFloat("pos.x", &position.x, -10.0f, 1000.0f);
+	ImGui::Text("");
+	ImGui::End();
+
 	//判定
 	colposition = position;
 	colposition.y += 0.5f;
