@@ -121,7 +121,7 @@ void Enemy::Draw(ID3D12GraphicsCommandList* cmdList)
 void Enemy::DrawLightView(ID3D12GraphicsCommandList* cmdList)
 {
 	enemyObject->DrawLightView(cmdList);
-	enemyEyeObject->DrawLightView(cmdList);
+	/*enemyEyeObject->DrawLightView(cmdList);*/
 }
 
 

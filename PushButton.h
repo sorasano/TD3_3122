@@ -43,9 +43,9 @@ public:
 	void SetPush(bool push) { this->push = push; }
 
 	//ƒuƒƒbƒN
-	void SetBlockPosition(XMFLOAT3 blockPosition) {	this->blockPosition = blockPosition; saveblockpos= position;}
+	void SetBlockPosition(XMFLOAT3 blockPosition) {	this->blockPosition = blockPosition; saveblockpos= blockPosition;}
 
-	void SetBlockPositionX(float blockPositionX) { this->blockPosition.x = blockPositionX; }
+	void SetBlockPositionX(float blockPositionX) { this->blockPosition.x = blockPositionX; saveblockpos.x = blockPositionX;}
 
 	void SetBlockScale(XMFLOAT3 blockScale) { this->blockScale = blockScale; }
 	void SetBlockScaleY(float blockScaleY) { this->blockScale.y = blockScaleY; }

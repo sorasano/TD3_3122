@@ -225,3 +225,17 @@ void Button::SetSRV(ID3D12DescriptorHeap* SRV)
 	buttonObject->SetSRV(SRV);
 	blockObject->SetSRV(SRV);
 }
+
+void Button::Reset()
+{
+	position = savePosition;
+	blockPosition = saveBlockPosition;
+
+	push = false;
+
+	blockUpSE->StopWave();
+
+	this->scale = { 0.5,0.5,0.1 };
+	this->position.y = 1.0;
+	buttonObject->SetModel(buttonUpModel);
+}

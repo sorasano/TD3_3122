@@ -1,12 +1,120 @@
 (1)
-position 30 1 -1 
+position 20 1 0 
 rotation 0 0 0 
-scale 0.01 0.01 0.01
+scale 0.05 0.01 0.01
 (2)
+position 30 1 0 
+rotation 0 0 0 
+scale 0.05 0.01 0.01
+(3)
 position 40 1 0 
 rotation 0 0 0 
-scale 0.01 0.01 0.01
-(3)
+scale 0.05 0.01 0.01
+(4)
 position 50 1 0 
+rotation 0 0 0 
+scale 0.05 0.01 0.01
+(5)
+position 270 1 -1 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(6)
+position 275 1 -1 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(7)
+position 280 1 -1 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(8)
+position 300 1 -1 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(9)
+position 528 1 -1
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(10)
+position 537.5 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(11)
+position 542.5 1 0 
+rotation 0 0 0 
+scale 0.005 0.01 0.01
+(12)
+position 547.5 1 0 
+rotation 0 0 0 
+scale 0.005 0.01 0.01
+(13)
+position 554 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(14)
+position 782 1 0
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(15)
+position 788 1 0
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(16)
+position 794 1 -1
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(17)
+position 800 1 -1
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(18)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(19)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(20)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(21)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(22)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(23)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(24)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(25)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(26)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(27)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(28)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(29)
+position 10000 1 0 
+rotation 0 0 0 
+scale 0.01 0.01 0.01
+(30)
+position 10000 1 0 
 rotation 0 0 0 
 scale 0.01 0.01 0.01

@@ -83,17 +83,16 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
 	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/grassFiled.png");
-	backGroundModel= FbxLoader::GetInstance()->LoadModelFromFile("background", "Resources/color/black1x1.png");
+	backGroundModel = FbxLoader::GetInstance()->LoadModelFromFile("background", "Resources/color/black1x1.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 
 	enemyModel = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/red1x1.png");
 	enemyModel2 = FbxLoader::GetInstance()->LoadModelFromFile("enemy", "Resources/color/green1x1.png");
 	enemyEyeModel = FbxLoader::GetInstance()->LoadModelFromFile("enemyEye", "Resources/color/yellow1x1.png");
 	cameraEnemyModel = FbxLoader::GetInstance()->LoadModelFromFile("cameraenemy", "Resources/color/red1x1.png");
-  
 	buttonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonUp", "Resources/color/yellow1x1.png");
 	buttonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonDown", "Resources/color/yellow1x1.png");
-  
+
 	pushButtonUpModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonUp", "Resources/color/blue1x1.png");
 	pushButtonDownModel = FbxLoader::GetInstance()->LoadModelFromFile("buttonDown", "Resources/color/blue1x1.png");
 
@@ -109,7 +108,8 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	FbxObject3D::SetLight(light);
 	FbxObject3D::SetLightGroup(lightGroup0);
 	FbxObject3D::CreateGraphicsPipelineLightView();
-	FbxObject3D::CreateGraphicsPipeline();
+	FbxObject3D::CreateGraphicsPipeline0();
+	FbxObject3D::CreateGraphicsPipeline1();
 
 	//地面
 	groundObject = new FbxObject3D;
@@ -175,7 +175,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	for (int i = 0; i < cameraEnemySize; i++)
 	{
 		std::unique_ptr<CameraEnemy>newObject = std::make_unique<CameraEnemy>();
-		newObject->Initialize(cameraEnemyModel, enemyEyeModel, blockModel,player);
+		newObject->Initialize(cameraEnemyModel, enemyEyeModel, blockModel, player);
 		newObject->SetModel(cameraEnemyModel);
 
 		newObject->SetPosition(cameraEnemyCsv->GetPosition(i));
@@ -469,7 +469,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//ゴール
 	goal = new Goal();
 	goal->Initialize(whiteSprite, clearSprite, player);
-	goal->SetClearPos(1000);
+	goal->SetClearPos(950);
 
 
 	/*cube = new CubeObject3D();
@@ -524,7 +524,7 @@ void GameScene::Update()
 	//オブジェクト更新
 
 	groundObject->SetPosition({ 90,0,0 });
-	groundObject->SetScale({ 10.0f,0.01f,0.5f });
+	groundObject->SetScale({ 100.0f,0.01f,0.5f });
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
 
@@ -559,7 +559,8 @@ void GameScene::Update()
 				playBGM->StopWave();
 			}
 		}
-		else if (goal->GetIsClear()) {
+
+		if (goal->GetIsClear()) {
 			scene = CLEAR;
 		}
 
@@ -676,6 +677,11 @@ void GameScene::Update()
 			pushButton->Update();
 		}
 
+		for (std::unique_ptr<FbxObject3D>& object : objectTree)
+		{
+			object->Update();
+		}
+
 		//Tree1
 		//スペースキーでファイル読み込み更新
 		if (input_->IsKeyTrigger(DIK_RETURN))
@@ -689,10 +695,164 @@ void GameScene::Update()
 				object->SetRotation(treeCsv->GetRotation(i));
 				i++;
 			}
-		}
-		for (std::unique_ptr<FbxObject3D>& object : objectTree)
-		{
-			object->Update();
+
+			//---------敵---------
+
+			enemyCsv->LoadCSV("Resources/csv/enemy.csv");
+			i = 0;
+
+			for (std::unique_ptr<Enemy>& enemy : enemys)
+			{
+				enemy->SetPosition(enemyCsv->GetPosition(i));
+				enemy->SetScale(enemyCsv->GetScale(i));
+				enemy->Setrotate(enemyCsv->GetRotation(i));
+				i++;
+
+			}
+
+			//---------監視カメラ---------
+
+			cameraEnemyCsv->LoadCSV("Resources/csv/cameraEnemy.csv");
+			i = 0;
+
+			for (std::unique_ptr<CameraEnemy>& cameraEnemy : cameraEnemys)
+			{
+				cameraEnemy->SetPosition(cameraEnemyCsv->GetPosition(i));
+				cameraEnemy->SetScale(cameraEnemyCsv->GetScale(i));
+				cameraEnemy->Setrotate(cameraEnemyCsv->GetRotation(i));
+				i++;
+
+			}
+
+			//--------ボタン----------
+
+			buttonCsv->LoadCSV("Resources/csv/button.csv");
+			buttonBlockCsv->LoadCSV("Resources/csv/buttonBlock.csv");
+			i = 0;
+
+			for (std::unique_ptr<Button>& button : buttons)
+			{
+
+				button->SetPosition(buttonCsv->GetPosition(i));
+				button->SetScale(buttonCsv->GetScale(i));
+				button->Setrotate(buttonCsv->GetRotation(i));
+
+				button->SetBlockPosition(buttonBlockCsv->GetPosition(i));
+				button->SetBlockScale(buttonBlockCsv->GetScale(i));
+				button->SetBlockrotate(buttonBlockCsv->GetRotation(i));
+				i++;
+
+			}
+
+			//--------爆弾--------	
+
+			bombCsv->LoadCSV("Resources/csv/bomb.csv");
+			i = 0;
+
+			for (std::unique_ptr<Bomb>& bomb : bombs)
+			{
+
+				bomb->SetPosition(bombCsv->GetPosition(i));
+				bomb->SetScale(bombCsv->GetScale(i));
+				bomb->Setrotate(bombCsv->GetRotation(i));
+				i++;
+
+			}
+
+			//----------沼----------
+
+			swampCsv->LoadCSV("Resources/csv/swamp.csv");
+			i = 0;
+
+			for (std::unique_ptr<Swamp>& swamp : swamps)
+			{
+
+				swamp->SetPosition(swampCsv->GetPosition(i));
+				swamp->SetScale(swampCsv->GetScale(i));
+				swamp->Setrotate(swampCsv->GetRotation(i));
+
+				i++;
+
+			}
+
+			//----------梯子--------
+
+			ladderCsv->LoadCSV("Resources/csv/ladder.csv");
+			i = 0;
+
+			for (std::unique_ptr<Ladder>& ladder : ladders)
+			{
+				ladder->SetPosition(ladderCsv->GetPosition(i));
+				ladder->SetScale(ladderCsv->GetScale(i));
+				ladder->Setrotate(ladderCsv->GetRotation(i));
+
+				i++;
+			}
+
+			//--------動く敵-------
+
+			moveEnemyCsv->LoadCSV("Resources/csv/moveEnemy.csv");
+			i = 0;
+
+			for (std::unique_ptr<MoveEnemy>& moveEnemy : moveEnemys)
+			{
+				moveEnemy->SetPosition(moveEnemyCsv->GetPosition(i));
+				moveEnemy->SetScale(moveEnemyCsv->GetScale(i));
+				moveEnemy->Setrotate(moveEnemyCsv->GetRotation(i));
+				i++;
+
+			}
+
+			//----------動かせるブロック----------
+
+			pushBlockCsv->LoadCSV("Resources/csv/pushBlock.csv");
+			i = 0;
+
+			for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks)
+			{
+				pushBlock->SetPosition(pushBlockCsv->GetPosition(i));
+				pushBlock->SetScale(pushBlockCsv->GetScale(i));
+				pushBlock->Setrotate(pushBlockCsv->GetRotation(i));
+				i++;
+
+
+			}
+
+			//----------ブロック----------
+
+			blockCsv->LoadCSV("Resources/csv/block.csv");
+			i = 0;
+			for (std::unique_ptr<Block>& block : blocks)
+			{
+				block->SetPosition(blockCsv->GetPosition(i));
+				block->SetScale(blockCsv->GetScale(i));
+				block->Setrotate(blockCsv->GetRotation(i));
+				i++;
+
+			}
+
+			//----------押している間のスイッチ----------
+
+			pushButtonCsv->LoadCSV("Resources/csv/pushButton.csv");
+			pushButtonBlockCsv->LoadCSV("Resources/csv/pushButtonBlock.csv");
+			i = 0;
+			for (std::unique_ptr<PushButton>& pushButton : pushButtons)
+			{
+
+				pushButton->SetPosition(pushButtonCsv->GetPosition(i));
+				pushButton->SetScale(pushButtonCsv->GetScale(i));
+				pushButton->Setrotate(pushButtonCsv->GetRotation(i));
+
+				pushButton->SetBlockPosition(pushButtonBlockCsv->GetPosition(i));
+				pushButton->SetBlockScale(pushButtonBlockCsv->GetScale(i));
+				pushButton->SetBlockrotate(pushButtonBlockCsv->GetRotation(i));
+				i++;
+
+
+			}
+
+			autoSave->UpdateCSV();
+
 		}
 
 		//プレイヤー
@@ -846,7 +1006,7 @@ void GameScene::DrawFBXLightView()
 
 	//ボタン
 	for (std::unique_ptr<Button>& button : buttons) {
-		if (camera_->GetEye().x - button->GetPosition().x >= -40 && camera_->GetEye().x - button->GetPosition().x <= 40)
+		if (camera_->GetEye().x - button->GetPosition().x >= -60 && camera_->GetEye().x - button->GetPosition().x <= 60)
 			button->DrawLightView(dxCommon_->GetCommandList());
 	}
 
@@ -874,7 +1034,7 @@ void GameScene::DrawFBXLightView()
 	}
 	//押している間のスイッチ
 	for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
-		if (camera_->GetEye().x - pushButton->GetPosition().x >= -40 && camera_->GetEye().x - pushButton->GetPosition().x <= 40)
+		if (camera_->GetEye().x - pushButton->GetPosition().x >= -60 && camera_->GetEye().x - pushButton->GetPosition().x <= 60)
 			pushButton->DrawLightView(dxCommon_->GetCommandList());
 	}
 
@@ -918,7 +1078,7 @@ void GameScene::DrawFBX()
 
 	//ボタン
 	for (std::unique_ptr<Button>& button : buttons) {
-		if (camera_->GetEye().x - button->GetPosition().x >= -40 && camera_->GetEye().x - button->GetPosition().x <= 40)
+		if (camera_->GetEye().x - button->GetPosition().x >= -60 && camera_->GetEye().x - button->GetPosition().x <= 60)
 			button->Draw(dxCommon_->GetCommandList());
 	}
 
@@ -952,7 +1112,7 @@ void GameScene::DrawFBX()
 	}
 	//押している間のスイッチ
 	for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
-		if (camera_->GetEye().x - pushButton->GetPosition().x >= -40 && camera_->GetEye().x - pushButton->GetPosition().x <= 40)
+		if (camera_->GetEye().x - pushButton->GetPosition().x >= -60 && camera_->GetEye().x - pushButton->GetPosition().x <= 60)
 			pushButton->Draw(dxCommon_->GetCommandList());
 	}
 }
@@ -998,6 +1158,11 @@ void GameScene::Reset(bool isFirst)
 	for (std::unique_ptr<MoveEnemy>& moveEnemy : moveEnemys) {
 		moveEnemy->Reset();
 	}
+	//ボタン
+	for (std::unique_ptr<Button>& button : buttons) {
+		button->Reset();
+	}
+
 	//押せるブロック
 	for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks) {
 		pushBlock->Reset();
