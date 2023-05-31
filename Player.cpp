@@ -25,11 +25,23 @@ void Player::Initialize(CubeObject3D* cubeObject)
 
 	//判定
 	this->cubeObject_ = cubeObject;
-	this->cubeObject_->SetScale(XMFLOAT3(0.5, 1.5, 1));
+	this->cubeObject_->SetScale(XMFLOAT3(0.5, 1.0, 1));
 
 	//音
 	walkingSE = new AudioManager();
 	walkingSE->SoundLoadWave("Resources/Audio/walking.wav");
+	//沼
+	swampSE = new AudioManager();
+	swampSE->SoundLoadWave("Resources/Audio/swamp.wav");
+	//沼
+	climbSE = new AudioManager();
+	climbSE->SoundLoadWave("Resources/Audio/ladder.wav");
+	//ジャンプ
+	jumpSE = new AudioManager();
+	jumpSE->SoundLoadWave("Resources/Audio/Jump.wav");
+	//ジャンプ
+	landSE = new AudioManager();
+	landSE->SoundLoadWave("Resources/Audio/Jump2.wav");
 }
 
 void Player::Update()
@@ -103,14 +115,16 @@ void Player::Update()
 				{
 					position.x -= swampSpeed;
 					rotate.y = 270 * (PI / 180);
-
 					action = WALK;
+					
 				}
 				else if (input->IsKeyPress(DIK_D) || input->IsDownLStickRight())
 				{
 					position.x += swampSpeed;
 					rotate.y = 90 * (PI / 180);
-
+					/*walkingSE->StopWave();
+					swampSE->StopWave();
+					swampSE->SoundPlayWave(swampSEVolume);*/
 					action = WALK;
 				}
 			}
@@ -135,6 +149,8 @@ void Player::Update()
 				//ジャンプ
 				if (input->IsKeyTrigger(DIK_SPACE) || input->IsPadTrigger(XINPUT_GAMEPAD_A)) {
 					if (isJump == false) {
+						jumpSE->StopWave();
+						jumpSE->SoundPlayWave(false, jumpSEVolume);
 						Jump();
 						isJump = true;
 					}
@@ -143,9 +159,13 @@ void Player::Update()
 		}
 	}
 
-	//リセット
-	inSwamp = false;
-	colLadder = false;
+	////リセット
+	//inSwamp = false;
+	//colLadder = false;
+
+	if (position.y > 1.0f) {
+		air = true;
+	}
 
 	//重力
 	if (!onLadder) {
@@ -158,6 +178,11 @@ void Player::Update()
 		SetJump(false);
 		gravity = 0.0f;
 		position.y = 1.0f;
+		if (air) {
+			landSE->StopWave();
+			landSE->SoundPlayWave(false, landSEVolume);
+		}
+		air = false;
 	}
 
 	if (isJump == true) {
@@ -167,18 +192,30 @@ void Player::Update()
 	//モデルの変更+音の変更
 
 	if (action != oldAction) {
-
+		swampSE->StopWave();
 		walkingSE->StopWave();
+		climbSE->StopWave();
 
 		if (action == WAIT) {
 			playerObject->SetModel(playerWaitModel);
 			playerObject->PlayAnimation();
 		}
 		else if (action == WALK) {
-			playerObject->SetModel(playerWalkModel);
-			playerObject->PlayAnimation();
+			if (inSwamp) {
+				playerObject->SetModel(playerWalkModel);
+				playerObject->PlayAnimation();
 
-			walkingSE->SoundPlayWave(walkingSEVolume);
+				//walkingSE->StopWave();
+				//swampSE->StopWave();
+				//swampSE->SoundPlayWave(swampSEVolume);
+			}
+			else {
+				playerObject->SetModel(playerWalkModel);
+				playerObject->PlayAnimation();
+				/*walkingSE->StopWave();
+				swampSE->StopWave();
+				walkingSE->SoundPlayWave(walkingSEVolume);*/
+			}
 		}
 		else if (action == JUMP) {
 			playerObject->SetModel(playerJumpModel);
@@ -192,6 +229,7 @@ void Player::Update()
 		}
 
 	}
+
 
 	oldAction = action;
 
@@ -213,12 +251,33 @@ void Player::Update()
 	//ImGui::End();
 
 
+	//音の変更
+	if (action == WALK) {
+		if (inSwamp) {
+			walkingSE->StopWave();
+			swampSE->SoundPlayWave(swampSEVolume);
+		}
+		else {
+			swampSE->StopWave();
+			walkingSE->SoundPlayWave(walkingSEVolume);
+		}
+	}
+
+	if (action == CLIMB) {
+		if (input->IsKeyPress(DIK_W) || input->IsKeyPress(DIK_S) || input->IsDownLStickUp() || input->IsDownLStickDown()) {
+			climbSE->SoundPlayWave(climbSEVolume);
+		}
+		else {
+			climbSE->StopWave();
+		}
+	}
+
+
 	//自機座標をimguiでいじる
 	ImGui::Begin("player");
 	ImGui::SliderFloat("pos.x", &position.x, -10.0f, 1000.0f);
 	ImGui::Text("");
 	ImGui::End();
-
 	//判定
 	colposition = position;
 	colposition.y += 0.5f;
@@ -230,6 +289,10 @@ void Player::Update()
 	playerObject->SetRotation(rotate);
 	playerObject->Update();
 
+
+	//リセット
+	inSwamp = false;
+	colLadder = false;
 }
 
 void Player::Draw(ID3D12GraphicsCommandList* cmdList)

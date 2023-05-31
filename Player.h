@@ -142,8 +142,21 @@ private:
 	bool stopAnimation = false;
 	bool oldStopAnimation = false;
 
-	//音
+	//歩き
 	AudioManager* walkingSE;
 	float walkingSEVolume = 1.0f;
+	//沼
+	AudioManager* swampSE;
+	float swampSEVolume = 0.1f;
+	//ハシゴ
+	AudioManager* climbSE;
+	float climbSEVolume = 0.1f;
+	//ジャンプ
+	AudioManager* jumpSE;
+	float jumpSEVolume = 0.1f;
+	//着地
+	AudioManager* landSE;
+	float landSEVolume = 0.1f;
+	bool air = false;
 };
 

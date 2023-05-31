@@ -15,6 +15,10 @@ void PushBlock::Initialize(FbxModel* blockModel, Player* player, CubeObject3D* c
 	//”»’è
 	this->cubeObject = cubeObject;
 	this->cubeObject->SetScale(XMFLOAT3(scale.x * 100.0f, scale.y * 100.0f, scale.z * 100.0f));
+
+	//‰¹
+	pushSE = new AudioManager();
+	pushSE->SoundLoadWave("Resources/Audio/PushBlock.wav");
 }
 
 void PushBlock::Update()
@@ -58,6 +62,7 @@ void PushBlock::Collision()
 		isPush = true;
 	}
 	else {
+		pushSE->StopWave();
 		isPush = false;
 	}
 }
@@ -81,6 +86,7 @@ void PushBlock::Push()
 				position.x += player->GetSpeed();
 			}
 		}
+		pushSE->SoundPlayWave(pushSEVolume);
 	}
 }
 
@@ -104,6 +110,7 @@ void PushBlock::NoPush()
 			}
 		}
 	}*/
+	pushSE->StopWave();
 	player->pushback(this->cubeObject);
 }
 

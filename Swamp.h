@@ -3,7 +3,7 @@
 #include "FbxObject3d.h"
 #include "FbxModel.h"
 #include "Player.h"
-
+#include "AudioManager.h"
 
 class Swamp
 {
@@ -45,5 +45,7 @@ private:
 
 	Player* player = nullptr;
 	bool inSwamp = false;
+
+	
 };
 
