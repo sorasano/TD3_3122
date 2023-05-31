@@ -82,7 +82,7 @@ void GameScene::Initialize(DirectXCommon* dxCommon, Input* input)
 	//FBX読み込み
 	FbxLoader::GetInstance()->Initialize(dxCommon_->GetDevice());
 	//モデル名を指定してファイル読み込み
-	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/grassFiled.png");
+	groundModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 	backGroundModel = FbxLoader::GetInstance()->LoadModelFromFile("background", "Resources/color/black1x1.png");
 	blockModel = FbxLoader::GetInstance()->LoadModelFromFile("cube", "Resources/color/gray1x1.png");
 
@@ -528,7 +528,7 @@ void GameScene::Update()
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
 
-	backGroundObject->SetPosition({ 1000,0,20.0f });
+	backGroundObject->SetPosition({ 1000,0,60.0f });
 	backGroundObject->SetScale({2000.0f,10.0f,1.0f });
 	backGroundObject->SetRotation({ 0.0f,XMConvertToRadians(180.0f),0.0f });
 	backGroundObject->Update();

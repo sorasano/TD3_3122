@@ -205,16 +205,10 @@ void Player::Update()
 				playerObject->SetModel(playerWalkModel);
 				playerObject->PlayAnimation();
 
-				//walkingSE->StopWave();
-				//swampSE->StopWave();
-				//swampSE->SoundPlayWave(swampSEVolume);
 			}
 			else {
 				playerObject->SetModel(playerWalkModel);
 				playerObject->PlayAnimation();
-				/*walkingSE->StopWave();
-				swampSE->StopWave();
-				walkingSE->SoundPlayWave(walkingSEVolume);*/
 			}
 		}
 		else if (action == JUMP) {
@@ -255,11 +249,11 @@ void Player::Update()
 	if (action == WALK) {
 		if (inSwamp) {
 			walkingSE->StopWave();
-			swampSE->SoundPlayWave(swampSEVolume);
+			swampSE->SoundPlayWave(true,swampSEVolume);
 		}
 		else {
 			swampSE->StopWave();
-			walkingSE->SoundPlayWave(walkingSEVolume);
+			walkingSE->SoundPlayWave(true, walkingSEVolume);
 		}
 	}
 

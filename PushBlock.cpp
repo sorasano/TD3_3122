@@ -86,7 +86,7 @@ void PushBlock::Push()
 				position.x += player->GetSpeed();
 			}
 		}
-		pushSE->SoundPlayWave(false,pushSEVolume);
+		pushSE->SoundPlayWave(true,pushSEVolume);
 	}
 }
 

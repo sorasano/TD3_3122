@@ -144,19 +144,19 @@ private:
 
 	//歩き
 	AudioManager* walkingSE;
-	float walkingSEVolume = 1.5f;
+	float walkingSEVolume = 0.3f;
 	//沼
 	AudioManager* swampSE;
-	float swampSEVolume = 0.1f;
+	float swampSEVolume = 0.5f;
 	//ハシゴ
 	AudioManager* climbSE;
 	float climbSEVolume = 0.1f;
 	//ジャンプ
 	AudioManager* jumpSE;
-	float jumpSEVolume = 0.1f;
+	float jumpSEVolume = 0.3f;
 	//着地
 	AudioManager* landSE;
-	float landSEVolume = 0.1f;
+	float landSEVolume = 0.3f;
 	bool air = false;
 };
 
