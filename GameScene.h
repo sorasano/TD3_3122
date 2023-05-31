@@ -250,7 +250,7 @@ private:
 	//音
 	//BGM
 	AudioManager* playBGM;
-	float playBGMVolume = 0.2f;
+	float playBGMVolume = 0.4f;
 
 	//決定音
 	AudioManager* pickSE;

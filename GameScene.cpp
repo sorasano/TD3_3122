@@ -528,8 +528,8 @@ void GameScene::Update()
 	groundObject->SetRotation({ 0.0f,0.0f,0.0f });
 	groundObject->Update();
 
-	backGroundObject->SetPosition({ 0,0,20.0f });
-	backGroundObject->SetScale({ 100.0f,10.0f,1.0f });
+	backGroundObject->SetPosition({ 1000,0,20.0f });
+	backGroundObject->SetScale({2000.0f,10.0f,1.0f });
 	backGroundObject->SetRotation({ 0.0f,XMConvertToRadians(180.0f),0.0f });
 	backGroundObject->Update();
 

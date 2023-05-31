@@ -70,5 +70,5 @@ private://ƒƒ“ƒo•Ï”
 
 	//‰¹
 	AudioManager* pushSE;
-	float pushSEVolume = 0.01f;
+	float pushSEVolume = 0.1f;
 };

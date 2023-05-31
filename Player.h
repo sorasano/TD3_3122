@@ -144,7 +144,7 @@ private:
 
 	//歩き
 	AudioManager* walkingSE;
-	float walkingSEVolume = 1.0f;
+	float walkingSEVolume = 1.5f;
 	//沼
 	AudioManager* swampSE;
 	float swampSEVolume = 0.1f;
