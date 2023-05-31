@@ -686,7 +686,7 @@ void GameScene::Update()
 		//スペースキーでファイル読み込み更新
 		if (input_->IsKeyTrigger(DIK_RETURN))
 		{
-			treeCsv->LoadCSV("Resources/Tree1.csv");
+			treeCsv->LoadCSV("Resources/csv/Tree1.csv");
 			int i = 0;
 			for (std::unique_ptr<FbxObject3D>& object : objectTree)
 			{
