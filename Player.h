@@ -73,6 +73,9 @@ public:
 	//横の判定
 	bool pushBlock(CubeObject3D* cubeObject);
 	
+	//音止める
+	void StopSound();
+
 private:
 	
 	XMFLOAT3 position = { 0.0f,2.0f,-1.0f};
@@ -144,7 +147,7 @@ private:
 
 	//歩き
 	AudioManager* walkingSE;
-	float walkingSEVolume = 0.3f;
+	float walkingSEVolume = 0.1f;
 	//沼
 	AudioManager* swampSE;
 	float swampSEVolume = 0.5f;
@@ -153,10 +156,10 @@ private:
 	float climbSEVolume = 0.1f;
 	//ジャンプ
 	AudioManager* jumpSE;
-	float jumpSEVolume = 0.3f;
+	float jumpSEVolume = 0.1f;
 	//着地
 	AudioManager* landSE;
-	float landSEVolume = 0.3f;
+	float landSEVolume = 0.1f;
 	bool air = false;
 };
 

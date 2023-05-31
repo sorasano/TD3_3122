@@ -491,3 +491,9 @@ bool Player::pushBlock(CubeObject3D* cubeObject)
 		}
 	}
 }
+
+void Player::StopSound()
+{
+	swampSE->StopWave();
+	walkingSE->StopWave();
+}

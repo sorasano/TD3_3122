@@ -555,7 +555,7 @@ void GameScene::Update()
 
 				pickSE->StopWave();
 				pickSE->SoundPlayWave(false, pickSEVolume);
-				//BGM停止
+				//音停止
 				playBGM->StopWave();
 			}
 		}
@@ -911,6 +911,17 @@ void GameScene::Update()
 		//メニュー
 		menu->Update();
 
+		//音止める
+		player->StopSound();
+		for (std::unique_ptr<Button>& button : buttons) {
+			button->StopSound();
+		}
+		for (std::unique_ptr<PushButton>& pushButton : pushButtons) {
+			pushButton->StopSound();
+		}
+		for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks) {
+			pushBlock->StopSound();
+		}
 
 		//シーン切り替えが起こったら
 		if (menu->GetIsSerect()) {

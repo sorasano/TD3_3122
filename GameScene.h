@@ -124,7 +124,7 @@ private:
 	std::list<std::unique_ptr<Enemy>> enemys;
 
 	//監視カメラ
-	size_t cameraEnemySize = 5;
+	size_t cameraEnemySize = 12;
 	FbxModel* cameraEnemyModel = nullptr;
 	std::list<std::unique_ptr<CameraEnemy>> cameraEnemys;
 

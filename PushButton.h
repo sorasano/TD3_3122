@@ -60,6 +60,8 @@ public:
 	static void SetInput(Input* input) { PushButton::input = input; }
 	static void SetDXInput(DXInput* dxInput) { PushButton::dxInput = dxInput; }
 
+	void StopSound();
+
 private:
 
 	XMFLOAT3 position = { 0.0f,1.0f,-1.0f };
@@ -113,5 +115,8 @@ private:
 	//‰¹
 	AudioManager* blockUpSE;
 	float blockUpSEVolume = 0.1f;
+
+	bool isSound = false;
+	bool reSound = false;
 };
 

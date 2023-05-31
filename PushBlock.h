@@ -44,6 +44,8 @@ public://メンバ関数
 	XMFLOAT3 GetPosition() { return position; }
 	CubeObject3D* GetCubeObject() { return cubeObject; }
 
+	void StopSound();
+
 public://静的メンバ関数
 	static void SetInput(Input* input) { PushBlock::input = input; }
 
@@ -71,4 +73,8 @@ private://メンバ変数
 	//音
 	AudioManager* pushSE;
 	float pushSEVolume = 0.1f;
+
+
+	bool isSound = false;
+	bool reSound = false;
 };
