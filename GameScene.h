@@ -117,41 +117,41 @@ private:
 	XMFLOAT3 playerpos;
 
 	//敵
-	size_t enemySize = 30;
+	size_t enemySize = 24;
 	FbxModel* enemyModel = nullptr;
 	FbxModel* enemyModel2 = nullptr;
 	FbxModel* enemyEyeModel = nullptr;
 	std::list<std::unique_ptr<Enemy>> enemys;
 
 	//監視カメラ
-	size_t cameraEnemySize = 30;
+	size_t cameraEnemySize = 5;
 	FbxModel* cameraEnemyModel = nullptr;
 	std::list<std::unique_ptr<CameraEnemy>> cameraEnemys;
 
 	//ボタン
-	size_t buttonSize = 30;
+	size_t buttonSize = 23;
 	FbxModel* buttonUpModel = nullptr;
 	FbxModel* buttonDownModel = nullptr;
 	std::list<std::unique_ptr<Button>> buttons;
 
 	//押している間のボタン
-	size_t pushButtonSize = 30;
+	size_t pushButtonSize = 12;
 	FbxModel* pushButtonUpModel = nullptr;
 	FbxModel* pushButtonDownModel = nullptr;
 	std::list<std::unique_ptr<PushButton>> pushButtons;
 
 	//爆弾
-	size_t bombSize = 30;
+	size_t bombSize = 19;
 	FbxModel* bombModel = nullptr;
 	std::list<std::unique_ptr<Bomb>> bombs;
 
 	//沼
-	size_t swampSize = 30;
+	size_t swampSize = 13;
 	FbxModel* swampModel = nullptr;
 	std::list<std::unique_ptr<Swamp>> swamps;
 
 	//押せるブロック
-	size_t pushBlockSize = 30;
+	size_t pushBlockSize = 11;
 	FbxModel* pushBlockModel = nullptr;
 	std::list<std::unique_ptr<PushBlock>> pushBlocks;
 

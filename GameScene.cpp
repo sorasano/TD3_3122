@@ -682,178 +682,178 @@ void GameScene::Update()
 			object->Update();
 		}
 
-		//Tree1
-		//スペースキーでファイル読み込み更新
-		if (input_->IsKeyTrigger(DIK_RETURN))
-		{
-			treeCsv->LoadCSV("Resources/csv/Tree1.csv");
-			int i = 0;
-			for (std::unique_ptr<FbxObject3D>& object : objectTree)
-			{
-				object->SetPosition(treeCsv->GetPosition(i));
-				object->SetScale(treeCsv->GetScale(i));
-				object->SetRotation(treeCsv->GetRotation(i));
-				i++;
-			}
+		////Tree1
+		////スペースキーでファイル読み込み更新
+		//if (input_->IsKeyTrigger(DIK_RETURN))
+		//{
+		//	treeCsv->LoadCSV("Resources/csv/Tree1.csv");
+		//	int i = 0;
+		//	for (std::unique_ptr<FbxObject3D>& object : objectTree)
+		//	{
+		//		object->SetPosition(treeCsv->GetPosition(i));
+		//		object->SetScale(treeCsv->GetScale(i));
+		//		object->SetRotation(treeCsv->GetRotation(i));
+		//		i++;
+		//	}
 
-			//---------敵---------
+		//	//---------敵---------
 
-			enemyCsv->LoadCSV("Resources/csv/enemy.csv");
-			i = 0;
+		//	enemyCsv->LoadCSV("Resources/csv/enemy.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<Enemy>& enemy : enemys)
-			{
-				enemy->SetPosition(enemyCsv->GetPosition(i));
-				enemy->SetScale(enemyCsv->GetScale(i));
-				enemy->Setrotate(enemyCsv->GetRotation(i));
-				i++;
+		//	for (std::unique_ptr<Enemy>& enemy : enemys)
+		//	{
+		//		enemy->SetPosition(enemyCsv->GetPosition(i));
+		//		enemy->SetScale(enemyCsv->GetScale(i));
+		//		enemy->Setrotate(enemyCsv->GetRotation(i));
+		//		i++;
 
-			}
+		//	}
 
-			//---------監視カメラ---------
+		//	//---------監視カメラ---------
 
-			cameraEnemyCsv->LoadCSV("Resources/csv/cameraEnemy.csv");
-			i = 0;
+		//	cameraEnemyCsv->LoadCSV("Resources/csv/cameraEnemy.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<CameraEnemy>& cameraEnemy : cameraEnemys)
-			{
-				cameraEnemy->SetPosition(cameraEnemyCsv->GetPosition(i));
-				cameraEnemy->SetScale(cameraEnemyCsv->GetScale(i));
-				cameraEnemy->Setrotate(cameraEnemyCsv->GetRotation(i));
-				i++;
+		//	for (std::unique_ptr<CameraEnemy>& cameraEnemy : cameraEnemys)
+		//	{
+		//		cameraEnemy->SetPosition(cameraEnemyCsv->GetPosition(i));
+		//		cameraEnemy->SetScale(cameraEnemyCsv->GetScale(i));
+		//		cameraEnemy->Setrotate(cameraEnemyCsv->GetRotation(i));
+		//		i++;
 
-			}
+		//	}
 
-			//--------ボタン----------
+		//	//--------ボタン----------
 
-			buttonCsv->LoadCSV("Resources/csv/button.csv");
-			buttonBlockCsv->LoadCSV("Resources/csv/buttonBlock.csv");
-			i = 0;
+		//	buttonCsv->LoadCSV("Resources/csv/button.csv");
+		//	buttonBlockCsv->LoadCSV("Resources/csv/buttonBlock.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<Button>& button : buttons)
-			{
+		//	for (std::unique_ptr<Button>& button : buttons)
+		//	{
 
-				button->SetPosition(buttonCsv->GetPosition(i));
-				button->SetScale(buttonCsv->GetScale(i));
-				button->Setrotate(buttonCsv->GetRotation(i));
+		//		button->SetPosition(buttonCsv->GetPosition(i));
+		//		button->SetScale(buttonCsv->GetScale(i));
+		//		button->Setrotate(buttonCsv->GetRotation(i));
 
-				button->SetBlockPosition(buttonBlockCsv->GetPosition(i));
-				button->SetBlockScale(buttonBlockCsv->GetScale(i));
-				button->SetBlockrotate(buttonBlockCsv->GetRotation(i));
-				i++;
+		//		button->SetBlockPosition(buttonBlockCsv->GetPosition(i));
+		//		button->SetBlockScale(buttonBlockCsv->GetScale(i));
+		//		button->SetBlockrotate(buttonBlockCsv->GetRotation(i));
+		//		i++;
 
-			}
+		//	}
 
-			//--------爆弾--------	
+		//	//--------爆弾--------	
 
-			bombCsv->LoadCSV("Resources/csv/bomb.csv");
-			i = 0;
+		//	bombCsv->LoadCSV("Resources/csv/bomb.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<Bomb>& bomb : bombs)
-			{
+		//	for (std::unique_ptr<Bomb>& bomb : bombs)
+		//	{
 
-				bomb->SetPosition(bombCsv->GetPosition(i));
-				bomb->SetScale(bombCsv->GetScale(i));
-				bomb->Setrotate(bombCsv->GetRotation(i));
-				i++;
+		//		bomb->SetPosition(bombCsv->GetPosition(i));
+		//		bomb->SetScale(bombCsv->GetScale(i));
+		//		bomb->Setrotate(bombCsv->GetRotation(i));
+		//		i++;
 
-			}
+		//	}
 
-			//----------沼----------
+		//	//----------沼----------
 
-			swampCsv->LoadCSV("Resources/csv/swamp.csv");
-			i = 0;
+		//	swampCsv->LoadCSV("Resources/csv/swamp.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<Swamp>& swamp : swamps)
-			{
+		//	for (std::unique_ptr<Swamp>& swamp : swamps)
+		//	{
 
-				swamp->SetPosition(swampCsv->GetPosition(i));
-				swamp->SetScale(swampCsv->GetScale(i));
-				swamp->Setrotate(swampCsv->GetRotation(i));
+		//		swamp->SetPosition(swampCsv->GetPosition(i));
+		//		swamp->SetScale(swampCsv->GetScale(i));
+		//		swamp->Setrotate(swampCsv->GetRotation(i));
 
-				i++;
+		//		i++;
 
-			}
+		//	}
 
-			//----------梯子--------
+		//	//----------梯子--------
 
-			ladderCsv->LoadCSV("Resources/csv/ladder.csv");
-			i = 0;
+		//	ladderCsv->LoadCSV("Resources/csv/ladder.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<Ladder>& ladder : ladders)
-			{
-				ladder->SetPosition(ladderCsv->GetPosition(i));
-				ladder->SetScale(ladderCsv->GetScale(i));
-				ladder->Setrotate(ladderCsv->GetRotation(i));
+		//	for (std::unique_ptr<Ladder>& ladder : ladders)
+		//	{
+		//		ladder->SetPosition(ladderCsv->GetPosition(i));
+		//		ladder->SetScale(ladderCsv->GetScale(i));
+		//		ladder->Setrotate(ladderCsv->GetRotation(i));
 
-				i++;
-			}
+		//		i++;
+		//	}
 
-			//--------動く敵-------
+		//	//--------動く敵-------
 
-			moveEnemyCsv->LoadCSV("Resources/csv/moveEnemy.csv");
-			i = 0;
+		//	moveEnemyCsv->LoadCSV("Resources/csv/moveEnemy.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<MoveEnemy>& moveEnemy : moveEnemys)
-			{
-				moveEnemy->SetPosition(moveEnemyCsv->GetPosition(i));
-				moveEnemy->SetScale(moveEnemyCsv->GetScale(i));
-				moveEnemy->Setrotate(moveEnemyCsv->GetRotation(i));
-				i++;
+		//	for (std::unique_ptr<MoveEnemy>& moveEnemy : moveEnemys)
+		//	{
+		//		moveEnemy->SetPosition(moveEnemyCsv->GetPosition(i));
+		//		moveEnemy->SetScale(moveEnemyCsv->GetScale(i));
+		//		moveEnemy->Setrotate(moveEnemyCsv->GetRotation(i));
+		//		i++;
 
-			}
+		//	}
 
-			//----------動かせるブロック----------
+		//	//----------動かせるブロック----------
 
-			pushBlockCsv->LoadCSV("Resources/csv/pushBlock.csv");
-			i = 0;
+		//	pushBlockCsv->LoadCSV("Resources/csv/pushBlock.csv");
+		//	i = 0;
 
-			for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks)
-			{
-				pushBlock->SetPosition(pushBlockCsv->GetPosition(i));
-				pushBlock->SetScale(pushBlockCsv->GetScale(i));
-				pushBlock->Setrotate(pushBlockCsv->GetRotation(i));
-				i++;
-
-
-			}
-
-			//----------ブロック----------
-
-			blockCsv->LoadCSV("Resources/csv/block.csv");
-			i = 0;
-			for (std::unique_ptr<Block>& block : blocks)
-			{
-				block->SetPosition(blockCsv->GetPosition(i));
-				block->SetScale(blockCsv->GetScale(i));
-				block->Setrotate(blockCsv->GetRotation(i));
-				i++;
-
-			}
-
-			//----------押している間のスイッチ----------
-
-			pushButtonCsv->LoadCSV("Resources/csv/pushButton.csv");
-			pushButtonBlockCsv->LoadCSV("Resources/csv/pushButtonBlock.csv");
-			i = 0;
-			for (std::unique_ptr<PushButton>& pushButton : pushButtons)
-			{
-
-				pushButton->SetPosition(pushButtonCsv->GetPosition(i));
-				pushButton->SetScale(pushButtonCsv->GetScale(i));
-				pushButton->Setrotate(pushButtonCsv->GetRotation(i));
-
-				pushButton->SetBlockPosition(pushButtonBlockCsv->GetPosition(i));
-				pushButton->SetBlockScale(pushButtonBlockCsv->GetScale(i));
-				pushButton->SetBlockrotate(pushButtonBlockCsv->GetRotation(i));
-				i++;
+		//	for (std::unique_ptr<PushBlock>& pushBlock : pushBlocks)
+		//	{
+		//		pushBlock->SetPosition(pushBlockCsv->GetPosition(i));
+		//		pushBlock->SetScale(pushBlockCsv->GetScale(i));
+		//		pushBlock->Setrotate(pushBlockCsv->GetRotation(i));
+		//		i++;
 
 
-			}
+		//	}
 
-			autoSave->UpdateCSV();
+		//	//----------ブロック----------
 
-		}
+		//	blockCsv->LoadCSV("Resources/csv/block.csv");
+		//	i = 0;
+		//	for (std::unique_ptr<Block>& block : blocks)
+		//	{
+		//		block->SetPosition(blockCsv->GetPosition(i));
+		//		block->SetScale(blockCsv->GetScale(i));
+		//		block->Setrotate(blockCsv->GetRotation(i));
+		//		i++;
+
+		//	}
+
+		//	//----------押している間のスイッチ----------
+
+		//	pushButtonCsv->LoadCSV("Resources/csv/pushButton.csv");
+		//	pushButtonBlockCsv->LoadCSV("Resources/csv/pushButtonBlock.csv");
+		//	i = 0;
+		//	for (std::unique_ptr<PushButton>& pushButton : pushButtons)
+		//	{
+
+		//		pushButton->SetPosition(pushButtonCsv->GetPosition(i));
+		//		pushButton->SetScale(pushButtonCsv->GetScale(i));
+		//		pushButton->Setrotate(pushButtonCsv->GetRotation(i));
+
+		//		pushButton->SetBlockPosition(pushButtonBlockCsv->GetPosition(i));
+		//		pushButton->SetBlockScale(pushButtonBlockCsv->GetScale(i));
+		//		pushButton->SetBlockrotate(pushButtonBlockCsv->GetRotation(i));
+		//		i++;
+
+
+		//	}
+
+		//	autoSave->UpdateCSV();
+
+		//}
 
 		//プレイヤー
 		player->Update();
