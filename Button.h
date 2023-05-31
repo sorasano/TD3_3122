@@ -60,6 +60,8 @@ public:
 
 	void Reset();
 
+	void StopSound();
+
 private:
 
 	XMFLOAT3 position = { 0.0f,0.5f,-1.0f };
@@ -107,5 +109,8 @@ private:
 	//‰¹
 	AudioManager* blockUpSE;
 	float blockUpSEVolume = 0.1f;
+
+	bool isSound = false;
+	bool reSound = false;
 };
 

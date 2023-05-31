@@ -124,7 +124,7 @@ private:
 	std::list<std::unique_ptr<Enemy>> enemys;
 
 	//監視カメラ
-	size_t cameraEnemySize = 5;
+	size_t cameraEnemySize = 12;
 	FbxModel* cameraEnemyModel = nullptr;
 	std::list<std::unique_ptr<CameraEnemy>> cameraEnemys;
 
@@ -151,22 +151,22 @@ private:
 	std::list<std::unique_ptr<Swamp>> swamps;
 
 	//押せるブロック
-	size_t pushBlockSize = 11;
+	size_t pushBlockSize = 10;
 	FbxModel* pushBlockModel = nullptr;
 	std::list<std::unique_ptr<PushBlock>> pushBlocks;
 
 	//動かせないブロック
-	size_t blockSize = 30;
+	size_t blockSize = 17;
 	FbxModel* blockModel = nullptr;
 	std::list<std::unique_ptr<Block>> blocks;
 
 	//梯子
-	size_t ladderSize = 30;
+	size_t ladderSize = 1;
 	FbxModel* ladderModel = nullptr;
 	std::list<std::unique_ptr<Ladder>> ladders;
 
 	//動く敵
-	size_t moveEnemySize = 30;
+	size_t moveEnemySize = 10;
 	std::list<std::unique_ptr<MoveEnemy>> moveEnemys;
 
 	//オートセーブ

@@ -36,6 +36,11 @@ void Button::Initialize(FbxModel* buttonUpModel, FbxModel* buttonDownModel, Play
 
 void Button::Update()
 {
+	if (reSound) {
+		blockUpSE->StopWave();
+		blockUpSE->SoundPlayWave(true, blockUpSEVolume);
+		reSound = false;
+	}
 
 	colPosition = position;
 	/*colPosition.y += 1.2f;*/
@@ -129,6 +134,7 @@ void Button::ButtonCol()
 
 					blockUpSE->StopWave();
 					blockUpSE->SoundPlayWave(true, blockUpSEVolume);
+					isSound = true;
 
 					this->scale = { 0.3,0.3,0.3};
 					this->position.y = 1.2;
@@ -194,6 +200,7 @@ void Button::PushButton()
 		push = false;
 
 		blockUpSE->StopWave();
+		isSound = false;
 
 		this->scale = { 0.5,0.5,0.1 };
 		this->position.y = 1.0;
@@ -238,4 +245,12 @@ void Button::Reset()
 	this->scale = { 0.5,0.5,0.1 };
 	this->position.y = 1.0;
 	buttonObject->SetModel(buttonUpModel);
+}
+
+void Button::StopSound()
+{
+	if (isSound) {
+		blockUpSE->StopWave();
+		reSound = true;
+	}
 }

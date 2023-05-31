@@ -23,6 +23,12 @@ void PushBlock::Initialize(FbxModel* blockModel, Player* player, CubeObject3D* c
 
 void PushBlock::Update()
 {
+	if (reSound) {
+		pushSE->StopWave();
+		pushSE->SoundPlayWave(true, pushSEVolume);
+		reSound = false;
+	}
+
 	////”»’è
 	//Collision();
 	////‰Ÿ‚·”»’è
@@ -64,6 +70,7 @@ void PushBlock::Collision()
 	else {
 		pushSE->StopWave();
 		isPush = false;
+		isSound = false;
 	}
 }
 
@@ -87,6 +94,7 @@ void PushBlock::Push()
 			}
 		}
 		pushSE->SoundPlayWave(true,pushSEVolume);
+		isSound = true;
 	}
 }
 
@@ -112,6 +120,8 @@ void PushBlock::NoPush()
 	}*/
 	pushSE->StopWave();
 	player->pushback(this->cubeObject);
+
+	isSound = false;
 }
 
 void PushBlock::pushback(CubeObject3D* cubeObject)
@@ -160,4 +170,12 @@ void PushBlock::pushback(CubeObject3D* cubeObject)
 void PushBlock::SetSRV(ID3D12DescriptorHeap* SRV)
 {
 	blockObject->SetSRV(SRV);
+}
+
+void PushBlock::StopSound()
+{
+	if (isSound) {
+		pushSE->StopWave();
+		reSound = true;
+	}
 }

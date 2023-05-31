@@ -39,6 +39,11 @@ void PushButton::Initialize(FbxModel* buttonUpModel, FbxModel* buttonDwonModel, 
 
 void PushButton::Update()
 {
+	if (reSound) {
+		blockUpSE->StopWave();
+		blockUpSE->SoundPlayWave(true, blockUpSEVolume);
+		reSound = false;
+	}
 
 
 	buttonColPosition = savepos;
@@ -80,9 +85,12 @@ void PushButton::Update()
 		if (isMove) {
 			blockUpSE->StopWave();
 			blockUpSE->SoundPlayWave(true, blockUpSEVolume);
+			isSound = true;
+
 		}
 		else {
 			blockUpSE->StopWave();
+			isSound = false;
 		}
 	}
 
@@ -259,4 +267,12 @@ void PushButton::SetSRV(ID3D12DescriptorHeap* SRV)
 {
 	buttonObject->SetSRV(SRV);
 	blockObject->SetSRV(SRV);
+}
+
+void PushButton::StopSound()
+{
+	if (isSound) {
+		blockUpSE->StopWave();
+		reSound = true;
+	}
 }
